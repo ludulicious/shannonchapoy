@@ -39,7 +39,7 @@ const Contact = () => {
                 <label htmlFor="message" className="block text-sm font-medium text-brand-charcoal mb-1">How can I help?</label>
                 <textarea id="message" rows={4} className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-brand-ltPurple focus:ring-2 focus:ring-brand-ltPurple/20 outline-none transition-all" placeholder="Tell me a bit about your journey..."></textarea>
               </div>
-              <button type="submit" className="w-full bg-brand-ltPurple text-white font-semibold py-3 rounded-lg hover:bg-brand-dkPurple transition-colors shadow-md transform hover:-translate-y-1">
+              <button type="submit" className="w-full px-10 py-4 bg-brand-ltPurple text-white rounded-full font-bold text-lg hover:bg-brand-dkPurple transition-all shadow-xl hover:shadow-2xl transform hover:-translate-y-1 hover:scale-105">
                 Send Message
               </button>
             </form>

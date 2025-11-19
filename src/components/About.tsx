@@ -26,12 +26,12 @@ const About = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="relative">
-            <div className="absolute inset-0 bg-brand-dkPurple/10 transform translate-x-4 translate-y-4 rounded-2xl"></div>
+            <div className="absolute inset-0 bg-brand-dkPurple/5 transform translate-x-2 translate-y-2 rounded-2xl"></div>
             <img 
               src={imgSrc} 
               alt="Shannon Chapoy" 
               onError={handleImgError}
-              className="relative rounded-2xl shadow-xl w-full object-cover h-[500px] bg-gray-200"
+              className="relative rounded-2xl shadow-xl w-full object-cover h-[700px] bg-gray-200"
             />
           </div>
           
