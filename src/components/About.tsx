@@ -3,10 +3,11 @@ import React, { useState } from 'react';
 import { Heart, Sparkles } from 'lucide-react';
 
 const About = () => {
-  // Attempt to load the local image from the root directory.
+  // Use Vite's BASE_URL to handle GitHub Pages base path correctly
   // Using a query parameter (v=timestamp) bypasses browser cache to ensure 
   // the newly uploaded file is detected immediately instead of a cached 404.
-  const [imgSrc, setImgSrc] = useState('/shannon.jpg?v=' + new Date().getTime());
+  const baseUrl = import.meta.env.BASE_URL || '/';
+  const [imgSrc, setImgSrc] = useState(`${baseUrl}shannon.jpg?v=` + new Date().getTime());
   const [hasError, setHasError] = useState(false);
 
   const handleImgError = () => {
