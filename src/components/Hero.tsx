@@ -41,7 +41,7 @@ const Hero = () => {
             href="#about" 
             className="px-10 py-4 bg-white/10 backdrop-blur-md text-white border border-white/50 rounded-full font-bold text-lg hover:bg-white/20 transition-all hover:shadow-lg transform hover:-translate-y-1"
           >
-            Meet Shannon
+            Join a PJ Group
           </a>
         </div>
       </div>
