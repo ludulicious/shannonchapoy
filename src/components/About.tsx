@@ -7,7 +7,7 @@ const About = () => {
   // Using a query parameter (v=timestamp) bypasses browser cache to ensure 
   // the newly uploaded file is detected immediately instead of a cached 404.
   const baseUrl = import.meta.env.BASE_URL || '/';
-  const [imgSrc, setImgSrc] = useState(`${baseUrl}shannon.jpg?v=` + new Date().getTime());
+  const [imgSrc, setImgSrc] = useState(`${baseUrl}shannon-cropped.png?v=` + new Date().getTime());
   const [hasError, setHasError] = useState(false);
 
   const handleImgError = () => {
@@ -32,7 +32,7 @@ const About = () => {
               src={imgSrc} 
               alt="Shannon Chapoy" 
               onError={handleImgError}
-              className="relative rounded-2xl shadow-xl w-full object-cover h-[700px] bg-gray-200"
+              className="relative rounded-2xl shadow-xl w-full object-cover object-left h-[450px] md:h-[600px] lg:h-[600px] bg-gray-200 -translate-x-2"
             />
           </div>
           
