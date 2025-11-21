@@ -12,12 +12,15 @@ const Hero = () => {
       <img 
         src="https://images.unsplash.com/photo-1528739215557-acce0b37e9b7?q=80&w=1920&auto=format&fit=crop"
         alt="Butterflies in brand colors"
-        className="absolute inset-0 w-full h-full object-cover z-0"
+        className="absolute inset-0 w-full h-full object-cover z-0 brightness-110"
       />
 
+      {/* Light Overlay to Brighten Background */}
+      <div className="absolute inset-0 bg-white/30 z-10"></div>
+
       {/* Gradient Overlay for Text Readability and Brand Tint */}
-      <div className="absolute inset-0 bg-gradient-to-b from-brand-dkPurple/40 via-brand-dkPurple/20 to-brand-dkPurple/90 z-10 mix-blend-multiply"></div>
-      <div className="absolute inset-0 bg-black/20 z-10"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-brand-dkPurple/30 via-brand-dkPurple/15 to-brand-dkPurple/70 z-10 mix-blend-multiply"></div>
+      <div className="absolute inset-0 bg-black/10 z-10"></div>
 
       {/* Main Content */}
       <div 

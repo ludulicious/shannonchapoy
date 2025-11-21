@@ -12,9 +12,14 @@ const Philosophy = () => {
         <img 
           src="https://images.unsplash.com/photo-1518173946687-a4c8892bbd9f?q=80&w=2000&auto=format&fit=crop"
           alt="Nature background"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover brightness-110"
         />
-        <div className="absolute inset-0 bg-brand-dkPurple/90 mix-blend-multiply"></div>
+        {/* Light Overlay to Brighten Background */}
+        <div className="absolute inset-0 bg-white/30"></div>
+        {/* Purple Tint Overlay */}
+        <div className="absolute inset-0 bg-brand-ltPurple/20"></div>
+        {/* Dark Overlay for Text Readability */}
+        <div className="absolute inset-0 bg-brand-dkPurple/60 mix-blend-multiply"></div>
       </div>
       
       <div 
