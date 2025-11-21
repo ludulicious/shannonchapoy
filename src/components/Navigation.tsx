@@ -24,7 +24,7 @@ const Navigation = () => {
 
         {/* Desktop Menu */}
         <div className="hidden md:flex space-x-8 items-center">
-          {['About', 'Services', 'Philosophy', 'Testimonials'].map((item) => (
+          {['About', 'Services', 'Philosophy'].map((item) => (
             <a 
               key={item} 
               href={`#${item.toLowerCase()}`} 
@@ -62,7 +62,7 @@ const Navigation = () => {
       {isMobileMenuOpen && (
         <div className="md:hidden bg-white absolute w-full shadow-xl border-t border-gray-100">
           <div className="px-4 pt-2 pb-6 space-y-2">
-            {['About', 'Services', 'Philosophy', 'Testimonials', 'Contact'].map((item) => (
+            {['About', 'Services', 'Philosophy', 'Contact'].map((item) => (
               <a 
                 key={item} 
                 href={`#${item.toLowerCase()}`}
