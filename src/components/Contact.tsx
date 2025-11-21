@@ -1,12 +1,20 @@
 
 import React from 'react';
 import { Mail, Instagram, Facebook, Linkedin } from 'lucide-react';
+import { useScrollAnimation } from '../hooks/useScrollAnimation';
 
 const Contact = () => {
+  const { elementRef, isVisible } = useScrollAnimation(0.2);
+
   return (
     <section id="contact" className="py-20 bg-brand-soft">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white rounded-3xl shadow-xl overflow-hidden flex flex-col md:flex-row">
+        <div 
+          ref={elementRef}
+          className={`bg-white rounded-3xl shadow-xl overflow-hidden flex flex-col md:flex-row transition-all duration-1000 ${
+            isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-10 scale-95'
+          }`}
+        >
           <div className="bg-brand-dkPurple p-10 md:w-2/5 text-white flex flex-col justify-between">
             <div>
               <h3 className="font-serif text-3xl font-bold mb-6">Let's Talk</h3>
