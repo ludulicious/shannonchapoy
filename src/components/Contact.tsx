@@ -9,7 +9,7 @@ const Contact = () => {
         <div className="bg-white rounded-3xl shadow-xl overflow-hidden flex flex-col md:flex-row">
           <div className="bg-brand-dkPurple p-10 md:w-2/5 text-white flex flex-col justify-between">
             <div>
-              <h3 className="font-serif text-3xl font-bold mb-6">Let's Connect</h3>
+              <h3 className="font-serif text-3xl font-bold mb-6">Let's Talk</h3>
               <p className="text-white/80 mb-8">Ready to start your transformation? Send me a message and let's discuss how we can work together.</p>
             </div>
             <div className="space-y-4">
@@ -24,25 +24,26 @@ const Contact = () => {
               </div>
             </div>
           </div>
-          
-          <div className="p-10 md:w-3/5">
-            <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-brand-charcoal mb-1">Your Name</label>
-                <input type="text" id="name" className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-brand-ltPurple focus:ring-2 focus:ring-brand-ltPurple/20 outline-none transition-all" placeholder="Jane Doe" />
-              </div>
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-brand-charcoal mb-1">Email Address</label>
-                <input type="email" id="email" className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-brand-ltPurple focus:ring-2 focus:ring-brand-ltPurple/20 outline-none transition-all" placeholder="jane@example.com" />
-              </div>
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium text-brand-charcoal mb-1">How can I help?</label>
-                <textarea id="message" rows={4} className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-brand-ltPurple focus:ring-2 focus:ring-brand-ltPurple/20 outline-none transition-all" placeholder="Tell me a bit about your journey..."></textarea>
-              </div>
-              <button type="submit" className="w-full px-10 py-4 bg-brand-ltPurple text-white rounded-full font-bold text-lg hover:bg-brand-dkPurple transition-all shadow-xl hover:shadow-2xl transform hover:-translate-y-1 hover:scale-105">
-                Send Message
-              </button>
-            </form>
+
+          <div className="md:w-4/5">
+            <iframe
+              src="https://actions.shannonchapoy.com/widget/form/WQ1oAQmkwYDHYsFWlOV9"
+              style={{width: '100%', height: '100%', border: 'none', borderRadius: '4px'}}
+              id="inline-WQ1oAQmkwYDHYsFWlOV9"
+              data-layout="{'id':'INLINE'}"
+              data-trigger-type="alwaysShow"
+              data-trigger-value=""
+              data-activation-type="alwaysActivated"
+              data-activation-value=""
+              data-deactivation-type="neverDeactivate"
+              data-deactivation-value=""
+              data-form-name="Website Contact Form"
+              data-height="542"
+              data-layout-iframe-id="inline-WQ1oAQmkwYDHYsFWlOV9"
+              data-form-id="WQ1oAQmkwYDHYsFWlOV9"
+              title="Website Contact Form"
+            >
+            </iframe>
           </div>
         </div>
       </div>

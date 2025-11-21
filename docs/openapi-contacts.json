@@ -1,0 +1,358 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+      "title": "GoHighLevel Contacts API",
+      "description": "OpenAPI 3.0 specification generated from the official GoHighLevel Contacts API documentation (https://marketplace.gohighlevel.com/docs/ghl/contacts/contacts and related pages). This covers the core contacts CRUD operations and related actions as of November 2025.",
+      "version": "2021-07-28",
+      "contact": {
+        "name": "HighLevel Developer Portal",
+        "url": "https://developers.gohighlevel.com/"
+      }
+    },
+    "servers": [
+      {
+        "url": "https://services.leadconnectorhq.com",
+        "description": "Production server"
+      }
+    ],
+    "security": [
+      {
+        "bearerAuth": []
+      }
+    ],
+    "components": {
+      "securitySchemes": {
+        "bearerAuth": {
+          "type": "http",
+          "scheme": "bearer",
+          "description": "Bearer token obtained via OAuth2 or Location access token or API key. Optional header: Version: 2021-07-28"
+        }
+      },
+      "schemas": {
+        "Contact": {
+          "type": "object",
+          "properties": {
+            "id": { "type": "string" },
+            "locationId": { "type": "string", "description": "Required for create/upsert" },
+            "firstName": { "type": "string" },
+            "lastName": { "type": "string" },
+            "name": { "type": "string" },
+            "email": { "type": "string" },
+            "phone": { "type": "string", "description": "E.164 format recommended (+15551234567)" },
+            "address1": { "type": "string" },
+            "city": { "type": "string" },
+            "state": { "type": "string" },
+            "postalCode": { "type": "string" },
+            "country": { "type": "string", "description": "2-letter ISO code, see country list in docs" },
+            "dateOfBirth": { "type": "string", "format": "date" },
+            "dateAdded": { "type": "string", "format": "date-time" },
+            "tags": { "type": "array", "items": { "type": "string" } },
+            "customFields": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": { "type": "string" },
+                  "fieldValue": { "type": "string" }
+                }
+              }
+            },
+            "dnd": { "type": "boolean" },
+            "source": { "type": "string" },
+            "businessId": { "type": "string" }
+          }
+        },
+        "PaginationMeta": {
+          "type": "object",
+          "properties": {
+            "total": { "type": "integer" },
+            "startAfterId": { "type": "string" },
+            "nextPage": { "type": "string" }
+          }
+        }
+      }
+    },
+    "paths": {
+      "/contacts/": {
+        "get": {
+          "summary": "List Contacts (Deprecated)",
+          "description": "Deprecated - Use /contacts/search instead.",
+          "operationId": "listContactsDeprecated",
+          "parameters": [
+            {
+              "name": "locationId",
+              "in": "query",
+              "required": true,
+              "schema": { "type": "string" }
+            },
+            {
+              "name": "limit",
+              "in": "query",
+              "schema": { "type": "integer", "default": 100 }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "List of contacts",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "contacts": {
+                        "type": "array",
+                        "items": { "$ref": "#/components/schemas/Contact" }
+                      },
+                      "meta": { "$ref": "#/components/schemas/PaginationMeta" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "summary": "Create Contact",
+          "operationId": "createContact",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Contact" }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Created contact",
+              "content": {
+                "application/json": {
+                  "schema": { "$ref": "#/components/schemas/Contact" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/contacts/{contactId}": {
+        "get": {
+          "summary": "Get Contact",
+          "operationId": "getContact",
+          "parameters": [
+            {
+              "name": "contactId",
+              "in": "path",
+              "required": true,
+              "schema": { "type": "string" }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Contact object",
+              "content": {
+                "application/json": {
+                  "schema": { "$ref": "#/components/schemas/Contact" }
+                }
+              }
+            }
+          }
+        },
+        "put": {
+          "summary": "Update Contact",
+          "operationId": "updateContact",
+          "parameters": [
+            {
+              "name": "contactId",
+              "in": "path",
+              "required": true,
+              "schema": { "type": "string" }
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Contact" }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Updated contact",
+              "content": {
+                "application/json": {
+                  "schema": { "$ref": "#/components/schemas/Contact" }
+                }
+              }
+            }
+          }
+        },
+        "delete": {
+          "summary": "Delete Contact",
+          "operationId": "deleteContact",
+          "parameters": [
+            {
+              "name": "contactId",
+              "in": "path",
+              "required": true,
+              "schema": { "type": "string" }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success"
+            }
+          }
+        }
+      },
+      "/contacts/upsert": {
+        "post": {
+          "summary": "Upsert Contact (Create or Update)",
+          "operationId": "upsertContact",
+          "description": "Creates a new contact or updates an existing one based on duplicate settings (email/phone). Highly recommended for integrations.",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Contact" }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Contact object (created or updated)",
+              "content": {
+                "application/json": {
+                  "schema": { "$ref": "#/components/schemas/Contact" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/contacts/search": {
+        "get": {
+          "summary": "Search Contacts (Recommended)",
+          "operationId": "searchContacts",
+          "parameters": [
+            {
+              "name": "locationId",
+              "in": "query",
+              "schema": { "type": "string" }
+            },
+            {
+              "name": "query",
+              "in": "query",
+              "description": "Free text search across name, email, phone, etc.",
+              "schema": { "type": "string" }
+            },
+            {
+              "name": "limit",
+              "in": "query",
+              "schema": { "type": "integer" }
+            },
+            {
+              "name": "startAfterId",
+              "in": "query",
+              "schema": { "type": "string" }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Paginated list of contacts",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "contacts": {
+                        "type": "array",
+                        "items": { "$ref": "#/components/schemas/Contact" }
+                      },
+                      "meta": { "$ref": "#/components/schemas/PaginationMeta" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/contacts/search-advanced": {
+        "post": {
+          "summary": "Advanced Search Contacts",
+          "operationId": "advancedSearchContacts",
+          "description": "Powerful filter-based search (tags, custom fields, date ranges, etc.)",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "locationId": { "type": "string" },
+                    "filters": { "type": "array", "items": { "type": "object" } }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Paginated contacts"
+            }
+          }
+        }
+      },
+      "/contacts/{contactId}/tags": {
+        "put": {
+          "summary": "Update Contact Tags (bulk operations also available on multiple contacts)",
+          "operationId": "updateContactTags",
+          "parameters": [
+            {
+              "name": "contactId",
+              "in": "path",
+              "required": true,
+              "schema": { "type": "string" }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "tags": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": { "200": { "description": "Success" } }
+        }
+      },
+      "/contacts/workflow": {
+        "post": {
+          "summary": "Add Contact to Workflow",
+          "operationId": "addToWorkflow",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "workflowId": { "type": "string" },
+                    "contactId": { "type": "string" }
+                  },
+                  "required": ["workflowId", "contactId"]
+                }
+              }
+            }
+          },
+          "responses": { "200": { "description": "Success" } }
+        }
+      }
+    }
+  }
