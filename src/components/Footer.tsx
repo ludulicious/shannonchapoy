@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import NoScrollLink from './NoScrollLink';
 
 const Footer = () => {
   return (
@@ -12,8 +12,8 @@ const Footer = () => {
         </div>
         
         <div className="flex space-x-8 mb-6 md:mb-0 text-sm text-gray-400">
-          <Link to="/privacy" className="hover:text-brand-ltPurple transition-colors">Privacy Policy</Link>
-          <Link to="/terms" className="hover:text-brand-ltPurple transition-colors">Terms of Service</Link>
+          <NoScrollLink to="/privacy" className="hover:text-brand-ltPurple transition-colors">Privacy Policy</NoScrollLink>
+          <NoScrollLink to="/terms" className="hover:text-brand-ltPurple transition-colors">Terms of Service</NoScrollLink>
         </div>
         
         <div className="text-gray-500 text-sm">

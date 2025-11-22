@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Heart, Users, Sun, ArrowRight } from 'lucide-react';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
 
@@ -68,9 +69,9 @@ const Services = () => {
                 </div>
                 <h3 className="font-serif text-2xl font-bold text-brand-charcoal mb-4">{service.title}</h3>
                 <p className="text-gray-600 mb-6">{service.description}</p>
-                <a href="#contact" className={`inline-flex items-center ${service.textColor} font-semibold hover:brightness-75 transition-all duration-300 group-hover:gap-2`}>
+                <Link to="/contact" className={`inline-flex items-center ${service.textColor} font-semibold hover:brightness-75 transition-all duration-300 group-hover:gap-2`}>
                   Learn More <ArrowRight className="w-4 h-4 ml-2 transition-transform duration-300 group-hover:translate-x-1" />
-                </a>
+                </Link>
               </div>
             </div>
           ))}

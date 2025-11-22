@@ -29,6 +29,11 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ filename }) => {
         
         const text = await response.text();
         setContent(text);
+        
+        // Ensure we're still at the top after content loads
+        window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to load markdown file');
         console.error('Error loading markdown:', err);

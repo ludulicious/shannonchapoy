@@ -1,42 +1,80 @@
 # Privacy Policy
 
-Last updated: [Date]
+**Last Updated: November 22, 2025**
+Shannon Chapoy respects your privacy and is committed to protecting your personal information. This Privacy Policy explains how we collect, use, disclose, and safeguard your data when you visit our website [shannonchapoy.com](https://shannonchapoy.com) (the "Website") or engage our life coaching services.
 
-## Introduction
+By using the Website or our services, you agree to the collection and use of information in accordance with this Privacy Policy.
 
-This Privacy Policy describes how we collect, use, and protect your personal information when you visit our website.
+## 1. Information We Collect
 
-## Information We Collect
+### a) Information You Provide Directly
+- Name, email address, phone number, and postal address
+- Payment information (processed securely through third-party payment processors – we do not store full credit card details)
+- Information you share during coaching sessions (notes, goals, personal circumstances, etc.)
+- Any other information you voluntarily submit via forms, emails, or during sessions
 
-We may collect the following types of information:
+### b) Automatically Collected Information
+- IP address, browser type, device information, and operating system
+- Pages visited, time spent on the Website, and referring URLs
+- Cookies and similar tracking technologies (see Section 6)
 
-- Personal information you provide directly (name, email address, etc.)
-- Information automatically collected when you visit our site
-- Cookies and similar tracking technologies
+## 2. How We Use Your Information
+We use your information to:
+- Schedule and deliver coaching sessions
+- Process payments and send invoices/receipts
+- Communicate with you (session reminders, follow-ups, newsletters if you opt in)
+- Improve our Website and services
+- Comply with legal obligations
 
-## How We Use Your Information
+## 3. Coaching Session Content
+Information shared during coaching sessions is treated as strictly confidential and used solely to provide you with effective coaching. Session notes are stored securely and accessible only to your coach.
 
-We use the information we collect to:
+## 4. Sharing Your Information
+We do not sell, trade, or rent your personal information to third parties.  
+We may share your information only in the following circumstances:
+- With trusted service providers (e.g., scheduling tools like Calendly/Acuity, payment processors like Stripe/PayPal, email services like Mailchimp) who are contractually obligated to protect your data
+- When required by law, regulation, or legal process (e.g., court order)
+- To protect the rights, safety, or property of ourselves, you, or others
 
-- Provide and improve our services
-- Communicate with you
-- Respond to your inquiries
-- Analyze website usage
+## 5. Data Security
+We use industry-standard security measures (SSL encryption, password protection, secure cloud storage) to protect your information. However, no method of transmission over the internet or electronic storage is 100% secure. While we strive to protect your data, we cannot guarantee absolute security.
 
-## Data Protection
+## 6. Cookies & Tracking Technologies
+- We use essential cookies to enable core Website functionality (e.g., booking forms).
+- We use analytics tools (Google Analytics, Meta Pixel, etc.) to understand how visitors use the Website.
+- You can disable cookies in your browser settings, but this may affect Website functionality.
 
-We implement appropriate security measures to protect your personal information.
+## 7. Third-Party Links
+Our Website may contain links to external sites (e.g., payment processors, scheduling tools). We are not responsible for the privacy practices of those websites. We encourage you to review their privacy policies.
 
-## Your Rights
+## 8. Your Rights & Choices
+Depending on your location, you may have the right to:
+- Access, correct, or delete your personal information
+- Object to or restrict certain processing
+- Withdraw consent (where processing is based on consent)
+- Request a copy of your data
 
-You have the right to:
+To exercise these rights, contact us at [info@shannonchapoy.com](mailto:info@shannonchapoy.com). We will respond within a reasonable timeframe (typically within 30 days).
 
-- Access your personal data
-- Request correction of inaccurate data
-- Request deletion of your data
-- Object to processing of your data
+## 9. Data Retention
+- We retain personal data only as long as necessary to provide services and fulfill the purposes outlined in this policy.
+- Coaching notes are typically retained for [e.g., 3–7 years] for professional continuity and legal requirements, then securely deleted.
+- Financial records are kept as required by tax law.
 
-## Contact Us
+## 10. International Data Transfers
+If you are located outside The Netherlands, your information may be transferred to and processed in The Netherlands. By using our services, you consent to this transfer.
 
-If you have questions about this Privacy Policy, please contact us.
+## 11. Children’s Privacy
+Our services are not intended for individuals under 18. We do not knowingly collect personal information from children. If we become aware that a child has provided personal data, we will delete it promptly.
 
+## 12. Changes to This Privacy Policy
+We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated "Last Updated" date. Continued use of the Website or services after changes constitutes acceptance of the revised policy.
+
+## 13. Contact Us
+If you have questions or concerns about this Privacy Policy or our data practices, please send a email to [info@shannonchapoy.com](mailto:info@shannonchapoy.com] )
+
+---
+
+Thank you for trusting us with your personal information.
+
+© [2025] Shannon Chapoy. All rights reserved.

@@ -46,10 +46,7 @@
       }
     </script>
     <style>
-      /* Smooth scrolling */
-      html {
-        scroll-behavior: smooth;
-      }
+      /* Smooth scrolling removed - handled programmatically for hash links only */
       /* Custom styles for specific animations if needed */
       .fade-in-up {
         animation: fadeInUp 1s ease-out;
@@ -79,6 +76,28 @@
 </head>
   <body>
     <div id="root"></div>
+    <script>
+      // Disable scroll restoration immediately, before React loads
+      if ('scrollRestoration' in window.history) {
+        window.history.scrollRestoration = 'manual';
+      }
+      
+      // Reset scroll position immediately
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      if (document.body) {
+        document.body.scrollTop = 0;
+      }
+      
+      // Also reset on DOMContentLoaded
+      document.addEventListener('DOMContentLoaded', function() {
+        window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        if (document.body) {
+          document.body.scrollTop = 0;
+        }
+      });
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

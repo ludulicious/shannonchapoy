@@ -1,36 +1,71 @@
-# Terms and Conditions
+# Terms of Service
+**Last Updated: November 22, 2025**
 
-Last updated: [Date]
+Welcome to Shannon Chapoy, a professional life coaching service provided through [shannonchapoy.com](https://shannonchapoy.com) (the "Website").
 
-## Acceptance of Terms
+By accessing or using this Website and/or engaging our life coaching services, you agree to be bound by these Terms and Conditions ("Terms"). If you do not agree with any part of these Terms, you must not use the Website or our services.
 
-By accessing and using this website, you accept and agree to be bound by the terms and provision of this agreement.
+## 1. Nature of Services
+- We provide life coaching, personal development guidance, goal-setting support, and related services ("Services").
+- Life coaching is not psychotherapy, medical advice, financial advice, legal advice, or any form of regulated professional counseling.
+- You acknowledge that coaching results are not guaranteed and depend entirely on your own effort, commitment, and circumstances.
 
-## Use License
+## 2. Eligibility
+You must be at least 18 years old (or the age of majority in your jurisdiction) to use our Services. By using the Website or engaging our Services, you represent that you meet this requirement.
 
-Permission is granted to temporarily access the materials on this website for personal, non-commercial transitory viewing only.
+## 3. Booking & Payment
+- Sessions are booked and paid for in advance via the booking system on the Website.
+- All fees are listed in EUR and are non-refundable except as expressly stated in our Cancellation & Refund Policy (Section 6).
+- We reserve the right to change pricing at any time. Changes will not affect bookings already paid for.
 
-## Disclaimer
+## 4. Scheduling and Attendance
+- You are responsible for attending sessions at the scheduled time.
+- Rescheduling is permitted with at least 24–48 hours’ notice (see booking confirmation email for exact policy).
+- No-shows or late cancellations may result in forfeiture of the session and fee.
 
-The materials on this website are provided on an 'as is' basis. We make no warranties, expressed or implied, and hereby disclaim and negate all other warranties.
+## 5. Session Format
+- Sessions are conducted via [Zoom, Google Meet, phone, or in-person as specified].
+- Sessions may be recorded only with the explicit prior consent of both parties. Recordings (if any) are for your personal use only and must not be shared publicly.
 
-## Limitations
+## 6. Cancellation & Refund Policy
+- Cancellations or rescheduling requests made more than [24/48] hours before the session: full credit toward a future session or refund (minus any payment processor fees).
+- Less than [24/48] hours’ notice or no-show: no refund or credit.
+- Packages expire [X months/years] from purchase date and are non-refundable after the first session is used.
 
-In no event shall we or our suppliers be liable for any damages arising out of the use or inability to use the materials on this website.
+## 7. Confidentiality
+- We treat all information you share as confidential, except where disclosure is required by law or necessary to prevent serious harm.
+- You agree not to disclose confidential information shared by the coach without prior written consent.
 
-## Accuracy of Materials
+## 8. Intellectual Property
+- All content on the Website, worksheets, materials, and resources provided during coaching remain our intellectual property.
+- You are granted a limited, non-transferable license to use materials for your personal use only. You may not sell, distribute, or reproduce them without written permission.
 
-The materials appearing on this website could include technical, typographical, or photographic errors. We do not warrant that any of the materials on its website are accurate, complete, or current.
+## 9. Disclaimer of Warranties & Limitation of Liability
+- Services are provided "as is" without warranties of any kind.
+- We do not guarantee specific outcomes or results from coaching.
+- To the fullest extent permitted by law, we shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of the Services or Website.
+- Our total liability shall in no event exceed the amount you paid us in the past 12 months.
 
-## Links
+## 10. Termination
+We reserve the right to terminate or suspend your access to the Services or Website at our sole discretion, without notice or liability, for conduct that we believe violates these Terms or is harmful to other users, us, or third parties.
 
-We have not reviewed all of the sites linked to our website and are not responsible for the contents of any such linked site.
+## 11. Governing Law
+These Terms shall be governed by the laws of [Your Country/State, e.g., the State of California, United States], without regard to conflict of law principles.
 
-## Modifications
+## 12. Dispute Resolution
+Any dispute arising from these Terms or the Services shall first be attempted to be resolved through good-faith negotiation. If unresolved, disputes will be handled in the courts of [Your City/County, State].
 
-We may revise these terms of service at any time without notice. By using this website you are agreeing to be bound by the then current version of these terms of service.
+## 13. Changes to Terms
+We may update these Terms from time to time. The updated version will be posted on this page with a revised "Last Updated" date. Continued use of the Website or Services after changes constitutes acceptance of the new Terms.
 
-## Contact Information
+## 14. Contact Information
+If you have any questions about these Terms, please contact us at:  
 
-If you have any questions about these Terms and Conditions, please contact us.
+- [Fill out our contact form](https://shannonchapoy.com/contact)
+- [Send an email](mailto:info@shannonchapoy.com) 
 
+---
+
+By using this Website and/or purchasing our Services, you acknowledge that you have read, understood, and agree to be bound by these Terms and Conditions.
+
+© [Year] Shannon Chapoy. All rights reserved.

@@ -8,7 +8,9 @@ const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
-  const isHomePage = location.pathname === '/';
+  
+  // Check if we're on the home page or any section route
+  const isHomePage = ['/', '/about', '/services', '/philosophy', '/contact'].includes(location.pathname);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,7 +20,7 @@ const Navigation = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // On non-home pages, always show background; on home page, show background when scrolled
+  // On non-home pages, always show background; on home page sections, show background when scrolled
   const shouldShowBackground = !isHomePage || isScrolled;
   
   return (
@@ -30,25 +32,37 @@ const Navigation = () => {
 
         {/* Desktop Menu */}
         <div className="hidden md:flex space-x-8 items-center">
-          {['About', 'Services', 'Philosophy'].map((item) => (
-            <a 
-              key={item} 
-              href={isHomePage ? `#${item.toLowerCase()}` : `/#${item.toLowerCase()}`}
-              className={`text-sm font-medium hover:text-brand-ltPurple transition-colors ${shouldShowBackground ? 'text-brand-charcoal' : 'text-white drop-shadow-sm'}`}
-            >
-              {item}
-            </a>
-          ))}
-          <a 
-            href={isHomePage ? '#contact' : '/#contact'}
+          {['About', 'Services', 'Philosophy'].map((item) => {
+            const itemPath = `/${item.toLowerCase()}`;
+            const isActive = location.pathname === itemPath;
+            return (
+              <Link 
+                key={item} 
+                to={itemPath}
+                className={`text-sm font-medium transition-colors ${
+                  isActive 
+                    ? 'text-brand-seaBlue font-semibold' 
+                    : shouldShowBackground 
+                      ? 'text-brand-charcoal hover:text-brand-ltPurple' 
+                      : 'text-white drop-shadow-sm hover:text-brand-ltPurple'
+                }`}
+              >
+                {item}
+              </Link>
+            );
+          })}
+          <Link 
+            to="/contact"
             className={`px-6 py-2 rounded-full text-sm font-semibold transition-all transform hover:scale-105 ${
-              shouldShowBackground 
-                ? 'bg-brand-dkPurple text-white hover:bg-brand-ltPurple' 
-                : 'bg-white/90 text-brand-dkPurple hover:bg-white'
+              location.pathname === '/contact'
+                ? 'bg-brand-seaBlue text-white hover:bg-brand-seaBlue/90'
+                : shouldShowBackground 
+                  ? 'bg-brand-dkPurple text-white hover:bg-brand-ltPurple' 
+                  : 'bg-white/90 text-brand-dkPurple hover:bg-white'
             }`}
           >
             Let's Talk
-          </a>
+          </Link>
         </div>
 
         {/* Mobile Menu Button */}
@@ -68,16 +82,24 @@ const Navigation = () => {
       {isMobileMenuOpen && (
         <div className="md:hidden bg-white absolute w-full shadow-xl border-t border-gray-100">
           <div className="px-4 pt-2 pb-6 space-y-2">
-            {['About', 'Services', 'Philosophy', 'Contact'].map((item) => (
-              <a 
-                key={item} 
-                href={isHomePage ? `#${item.toLowerCase()}` : `/#${item.toLowerCase()}`}
-                className="block px-3 py-2 text-base font-medium text-brand-charcoal hover:text-brand-ltPurple hover:bg-brand-soft rounded-md"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {item}
-              </a>
-            ))}
+            {['About', 'Services', 'Philosophy', 'Contact'].map((item) => {
+              const itemPath = `/${item.toLowerCase()}`;
+              const isActive = location.pathname === itemPath;
+              return (
+                <Link 
+                  key={item} 
+                  to={itemPath}
+                  className={`block px-3 py-2 text-base font-medium rounded-md transition-colors ${
+                    isActive
+                      ? 'text-brand-seaBlue bg-brand-seaBlue/10 font-semibold'
+                      : 'text-brand-charcoal hover:text-brand-ltPurple hover:bg-brand-soft'
+                  }`}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {item}
+                </Link>
+              );
+            })}
           </div>
         </div>
       )}
