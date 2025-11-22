@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import Navigation from '../Navigation';
 import Hero from '../Hero';
@@ -20,6 +20,9 @@ const Home = () => {
     const homePageRoutes = ['/', '/about', '/services', '/philosophy', '/contact'];
     const isHomePageRoute = homePageRoutes.includes(currentPath);
     const wasHomePageRoute = homePageRoutes.includes(prevPath);
+    const isPageRefresh = prevPath === '';
+    
+    let loadHandler: (() => void) | null = null;
     
     // Only handle scrolling if we're navigating within home page sections
     if (isHomePageRoute) {
@@ -30,35 +33,70 @@ const Home = () => {
         // Navigating to a section
         const sectionId = currentPath.substring(1); // Remove leading "/"
         
-        // If we're coming from another home page section, scroll smoothly
-        // If we're coming from a different page, wait for page transition then scroll
-        const scrollToSection = () => {
+        // Scroll function with retry logic for page refresh
+        const scrollToSection = (retryCount = 0) => {
           const element = document.getElementById(sectionId);
           
           if (element) {
+            // Ensure element is rendered and has dimensions
+            const rect = element.getBoundingClientRect();
+            if (rect.height === 0 && retryCount < 20) {
+              // Element exists but not rendered yet, retry
+              requestAnimationFrame(() => scrollToSection(retryCount + 1));
+              return;
+            }
+            
             const offset = 80; // Account for fixed navigation
-            const elementPosition = element.getBoundingClientRect().top;
+            const elementPosition = rect.top;
             const offsetPosition = elementPosition + window.pageYOffset - offset;
 
             window.scrollTo({
               top: offsetPosition,
-              behavior: wasHomePageRoute ? 'smooth' : 'auto'
+              behavior: wasHomePageRoute && !isPageRefresh ? 'smooth' : 'auto'
             });
+          } else if (retryCount < 20) {
+            // Element not found yet, retry after a short delay
+            requestAnimationFrame(() => scrollToSection(retryCount + 1));
           }
         };
 
-        // If coming from a different page, wait for transition
-        // If navigating within home page, scroll immediately
-        if (wasHomePageRoute) {
+        // On page refresh, wait for DOM and resources to be ready
+        if (isPageRefresh) {
+          // First try after DOM is ready
+          requestAnimationFrame(() => {
+            setTimeout(() => scrollToSection(), 100);
+          });
+          
+          // Also try after window load (images/iframes loaded)
+          loadHandler = () => {
+            scrollToSection();
+          };
+          
+          if (document.readyState === 'complete') {
+            // Already loaded
+            setTimeout(() => scrollToSection(), 300);
+          } else {
+            window.addEventListener('load', loadHandler, { once: true });
+          }
+        } else if (wasHomePageRoute) {
+          // Navigating within home page sections
           setTimeout(scrollToSection, 50);
         } else {
-          setTimeout(scrollToSection, 200); // Wait for page transition
+          // Coming from a different page
+          setTimeout(scrollToSection, 200);
         }
       }
     }
     
     // Update previous path
     prevPathRef.current = currentPath;
+    
+    // Cleanup function
+    return () => {
+      if (loadHandler) {
+        window.removeEventListener('load', loadHandler);
+      }
+    };
   }, [location.pathname]);
 
   return (

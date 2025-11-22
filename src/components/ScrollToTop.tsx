@@ -10,11 +10,13 @@ const ScrollToTop = () => {
     const homePageRoutes = ['/', '/about', '/services', '/philosophy', '/contact'];
     const isHomePageRoute = homePageRoutes.includes(pathname);
     const wasHomePageRoute = homePageRoutes.includes(prevPathnameRef.current);
+    const isInitialLoad = prevPathnameRef.current === '';
     
     // Only scroll to top if:
     // 1. Navigating to a non-home page (privacy, terms, markdown)
     // 2. Navigating from a non-home page to any page
-    if (!isHomePageRoute || !wasHomePageRoute) {
+    // BUT NOT on initial load/refresh when on a home page section route (let Home component handle scrolling)
+    if ((!isHomePageRoute || !wasHomePageRoute) && !(isInitialLoad && isHomePageRoute && pathname !== '/')) {
       // Add class to prevent visible scrolling during transition
       document.documentElement.classList.add('no-scroll-transition');
       
@@ -40,9 +42,11 @@ const ScrollToTop = () => {
     const homePageRoutes = ['/', '/about', '/services', '/philosophy', '/contact'];
     const isHomePageRoute = homePageRoutes.includes(pathname);
     const wasHomePageRoute = homePageRoutes.includes(prevPathnameRef.current);
+    const isInitialLoad = prevPathnameRef.current === '';
     
     // Only enforce scroll position for non-home pages
-    if (!isHomePageRoute || !wasHomePageRoute) {
+    // BUT NOT on initial load/refresh when on a home page section route (let Home component handle scrolling)
+    if ((!isHomePageRoute || !wasHomePageRoute) && !(isInitialLoad && isHomePageRoute && pathname !== '/')) {
       // Multiple checks to catch any delayed scrolls
       const checkAndReset = () => {
         if (window.scrollY !== 0 || document.documentElement.scrollTop !== 0 || document.body.scrollTop !== 0) {
