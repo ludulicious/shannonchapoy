@@ -23,7 +23,11 @@ const Home = () => {
     
     // Only handle scrolling if we're navigating within home page sections
     if (isHomePageRoute) {
-      if (currentPath !== '/') {
+      if (currentPath === '/') {
+        // Navigating to root home page - always scroll to top
+        window.scrollTo({ top: 0, behavior: wasHomePageRoute ? 'smooth' : 'auto' });
+      } else {
+        // Navigating to a section
         const sectionId = currentPath.substring(1); // Remove leading "/"
         
         // If we're coming from another home page section, scroll smoothly
@@ -50,9 +54,6 @@ const Home = () => {
         } else {
           setTimeout(scrollToSection, 200); // Wait for page transition
         }
-      } else if (currentPath === '/' && !wasHomePageRoute) {
-        // Coming from a different page to home, scroll to top
-        window.scrollTo({ top: 0, behavior: 'auto' });
       }
     }
     
