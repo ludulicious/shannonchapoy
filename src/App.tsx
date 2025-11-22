@@ -1,24 +1,19 @@
 
 import React from 'react';
-import Navigation from './components/Navigation';
-import Hero from './components/Hero';
-import About from './components/About';
-import Services from './components/Services';
-import Philosophy from './components/Philosophy';
-import Contact from './components/Contact';
-import Footer from './components/Footer';
+import { Routes, Route } from 'react-router-dom';
+import Home from './components/pages/Home';
+import Privacy from './components/pages/Privacy';
+import Terms from './components/pages/Terms';
+import MarkdownPage from './components/pages/MarkdownPage';
 
 const App = () => {
   return (
-    <div className="antialiased text-brand-charcoal bg-brand-soft">
-      <Navigation />
-      <Hero />
-      <About />
-      <Services />
-      <Philosophy />
-      <Contact />
-      <Footer />
-    </div>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/privacy" element={<Privacy />} />
+      <Route path="/terms" element={<Terms />} />
+      <Route path="/markdown/:filename?" element={<MarkdownPage />} />
+    </Routes>
   );
 };
 
