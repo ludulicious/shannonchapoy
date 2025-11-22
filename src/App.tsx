@@ -5,6 +5,7 @@ import Home from './components/pages/Home';
 import Privacy from './components/pages/Privacy';
 import Terms from './components/pages/Terms';
 import MarkdownPage from './components/pages/MarkdownPage';
+import NotFound from './components/pages/NotFound';
 import ScrollToTop from './components/ScrollToTop';
 
 const App = () => {
@@ -20,6 +21,7 @@ const App = () => {
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/terms" element={<Terms />} />
         <Route path="/markdown/:filename?" element={<MarkdownPage />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </>
   );

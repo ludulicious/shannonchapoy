@@ -61,13 +61,15 @@ const Home = () => {
   }, [location.pathname]);
 
   return (
-    <div className="antialiased text-brand-charcoal bg-brand-soft">
+    <div className="antialiased text-brand-charcoal bg-brand-soft min-h-screen flex flex-col">
       <Navigation />
-      <Hero />
-      <About />
-      <Services />
-      <Philosophy />
-      <Contact />
+      <div className="flex-1">
+        <Hero />
+        <About />
+        <Services />
+        <Philosophy />
+        <Contact />
+      </div>
       <Footer />
     </div>
   );

@@ -20,9 +20,9 @@ const Terms = () => {
   }, []);
 
   return (
-    <div className={`antialiased text-brand-charcoal bg-brand-soft min-h-screen transition-opacity duration-300 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+    <div className={`antialiased text-brand-charcoal bg-brand-soft min-h-screen flex flex-col transition-opacity duration-300 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
       <Navigation />
-      <div className="pt-24 pb-16">
+      <div className="flex-1 pt-24 pb-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <MarkdownRenderer filename="terms.md" />
         </div>
