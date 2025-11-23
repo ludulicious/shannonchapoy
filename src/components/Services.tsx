@@ -42,8 +42,9 @@ const Services = () => {
           className={`transition-all duration-1000 ${headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
             }`}
         >
-          <h2 className="font-serif text-4xl font-bold text-brand-dkPurple mb-4">How I Can Help You</h2>
-          <p className="text-brand-charcoal max-w-2xl mx-auto mb-16">Choose the path that best fits your journey. Whether you prefer individual attention or group energy, I have a program for you.</p>
+           <h2 className="font-serif text-2xl font-bold text-brand-charcoal mb-4">Ways I support you</h2>
+          <h3 className="font-serif text-3xl font-bold text-brand-dkPurple mb-4">Choose the path that best fits your journey</h3>
+          <p className="text-brand-charcoal max-w-2xl mx-auto mb-16">Whether you prefer a small group support and transformation journey or a private deeper love journey, I have a program for you.</p>
         </div>
 
         <div
