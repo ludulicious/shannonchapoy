@@ -1,13 +1,13 @@
 # Terms of Service
 **Last Updated: November 22, 2025**
 
-Welcome to Shannon Chapoy, a professional life coaching service provided through [shannonchapoy.com](https://shannonchapoy.com) (the "Website").
+Welcome to Shannon Chapoy, a professional love coaching service provided through [shannonchapoy.com](https://shannonchapoy.com) (the "Website").
 
-By accessing or using this Website and/or engaging our life coaching services, you agree to be bound by these Terms and Conditions ("Terms"). If you do not agree with any part of these Terms, you must not use the Website or our services.
+By accessing or using this Website and/or engaging our love coaching services, you agree to be bound by these Terms and Conditions ("Terms"). If you do not agree with any part of these Terms, you must not use the Website or our services.
 
 ## 1. Nature of Services
-- We provide life coaching, personal development guidance, goal-setting support, and related services ("Services").
-- Life coaching is not psychotherapy, medical advice, financial advice, legal advice, or any form of regulated professional counseling.
+- We provide love coaching, personal development guidance, goal-setting support, and related services ("Services").
+- Love Coaching is not psychotherapy, medical advice, financial advice, legal advice, or any form of regulated professional counseling.
 - You acknowledge that coaching results are not guaranteed and depend entirely on your own effort, commitment, and circumstances.
 
 ## 2. Eligibility

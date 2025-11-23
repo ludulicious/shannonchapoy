@@ -61,7 +61,7 @@ const Navigation = () => {
                   : 'bg-white/90 text-brand-dkPurple hover:bg-white'
             }`}
           >
-            Let's Talk
+            Start Your Journey
           </Link>
         </div>
 

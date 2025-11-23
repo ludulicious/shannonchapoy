@@ -69,7 +69,7 @@ const About = () => {
             <p className={`text-lg text-brand-charcoal mb-8 leading-relaxed transition-all duration-1000 delay-600 ${
               contentVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
             }`}>
-              With years of experience in life coaching and wellness, I specialize in helping women break free from limiting beliefs, discover their true purpose, and create a life that feels as good on the inside as it looks on the outside.
+              With years of experience in love coaching and wellness, I specialize in helping women break free from limiting beliefs, discover their true purpose, and create a life that feels as good on the inside as it looks on the outside.
             </p>
             
             <div className={`grid grid-cols-2 gap-6 transition-all duration-1000 delay-700 ${

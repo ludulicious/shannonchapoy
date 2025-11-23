@@ -1,7 +1,7 @@
 # Privacy Policy
 
 **Last Updated: November 22, 2025**
-Shannon Chapoy respects your privacy and is committed to protecting your personal information. This Privacy Policy explains how we collect, use, disclose, and safeguard your data when you visit our website [shannonchapoy.com](https://shannonchapoy.com) (the "Website") or engage our life coaching services.
+Shannon Chapoy respects your privacy and is committed to protecting your personal information. This Privacy Policy explains how we collect, use, disclose, and safeguard your data when you visit our website [shannonchapoy.com](https://shannonchapoy.com) (the "Website") or engage our love coaching services.
 
 By using the Website or our services, you agree to the collection and use of information in accordance with this Privacy Policy.
 
