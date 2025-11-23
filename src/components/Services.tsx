@@ -1,5 +1,4 @@
 
-import React from 'react';
 import { Link } from 'react-router-dom';
 import { Heart, Users, Sun, ArrowRight } from 'lucide-react';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
@@ -8,11 +7,11 @@ const Services = () => {
   const services = [
     {
       title: "Peace & Joy Circle",
-      description: "Join one of our PJ Circles, a community of like-minded women who are committed to living a life of peace and joy. Share experiences, grow together, and build lasting connections.",
+      description: "Start your journey and join one of our PJ Circles, a community of like-minded women who are committed to living a life of peace and joy. Share experiences, grow together, and build lasting connections.",
       icon: <Users className="w-8 h-8 text-white" />,
       color: "bg-brand-seaBlue",
       textColor: "text-brand-seaBlue",
-      link: "/contact"
+      link: "/start-your-journey"
     }, 
     {
       title: "1:1 Love Coaching",
@@ -28,7 +27,7 @@ const Services = () => {
       icon: <Sun className="w-8 h-8 text-white" />,
       color: "bg-brand-skyBlue",
       textColor: "text-brand-skyBlue",
-      link: "/contact"
+      link: "/art-of-dating-yourself"
     },
   ];
 

@@ -32,7 +32,7 @@ const Navigation = () => {
 
         {/* Desktop Menu */}
         <div className="hidden md:flex space-x-8 items-center">
-          {['About', 'Services', 'Philosophy'].map((item) => {
+          {['About', 'Services', 'Philosophy', 'Contact'].map((item) => {
             const itemPath = `/${item.toLowerCase()}`;
             const isActive = location.pathname === itemPath;
             return (
@@ -52,9 +52,9 @@ const Navigation = () => {
             );
           })}
           <Link 
-            to="/contact"
+            to="/start-your-journey"
             className={`px-6 py-2 rounded-full text-sm font-semibold transition-all transform hover:scale-105 ${
-              location.pathname === '/contact'
+              location.pathname === '/start-your-journey'
                 ? 'bg-brand-seaBlue text-white hover:bg-brand-seaBlue/90'
                 : shouldShowBackground 
                   ? 'bg-brand-dkPurple text-white hover:bg-brand-ltPurple' 
