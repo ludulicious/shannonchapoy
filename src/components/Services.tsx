@@ -11,21 +11,24 @@ const Services = () => {
       description: "Join one of our PJ Circles, a community of like-minded women who are committed to living a life of peace and joy. Share experiences, grow together, and build lasting connections.",
       icon: <Users className="w-8 h-8 text-white" />,
       color: "bg-brand-seaBlue",
-      textColor: "text-brand-seaBlue"
+      textColor: "text-brand-seaBlue",
+      link: "/contact"
     }, 
     {
       title: "1:1 Love Coaching",
       description: "Personalized guidance tailored to your unique goals and challenges. We'll work together to unlock your potential.",
       icon: <Heart className="w-8 h-8 text-white" />,
       color: "bg-brand-ltPurple",
-      textColor: "text-brand-ltPurple"
+      textColor: "text-brand-ltPurple",
+      link: "/one-on-one-love-coaching"
     },
     {
       title: "The Art of Dating Yourself",
       description: "A series of workshops designed to help you date yourself better. We'll cover topics like self-love, self-care, and self-improvement.",
       icon: <Sun className="w-8 h-8 text-white" />,
       color: "bg-brand-skyBlue",
-      textColor: "text-brand-skyBlue"
+      textColor: "text-brand-skyBlue",
+      link: "/contact"
     },
   ];
 
@@ -49,9 +52,10 @@ const Services = () => {
           className="grid md:grid-cols-3 gap-8"
         >
           {services.map((service, index) => (
-            <div
+            <Link
               key={index}
-              className={`group bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 border border-gray-100 hover:-translate-y-2 flex flex-col ${cardsVisible
+              to={service.link}
+              className={`group bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 border border-gray-100 hover:-translate-y-2 flex flex-col block ${cardsVisible
                 ? 'opacity-100 translate-y-0 scale-100'
                 : 'opacity-0 translate-y-10 scale-95'
                 }`}
@@ -67,11 +71,11 @@ const Services = () => {
                 </div>
                 <h3 className="font-serif text-2xl font-bold text-brand-charcoal mb-4">{service.title}</h3>
                 <p className="text-gray-600 mb-6 flex-grow">{service.description}</p>
-                <Link to="/contact" className={`inline-flex items-center ${service.textColor} font-semibold hover:brightness-75 transition-all duration-300 group-hover:gap-2 mt-auto`}>
+                <div className={`inline-flex items-center ${service.textColor} font-semibold hover:brightness-75 transition-all duration-300 group-hover:gap-2 mt-auto`}>
                   Learn More <ArrowRight className="w-4 h-4 ml-2 transition-transform duration-300 group-hover:translate-x-1" />
-                </Link>
+                </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
