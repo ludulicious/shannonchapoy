@@ -36,18 +36,17 @@ const OneOnOneLoveCoaching = () => {
         </div>
 
         {/* Markdown Content Section */}
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
-          <MarkdownRenderer filename="one-on-one-love-coaching-pt1.md" />
-        </div>
+        <p className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
+          Transform your love life with personalized, one-on-one coaching sessions designed to help you find and maintain meaningful relationships.
+        </p>
 
         {/* Contact Form Section */}
         <section className="bg-brand-soft">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div 
+            <div
               ref={elementRef}
-              className={`bg-white rounded-3xl shadow-xl overflow-hidden flex flex-col md:flex-row transition-all duration-1000 ${
-                formVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-10 scale-95'
-              }`}
+              className={`bg-white rounded-3xl shadow-xl overflow-hidden flex flex-col md:flex-row transition-all duration-1000 ${formVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-10 scale-95'
+                }`}
             >
               <div className="bg-brand-ltPurple p-10 md:w-2/5 text-white flex flex-col justify-between">
                 <div>
@@ -60,7 +59,7 @@ const OneOnOneLoveCoaching = () => {
               <div className="md:w-4/5">
                 <iframe
                   src="https://actions.shannonchapoy.com/widget/form/5fdGTG9XZ2bT8OBLidJk"
-                  style={{width: '100%', height: '100%', border: 'none', borderRadius: '4px'}}
+                  style={{ width: '100%', height: '100%', border: 'none', borderRadius: '4px' }}
                   id="inline-5fdGTG9XZ2bT8OBLidJk"
                   data-layout="{'id':'INLINE'}"
                   data-trigger-type="alwaysShow"
@@ -81,7 +80,7 @@ const OneOnOneLoveCoaching = () => {
           </div>
         </section>
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
-          <MarkdownRenderer filename="one-on-one-love-coaching-pt2.md" />
+          <MarkdownRenderer filename="one-on-one-love-coaching.md" />
         </div>
       </div>
       <Footer />
