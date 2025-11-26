@@ -11,7 +11,7 @@ const Services = () => {
       icon: <Users className="w-8 h-8 text-white" />,
       color: "bg-brand-seaBlue",
       textColor: "text-brand-seaBlue",
-      link: "/start-your-journey"
+      link: "/pj-circle"
     }, 
     {
       title: "1:1 Love Coaching",

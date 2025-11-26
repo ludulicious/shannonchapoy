@@ -31,14 +31,15 @@ const PjCircle = () => {
                         <div className="w-16 h-16 rounded-full flex items-center justify-center shadow-md bg-brand-seaBlue flex-shrink-0">
                             <Users className="w-8 h-8 text-white" />
                         </div>
-                        <h1 className="font-serif text-4xl md:text-5xl font-bold text-brand-seaBlue">Start Your Journey with a PJ Circle</h1>
+                        <h1 className="font-serif text-4xl md:text-5xl font-bold text-brand-seaBlue">Free first session inside a Peace & Joy Circle</h1>
+
                     </div>
                 </div>
 
                 {/* Markdown Content Section */}
-                <p className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
-                    Join one of our Peace & Joy Circles, a community of like-minded women who are committed to living a life of peace and joy. Share experiences, grow together, and build lasting connections.
-                </p>
+                <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
+                    <MarkdownRenderer filename="pj-circle-intro.md" />
+                </div>
 
                 {/* Contact Form Section */}
                 <section className="bg-brand-soft">
@@ -52,7 +53,7 @@ const PjCircle = () => {
                                 <div>
                                     <div>
                                         <h3 className="font-serif text-3xl font-bold mb-6">Start Your Journey</h3>
-                                        <p className="text-white/80 mb-8">Ready to start your journey? Sign up for our PJ Circles and start your transformation today.</p>
+                                        <p className="text-white/80 mb-8">Ready to start your journey? <br/> <br/> Sign up for a free first session and start your transformation today.</p>
                                     </div>
                                 </div>
                             </div>
