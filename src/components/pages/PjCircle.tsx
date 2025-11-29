@@ -53,13 +53,6 @@ const PjCircle = () => {
                                 <div>
                                     <div>
                                         <h3 className="font-serif text-3xl font-bold mb-6">Start Your Journey</h3>
-                                        <div className="mb-6">
-                                            <img 
-                                                src="/shannon-cropped.png" 
-                                                alt="Shannon Chapoy" 
-                                                className="rounded-lg shadow-lg w-full max-w-xs mx-auto object-cover"
-                                            />
-                                        </div>
                                         <p className="text-white/80 mb-8">Ready to start your journey? <br/> <br/> Sign up for a free first session and start your transformation today.</p>
                                     </div>
                                 </div>

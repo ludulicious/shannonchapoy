@@ -1,60 +1,93 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Shannon Chapoy Website
 
-# Run and deploy your AI Studio app
+Personal website for Shannon Chapoy built with Nuxt 4, Nuxt Content, and Tailwind CSS.
 
-This contains everything you need to run your app locally.
+## Tech Stack
 
-View your app in AI Studio: https://ai.studio/apps/drive/1MLtqK6_L5m1Tgs4L8FatzN2wp3RhjdiU
+- **Nuxt 4** - Vue.js framework with modern app directory structure
+- **Nuxt Content** - Markdown content management
+- **Tailwind CSS** - Utility-first CSS framework
+- **TypeScript** - Type safety
+- **Lucide Vue Next** - Icon library
 
 ## Run Locally
 
-**Prerequisites:**  Node.js
+**Prerequisites:** Node.js 20+
 
 1. Install dependencies:
    ```bash
    npm install
    ```
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key (optional)
-3. Run the app:
+
+2. Run the development server:
    ```bash
    npm run dev
    ```
 
-## Deploy to GitHub Pages
+3. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-This project is configured for automatic deployment to GitHub Pages using GitHub Actions.
+## Build for Production
 
-### Setup Instructions:
-
-1. **Push your code to GitHub:**
-   ```bash
-   git add .
-   git commit -m "Initial commit"
-   git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
-   git push -u origin master
-   ```
-
-2. **Enable GitHub Pages:**
-   - Go to your repository on GitHub
-   - Navigate to **Settings** → **Pages**
-   - Under **Source**, select **GitHub Actions**
-   - Save the settings
-
-3. **Automatic Deployment:**
-   - The workflow will automatically deploy when you push to the `master` branch
-   - You can also manually trigger it from the **Actions** tab → **Deploy to GitHub Pages** → **Run workflow**
-
-4. **Your site will be available at:**
-   - Project pages: `https://YOUR_USERNAME.github.io/YOUR_REPO_NAME/`
-   - User/Org pages (if repo is `username.github.io`): `https://YOUR_USERNAME.github.io/`
-
-### Manual Build:
-
-To build locally for testing:
 ```bash
 npm run build
 ```
 
-The built files will be in the `dist/` folder.
+The built files will be in the `.output/` folder.
+
+## Docker Deployment
+
+### Build Docker Image
+
+```bash
+docker build -t shannon-chapoy .
+```
+
+### Run with Docker
+
+```bash
+docker run -p 3000:3000 shannon-chapoy
+```
+
+### Using Docker Compose
+
+```bash
+docker-compose up
+```
+
+The application will be available at [http://localhost:3000](http://localhost:3000)
+
+## Project Structure (Nuxt 4)
+
+Nuxt 4 uses a preferred folder structure with the `app/` directory:
+
+```
+├── app/              # Main application directory
+│   ├── assets/       # CSS and static assets
+│   ├── components/   # Vue components (auto-imported)
+│   ├── composables/  # Vue composables (auto-imported)
+│   ├── layouts/      # Layout components
+│   ├── pages/        # File-based routing
+│   ├── plugins/      # Vue plugins
+│   ├── utils/        # Utility functions
+│   └── app.vue       # Root component
+├── server/           # Server-side code
+├── shared/           # Shared code between client and server
+├── content/          # Markdown content files (Nuxt Content)
+├── public/           # Static files (favicons, images)
+└── nuxt.config.ts    # Nuxt configuration
+```
+
+## Content Management
+
+Markdown files in the `content/` directory are automatically available via Nuxt Content. Use the `<ContentDoc>` component to render markdown content.
+
+## Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run generate` - Generate static site
+- `npm run preview` - Preview production build
+
+## Migration Notes
+
+This project has been migrated from React to Nuxt 4 using the preferred folder structure. All components, composables, layouts, and pages are organized within the `app/` directory for better maintainability and scalability.

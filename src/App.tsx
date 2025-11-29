@@ -25,7 +25,7 @@ const App = () => {
         <Route path="/terms" element={<Terms />} />
         <Route path="/one-on-one-love-coaching" element={<OneOnOneLoveCoaching />} />
         <Route path="/art-of-dating-yourself" element={<ArtOfDatingYourself />} />
-        <Route path="/pj-circle" element={<PjCircle />} />
+        <Route path="/start-your-journey" element={<PjCircle />} />
         <Route path="/markdown/:filename?" element={<MarkdownPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
