@@ -59,7 +59,16 @@
       </div>
     </section>
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
-      <ContentDoc path="/art-of-dating-yourself" />
+      <div v-if="contentPending" class="flex justify-center items-center py-12">
+        <div class="text-brand-charcoal">Loading...</div>
+      </div>
+      <div v-else-if="contentError" class="bg-red-50 border border-red-200 rounded-lg p-4">
+        <h2 class="text-red-800 font-semibold mb-2">Error loading content</h2>
+        <p class="text-red-600">{{ contentError }}</p>
+      </div>
+      <article v-else-if="contentData" class="prose prose-lg max-w-none">
+        <ContentRenderer :value="contentData" />
+      </article>
     </div>
   </div>
 </template>
@@ -69,6 +78,10 @@ import { Sun } from 'lucide-vue-next'
 
 const isVisible = ref(false)
 const { elementRef, isVisible: formVisible } = useScrollAnimation(0.2)
+
+const { data: contentData, pending: contentPending, error: contentError } = await useAsyncData('content-art-of-dating', () => 
+  queryCollection('content').path('/art-of-dating-yourself').first()
+)
 
 useHead({
   title: 'The Art of Dating Yourself - Shannon Chapoy'
@@ -83,4 +96,3 @@ onMounted(() => {
   }
 })
 </script>
-

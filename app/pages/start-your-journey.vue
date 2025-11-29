@@ -12,7 +12,16 @@
 
     <!-- Markdown Content Section -->
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
-      <ContentDoc path="/pj-circle-intro" />
+      <div v-if="introPending" class="flex justify-center items-center py-12">
+        <div class="text-brand-charcoal">Loading...</div>
+      </div>
+      <div v-else-if="introError" class="bg-red-50 border border-red-200 rounded-lg p-4">
+        <h2 class="text-red-800 font-semibold mb-2">Error loading content</h2>
+        <p class="text-red-600">{{ introError }}</p>
+      </div>
+      <article v-else-if="introData" class="prose prose-lg max-w-none">
+        <ContentRenderer :value="introData" />
+      </article>
     </div>
 
     <!-- Contact Form Section -->
@@ -58,7 +67,16 @@
       </div>
     </section>
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
-      <ContentDoc path="/pj-circle" />
+      <div v-if="contentPending" class="flex justify-center items-center py-12">
+        <div class="text-brand-charcoal">Loading...</div>
+      </div>
+      <div v-else-if="contentError" class="bg-red-50 border border-red-200 rounded-lg p-4">
+        <h2 class="text-red-800 font-semibold mb-2">Error loading content</h2>
+        <p class="text-red-600">{{ contentError }}</p>
+      </div>
+      <article v-else-if="contentData" class="prose prose-lg max-w-none">
+        <ContentRenderer :value="contentData" />
+      </article>
     </div>
   </div>
 </template>
@@ -68,6 +86,14 @@ import { Users } from 'lucide-vue-next'
 
 const isVisible = ref(false)
 const { elementRef, isVisible: formVisible } = useScrollAnimation(0.2)
+
+const { data: introData, pending: introPending, error: introError } = await useAsyncData('content-pj-intro', () => 
+  queryCollection('content').path('/pj-circle-intro').first()
+)
+
+const { data: contentData, pending: contentPending, error: contentError } = await useAsyncData('content-pj-circle', () => 
+  queryCollection('content').path('/pj-circle').first()
+)
 
 useHead({
   title: 'Start Your Journey - Shannon Chapoy'
@@ -82,4 +108,3 @@ onMounted(() => {
   }
 })
 </script>
-
