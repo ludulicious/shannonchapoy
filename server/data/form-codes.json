@@ -1,0 +1,27 @@
+[
+  {
+    "code": "EXAMPLE123",
+    "validFrom": "2025-01-01",
+    "validUntil": "2025-12-31",
+    "formType": "pj-circle"
+  },
+  {
+    "code": "SAMPLE456",
+    "validFrom": "2025-01-01",
+    "validUntil": "2025-12-31",
+    "formType": "one-on-one-coaching"
+  },
+  {
+    "code": "DEMO789",
+    "validFrom": "2025-01-01",
+    "validUntil": "2025-12-31",
+    "formType": "art-of-dating-yourself"
+  },
+  {
+    "code": "TEST321",
+    "validFrom": "2025-11-30",
+    "validUntil": "2025-12-31",
+    "formType": "contact"
+  }
+]
+

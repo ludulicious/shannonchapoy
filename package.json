@@ -14,8 +14,10 @@
     "@nuxt/content": "^3.8.2",
     "@nuxtjs/tailwindcss": "^6.12.0",
     "better-sqlite3": "^12.5.0",
+    "date-fns": "^4.1.0",
     "lucide-vue-next": "^0.460.0",
-    "nuxt": "^4.0.0"
+    "nuxt": "^4.0.0",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",
