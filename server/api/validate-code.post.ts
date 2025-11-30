@@ -54,7 +54,7 @@ export default defineEventHandler(
         setResponseStatus(event, 404);
         return {
           valid: false,
-          error: "Invalid code or form type",
+          error: "Code is not valid",
         };
       }
 
