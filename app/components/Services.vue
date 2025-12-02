@@ -59,7 +59,7 @@ const services = [
     iconComponent: Users,
     color: "bg-brand-seaBlue",
     textColor: "text-brand-seaBlue",
-    link: "/start-your-journey"
+    link: "/pj-circle"
   }, 
   {
     title: "1:1 Love Coaching",

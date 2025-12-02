@@ -26,10 +26,10 @@
           {{ item.name }}
         </NuxtLink>
         <NuxtLink 
-          to="/start-your-journey"
+          to="/pj-circle"
           :class="[
             'px-6 py-2 rounded-full text-sm font-semibold transition-all transform hover:scale-105',
-            route.path === '/start-your-journey'
+            route.path === '/pj-circle'
               ? 'bg-brand-seaBlue text-white hover:bg-brand-seaBlue/90'
               : shouldShowBackground
                 ? 'bg-brand-dkPurple text-white hover:bg-brand-ltPurple'

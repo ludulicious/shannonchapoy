@@ -187,7 +187,7 @@ const { data: contentData, pending: contentPending, error: contentError } = awai
 )
 
 useHead({
-  title: 'Start Your Journey - Shannon Chapoy'
+  title: 'PJ Circle - Shannon Chapoy'
 })
 
 onMounted(() => {
@@ -199,3 +199,4 @@ onMounted(() => {
   }
 })
 </script>
+
