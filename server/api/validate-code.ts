@@ -25,29 +25,48 @@ const validateCodeRequestSchema = z.object({
 export default defineEventHandler(
   async (event): Promise<ValidationResponse> => {
     try {
-      // Read and parse request body
-      const body = await readBody(event);
+      const method = getMethod(event);
+      let code: string;
+      let formType: string;
 
-      // Validate request body using Zod
-      const validationResult = validateCodeRequestSchema.safeParse(body);
+      // Handle GET requests (query parameters) and POST requests (request body)
+      if (method === "GET") {
+        const query = getQuery(event);
+        const validationResult = validateCodeRequestSchema.safeParse(query);
 
-      if (!validationResult.success) {
-        setResponseStatus(event, 400);
-        return {
-          valid: false,
-          error: "Validation failed",
-          details: validationResult.error,
-        };
+        if (!validationResult.success) {
+          setResponseStatus(event, 400);
+          return {
+            valid: false,
+            error: "Validation failed",
+            details: validationResult.error,
+          };
+        }
+
+        ({ code, formType } = validationResult.data);
+      } else {
+        // POST or other methods - read from body
+        const body = await readBody(event);
+        const validationResult = validateCodeRequestSchema.safeParse(body);
+
+        if (!validationResult.success) {
+          setResponseStatus(event, 400);
+          return {
+            valid: false,
+            error: "Validation failed",
+            details: validationResult.error,
+          };
+        }
+
+        ({ code, formType } = validationResult.data);
       }
-
-      const { code, formType } = validationResult.data;
 
       // Use imported form codes data (bundled in build)
       const formCodes: FormCode[] = formCodesData;
 
-      // Find matching code
+      // Find matching code (case-insensitive comparison)
       const matchingCode = formCodes.find(
-        (fc) => fc.code === code && fc.formType === formType
+        (fc) => fc.code.toLowerCase() === code.toLowerCase() && fc.formType.toLowerCase() === formType.toLowerCase()
       );
       console.log("matchingCode", matchingCode);
       if (!matchingCode) {
@@ -119,3 +138,4 @@ export default defineEventHandler(
     }
   }
 );
+
