@@ -41,6 +41,7 @@
           </div>
 
           <div class="md:w-4/5">
+            
             <iframe
               src="https://actions.shannonchapoy.com/widget/form/6lN7WgzfJecJjmfppVfx"
               style="width: 100%; height: 100%; border: none; border-radius: 4px;"
@@ -57,6 +58,10 @@
               data-layout-iframe-id="inline-6lN7WgzfJecJjmfppVfx"
               data-form-id="6lN7WgzfJecJjmfppVfx"
               title="Sign up for PJ Circle"
+              allow="autoplay; camera; microphone; geolocation; payment"
+              allowfullscreen
+              referrerpolicy="no-referrer-when-downgrade"
+              loading="lazy"
             >
             </iframe>
           </div>
