@@ -1,0 +1,74 @@
+<script>
+    (function () {
+        console.log('Script loaded immediately'); // This should show first
+        // Target your exact field by its unique name or data-q
+        const voucherInput = document.querySelector('input[data-q="voucher-code"]');
+
+        if (!voucherInput) {
+            console.log('Voucher field not found yet – will retry once');
+            setTimeout(arguments.callee, 1000); // retry once after 1s (covers Vue delay)
+            return;
+        }
+        async function validate() {
+            const code = voucherInput.value.trim();
+            let errorMessage = null;
+            let isValid = false;
+            if (!code) {
+                isValid = true;
+            }
+            else {
+                try {
+                    const response = await fetch('https://shannonchapoy.com/api/validate-code', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            code: code,
+                            formType: 'pj-circle'  // Change only if you have multiple forms
+                        })
+                    });
+
+                    const result = await response.json();
+                    isValid = result.valid;
+                    errorMessage = result.error || 'Invalid or expired voucher code';
+                } catch (err) {
+                    console.error('API error:', err);
+                    isValid = false;
+                    errorMessage = 'Validation failed — please try again';
+                }
+            }
+            // Remove old error if exists
+            const oldError = voucherInput.parentNode.querySelector('.my-voucher-error');
+            if (oldError) oldError.remove();
+
+            if (!isValid) {
+                // Add red border
+                voucherInput.style.borderColor = '#dc3545';
+                voucherInput.style.boxShadow = '0 0 0 0.2rem rgba(220,53,69,.25)';
+
+                // Add error message below the field
+                const error = document.createElement('div');
+                error.textContent = errorMessage;
+                error.style.color = '#dc3545';
+                error.style.fontSize = '0.875rem';
+                error.style.marginTop = '4px';
+                error.className = 'my-voucher-error';
+                voucherInput.parentNode.appendChild(error);
+            } else {
+                // Valid or empty → clean style
+                voucherInput.style.borderColor = '';
+                voucherInput.style.boxShadow = '';
+            }
+        }
+
+        // Run on blur (when user leaves the field)
+        voucherInput.addEventListener('blur', validate);
+
+        // Optional: run live as they type (uncomment if you want instant feedback)
+        // voucherInput.addEventListener('input', validate);
+
+        console.log('Voucher validation active');
+    })();
+</script>

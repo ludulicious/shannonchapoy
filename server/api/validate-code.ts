@@ -24,42 +24,45 @@ const validateCodeRequestSchema = z.object({
 
 export default defineEventHandler(
   async (event): Promise<ValidationResponse> => {
+    // Set CORS headers to allow requests from actions.shannonchapoy.com
+    setHeaders(event, {
+      'Access-Control-Allow-Origin': 'https://actions.shannonchapoy.com',
+      'Access-Control-Allow-Methods': 'POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type',
+      'Access-Control-Max-Age': '86400', // 24 hours
+    });
+
+    // Handle OPTIONS preflight requests
+    const method = getMethod(event);
+    if (method === 'OPTIONS') {
+      setResponseStatus(event, 204);
+      return {} as ValidationResponse;
+    }
+
+    // Only allow POST requests
+    if (method !== 'POST') {
+      setResponseStatus(event, 405);
+      return {
+        valid: false,
+        error: 'Method not allowed. Only POST requests are supported.',
+      };
+    }
+
     try {
-      const method = getMethod(event);
-      let code: string;
-      let formType: string;
+      // Read from request body
+      const body = await readBody(event);
+      const validationResult = validateCodeRequestSchema.safeParse(body);
 
-      // Handle GET requests (query parameters) and POST requests (request body)
-      if (method === "GET") {
-        const query = getQuery(event);
-        const validationResult = validateCodeRequestSchema.safeParse(query);
-
-        if (!validationResult.success) {
-          setResponseStatus(event, 400);
-          return {
-            valid: false,
-            error: "Validation failed",
-            details: validationResult.error,
-          };
-        }
-
-        ({ code, formType } = validationResult.data);
-      } else {
-        // POST or other methods - read from body
-        const body = await readBody(event);
-        const validationResult = validateCodeRequestSchema.safeParse(body);
-
-        if (!validationResult.success) {
-          setResponseStatus(event, 400);
-          return {
-            valid: false,
-            error: "Validation failed",
-            details: validationResult.error,
-          };
-        }
-
-        ({ code, formType } = validationResult.data);
+      if (!validationResult.success) {
+        setResponseStatus(event, 400);
+        return {
+          valid: false,
+          error: "Validation failed",
+          details: validationResult.error,
+        };
       }
+
+      const { code, formType } = validationResult.data;
 
       // Use imported form codes data (bundled in build)
       const formCodes: FormCode[] = formCodesData;
