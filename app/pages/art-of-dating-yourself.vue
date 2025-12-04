@@ -52,6 +52,10 @@
               data-layout-iframe-id="inline-OuOANmqGsixnQg0en5oF"
               data-form-id="OuOANmqGsixnQg0en5oF"
               title="Waiting Art of Dating Yourself"
+              allow="autoplay; camera; microphone; geolocation; payment"
+              allowfullscreen
+              referrerpolicy="no-referrer-when-downgrade"
+              loading="lazy"
             >
             </iframe>
           </div>

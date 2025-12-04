@@ -49,6 +49,10 @@
             data-layout-iframe-id="inline-WQ1oAQmkwYDHYsFWlOV9"
             data-form-id="WQ1oAQmkwYDHYsFWlOV9"
             title="Website Contact Form"
+            allow="autoplay; camera; microphone; geolocation; payment"
+            allowfullscreen
+            referrerpolicy="no-referrer-when-downgrade"
+            loading="lazy"
           >
           </iframe>
         </div>

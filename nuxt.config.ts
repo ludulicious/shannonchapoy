@@ -21,11 +21,7 @@ export default defineNuxtConfig({
       },
       meta: [
         { charset: 'UTF-8' },
-        { name: 'viewport', content: 'width=device-width, initial-scale=1.0' },
-        {
-          'http-equiv': 'Content-Security-Policy',
-          content: "frame-src 'self' https://actions.shannonchapoy.com https://storage.googleapis.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://actions.shannonchapoy.com https://storage.googleapis.com; connect-src 'self' https://actions.shannonchapoy.com https://backend.leadconnectorhq.com https://storage.googleapis.com;"
-        }
+        { name: 'viewport', content: 'width=device-width, initial-scale=1.0' }
       ],
       link: [
         { rel: 'apple-touch-icon', sizes: '180x180', href: '/fav/apple-touch-icon.png' },

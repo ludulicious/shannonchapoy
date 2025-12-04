@@ -50,6 +50,10 @@
               data-layout-iframe-id="inline-5fdGTG9XZ2bT8OBLidJk"
               data-form-id="5fdGTG9XZ2bT8OBLidJk"
               title="Waiting List 1:1 Love Coaching"
+              allow="autoplay; camera; microphone; geolocation; payment"
+              allowfullscreen
+              referrerpolicy="no-referrer-when-downgrade"
+              loading="lazy"
             >
             </iframe>
           </div>
