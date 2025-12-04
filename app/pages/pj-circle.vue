@@ -6,7 +6,7 @@
         <div class="w-16 h-16 rounded-full flex items-center justify-center shadow-md bg-brand-seaBlue flex-shrink-0">
           <Users class="w-8 h-8 text-white" />
         </div>
-        <h1 class="font-serif text-4xl md:text-5xl font-bold text-brand-seaBlue">Free first session inside a Peace & Joy Circle</h1>
+        <h1 class="font-serif text-4xl md:text-5xl font-bold text-brand-seaBlue">Peace & Joy Circle  (PJ Circle)</h1>
       </div>
     </div>
 
@@ -91,7 +91,7 @@
             <div>
               <div>
                 <h3 class="font-serif text-3xl font-bold mb-6">Start Your Journey</h3>
-                <p class="text-white/80 mb-8">Ready to start your journey? <br/> <br/> Sign up for a free first session and start your transformation today.</p>
+                <p class="text-white/80 mb-8">Ready to start your journey? <br/> <br/> Sign up to join a PJ Circle and start your transformation of reconnecting to yourself and your divine essence.</p>
               </div>
             </div>
           </div>
