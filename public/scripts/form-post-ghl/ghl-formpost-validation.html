@@ -9,6 +9,13 @@
             setTimeout(arguments.callee, 1000); // retry once after 1s (covers Vue delay)
             return;
         }
+
+        // Find the submit button directly (no form element needed)
+        const submitBtn = document.querySelector('button[type="submit"]');
+
+        // Track if user has blurred the field at least once
+        let hasBlurredOnce = false;
+
         async function validate() {
             const code = voucherInput.value.trim();
             let errorMessage = null;
@@ -42,7 +49,8 @@
             // Remove old error if exists
             const oldError = voucherInput.parentNode.querySelector('.my-voucher-error');
             if (oldError) oldError.remove();
-
+            const oldSuccess = voucherInput.parentNode.querySelector('.my-voucher-success');
+            if (oldSuccess) oldSuccess.remove();
             if (!isValid) {
                 // Add red border
                 voucherInput.style.borderColor = '#dc3545';
@@ -57,17 +65,47 @@
                 error.className = 'my-voucher-error';
                 voucherInput.parentNode.appendChild(error);
             } else {
+                if (code) {
+                    const success = document.createElement('div');
+                    success.textContent = 'Code is valid';
+                    success.style.color = '#28a745';
+                    success.style.fontSize = '0.875rem';
+                    success.style.marginTop = '4px';
+                    success.className = 'my-voucher-success';
+                    voucherInput.parentNode.appendChild(success);
+                }
                 // Valid or empty → clean style
                 voucherInput.style.borderColor = '';
                 voucherInput.style.boxShadow = '';
             }
+
+            // Enable/disable submit button based on isValid
+            if (submitBtn) {
+                submitBtn.disabled = !isValid;
+            }
         }
 
         // Run on blur (when user leaves the field)
-        voucherInput.addEventListener('blur', validate);
+        voucherInput.addEventListener('blur', function() {
+            validate();
+            // After first blur, enable instant feedback as they type
+            if (!hasBlurredOnce) {
+                hasBlurredOnce = true;
+                voucherInput.addEventListener('input', validate);
+            }
+        });
 
-        // Optional: run live as they type (uncomment if you want instant feedback)
-        // voucherInput.addEventListener('input', validate);
+        // Set initial button state based on current field value
+        if (submitBtn) {
+            const initialCode = voucherInput.value.trim();
+            if (initialCode) {
+                // If there's a code, validate it to set button state
+                validate();
+            } else {
+                // If empty, enable the button
+                submitBtn.disabled = false;
+            }
+        }
 
         console.log('Voucher validation active');
     })();
