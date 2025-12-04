@@ -55,7 +55,6 @@
               allow="autoplay; camera; microphone; geolocation; payment"
               allowfullscreen
               referrerpolicy="no-referrer-when-downgrade"
-              loading="lazy"
             >
             </iframe>
           </div>
