@@ -26,7 +26,7 @@ export default defineEventHandler((event) => {
     ].join('; '),
     'X-Frame-Options': 'SAMEORIGIN',
     'Referrer-Policy': 'strict-origin-when-cross-origin',
-    'Permissions-Policy': 'autoplay=*, camera=(), microphone=(), geolocation=()'
+    'Permissions-Policy': 'autoplay=*, camera=(), microphone=(), geolocation=(), payment=(self "https://actions.shannonchapoy.com")'
   });
 });
 

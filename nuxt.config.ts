@@ -21,7 +21,11 @@ export default defineNuxtConfig({
       },
       meta: [
         { charset: 'UTF-8' },
-        { name: 'viewport', content: 'width=device-width, initial-scale=1.0' }
+        { name: 'viewport', content: 'width=device-width, initial-scale=1.0' },
+        {
+          'http-equiv': 'Permissions-Policy',
+          content: 'autoplay=*, camera=(), microphone=(), geolocation=(), payment=(self "https://actions.shannonchapoy.com")'
+        }
       ],
       link: [
         { rel: 'apple-touch-icon', sizes: '180x180', href: '/fav/apple-touch-icon.png' },
@@ -42,5 +46,27 @@ export default defineNuxtConfig({
 
   typescript: {
     strict: true
+  },
+
+  nitro: {
+    routeRules: {
+      '/**': {
+        headers: {
+          'Content-Security-Policy': [
+            "default-src 'self'",
+            "frame-src 'self' https://actions.shannonchapoy.com https://storage.googleapis.com https://*.googleapis.com",
+            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://actions.shannonchapoy.com https://storage.googleapis.com https://*.googleapis.com",
+            "connect-src 'self' https://actions.shannonchapoy.com https://backend.leadconnectorhq.com https://storage.googleapis.com https://*.googleapis.com https://*.leadconnectorhq.com",
+            "img-src 'self' data: https: blob:",
+            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+            "font-src 'self' https://fonts.gstatic.com data:",
+            "object-src 'none'",
+            "base-uri 'self'",
+            "form-action 'self' https://actions.shannonchapoy.com",
+            "frame-ancestors 'self'"
+          ].join('; ')          
+        }
+      }
+    }
   }
 })

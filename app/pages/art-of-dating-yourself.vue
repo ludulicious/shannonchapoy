@@ -35,10 +35,10 @@
             </div>
           </div>
 
-          <div class="md:w-4/5">
+          <div class="md:w-4/5 min-h-[555px] bg-white">
             <iframe
               src="https://actions.shannonchapoy.com/widget/form/OuOANmqGsixnQg0en5oF"
-              style="width: 100%; height: 100%; border: none; border-radius: 4px;"
+              style="width: 100%; height: 555px; border: none; border-radius: 4px;"
               id="inline-OuOANmqGsixnQg0en5oF"
               data-layout="{'id':'INLINE'}"
               data-trigger-type="alwaysShow"
@@ -52,7 +52,7 @@
               data-layout-iframe-id="inline-OuOANmqGsixnQg0en5oF"
               data-form-id="OuOANmqGsixnQg0en5oF"
               title="Waiting Art of Dating Yourself"
-              allow="autoplay; camera; microphone; geolocation; payment"
+              allow="autoplay; payment"
               allowfullscreen
               referrerpolicy="no-referrer-when-downgrade"
             >

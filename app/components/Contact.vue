@@ -32,10 +32,10 @@
           </div>
         </div>
 
-        <div class="md:w-4/5">
+        <div class="md:w-4/5 min-h-[542px] bg-white">
           <iframe
             src="https://actions.shannonchapoy.com/widget/form/WQ1oAQmkwYDHYsFWlOV9"
-            style="width: 100%; height: 100%; border: none; border-radius: 4px;"
+            style="width: 100%; height: 542px; border: none; border-radius: 4px;"
             id="inline-WQ1oAQmkwYDHYsFWlOV9"
             data-layout="{'id':'INLINE'}"
             data-trigger-type="alwaysShow"
@@ -49,7 +49,7 @@
             data-layout-iframe-id="inline-WQ1oAQmkwYDHYsFWlOV9"
             data-form-id="WQ1oAQmkwYDHYsFWlOV9"
             title="Website Contact Form"
-            allow="autoplay; camera; microphone; geolocation; payment"
+            allow="autoplay; payment"
             allowfullscreen
             referrerpolicy="no-referrer-when-downgrade"
           >

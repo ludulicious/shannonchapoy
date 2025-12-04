@@ -33,10 +33,10 @@
             </div>
           </div>
 
-          <div class="md:w-4/5">
+          <div class="md:w-4/5 min-h-[555px] bg-white">
             <iframe
               src="https://actions.shannonchapoy.com/widget/form/5fdGTG9XZ2bT8OBLidJk"
-              style="width: 100%; height: 100%; border: none; border-radius: 4px;"
+              style="width: 100%; height: 555px; border: none; border-radius: 4px;"
               id="inline-5fdGTG9XZ2bT8OBLidJk"
               data-layout="{'id':'INLINE'}"
               data-trigger-type="alwaysShow"
@@ -50,7 +50,7 @@
               data-layout-iframe-id="inline-5fdGTG9XZ2bT8OBLidJk"
               data-form-id="5fdGTG9XZ2bT8OBLidJk"
               title="Waiting List 1:1 Love Coaching"
-              allow="autoplay; camera; microphone; geolocation; payment"
+              allow="autoplay; payment"
               allowfullscreen
               referrerpolicy="no-referrer-when-downgrade"
             >

@@ -29,7 +29,10 @@
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div
           ref="elementRef"
-          class="bg-white rounded-3xl shadow-xl overflow-hidden flex flex-col md:flex-row transition-all duration-1000 opacity-100 translate-y-0 scale-100"
+          :class="[
+            'bg-white rounded-3xl shadow-xl overflow-hidden flex flex-col md:flex-row transition-all duration-1000',
+            formVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-10 scale-95'
+          ]"
         >
           <div class="bg-brand-seaBlue p-10 md:w-2/5 text-white flex flex-col justify-between">
             <div>
@@ -40,11 +43,10 @@
             </div>
           </div>
 
-          <div class="md:w-4/5">
-            
+          <div class="md:w-4/5 min-h-[555px] bg-white">
             <iframe
               src="https://actions.shannonchapoy.com/widget/form/6lN7WgzfJecJjmfppVfx"
-              style="width: 100%; height: 100%; border: none; border-radius: 4px;"
+              style="width: 100%; height: 555px; border: none; border-radius: 4px;"
               id="inline-6lN7WgzfJecJjmfppVfx"
               data-layout="{'id':'INLINE'}"
               data-trigger-type="alwaysShow"
@@ -58,7 +60,7 @@
               data-layout-iframe-id="inline-6lN7WgzfJecJjmfppVfx"
               data-form-id="6lN7WgzfJecJjmfppVfx"
               title="Sign up for PJ Circle"
-              allow="autoplay; camera; microphone; geolocation; payment"
+              allow="autoplay; payment"
               allowfullscreen
               referrerpolicy="no-referrer-when-downgrade"
             >
@@ -85,6 +87,7 @@
 <script setup lang="ts">
 import { Users } from 'lucide-vue-next'
 
+const { elementRef, isVisible: formVisible } = useScrollAnimation(0.2)
 
 const { data: introData, pending: introPending, error: introError } = await useAsyncData('content-pj-intro', () => 
   queryCollection('content').path('/pj-circle-intro').first()
