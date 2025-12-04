@@ -24,23 +24,8 @@ const validateCodeRequestSchema = z.object({
 
 export default defineEventHandler(
   async (event): Promise<ValidationResponse> => {
-    // Set CORS headers to allow requests from actions.shannonchapoy.com
-    setHeaders(event, {
-      'Access-Control-Allow-Origin': 'https://actions.shannonchapoy.com',
-      'Access-Control-Allow-Methods': 'POST, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type',
-      'Access-Control-Max-Age': '86400', // 24 hours
-    });
-
-    // Handle OPTIONS preflight requests
-    const method = getMethod(event);
-    if (method === 'OPTIONS') {
-      setResponseStatus(event, 204);
-      return {} as ValidationResponse;
-    }
-
     // Only allow POST requests
-    if (method !== 'POST') {
+    if (event.method !== 'POST') {
       setResponseStatus(event, 405);
       return {
         valid: false,
