@@ -32,30 +32,21 @@
             contentVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'
           ]"
         >
-          <h2 :class="[
-            'font-serif text-4xl font-bold text-brand-dkPurple mb-6 transition-all duration-1000 delay-300',
+          <div v-if="contentPending" class="flex justify-center items-center py-12">
+            <div class="text-brand-charcoal">Loading...</div>
+          </div>
+          <div v-else-if="contentError" class="bg-red-50 border border-red-200 rounded-lg p-4">
+            <h2 class="text-red-800 font-semibold mb-2">Error loading content</h2>
+            <p class="text-red-600">{{ contentError }}</p>
+          </div>
+          <div v-else-if="contentData" :class="[
+            'transition-all duration-1000 delay-300',
             contentVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
           ]">
-            Hi, I'm Shannon
-          </h2>
-          <div :class="[
-            'w-20 h-1 bg-brand-ltPurple mb-8 transition-all duration-1000 delay-400',
-            contentVisible ? 'opacity-100 scale-x-100' : 'opacity-0 scale-x-0'
-          ]"></div>
-          <p :class="[
-            'text-lg text-brand-charcoal mb-6 leading-relaxed transition-all duration-1000 delay-500',
-            contentVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
-          ]">
-            I believe that every woman holds the power to transform her life, just as a butterfly emerges from its cocoon with vibrant new wings. My mission is to guide you through your own metamorphosis.
-            With 30 years of experience in self development and love coaching, I specialize in helping women break free from limiting beliefs, discover their greatest love and light within, and create a life that feels as good on the inside as it looks on the outside.
-          </p>
-          <p :class="[
-            'text-lg text-brand-charcoal mb-8 leading-relaxed transition-all duration-1000 delay-600',
-            contentVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
-          ]">
-            My own journey of self discovery and transformation led me to release old stories of being "unlucky in love and destined to be alone"  to expansive dreaming and creating an abundantly carefree life of love and fun adventures.  And now I'm happily married and living my best life.
-            I'm passionate about supporting and guiding women to their greatest love and living their best life.  Let's connect and go on this journey together!
-          </p>
+            <article class="prose prose-lg max-w-none">
+              <ContentRenderer :value="contentData" />
+            </article>
+          </div>
           <div :class="[
             'grid grid-cols-2 gap-6 transition-all duration-1000 delay-700',
             contentVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
@@ -86,6 +77,10 @@ import { Heart, Sparkles } from 'lucide-vue-next'
 
 const { elementRef: imageRef, isVisible: imageVisible } = useScrollAnimation(0.2)
 const { elementRef: contentRef, isVisible: contentVisible } = useScrollAnimation(0.2)
+
+const { data: contentData, pending: contentPending, error: contentError } = await useAsyncData('content-about', () => 
+  queryCollection('content').path('/about').first()
+)
 
 const imgSrc = ref(`/shannon-cropped.png?v=${Date.now()}`)
 const hasError = ref(false)
