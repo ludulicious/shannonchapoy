@@ -26,8 +26,15 @@
         'font-serif text-5xl md:text-7xl font-bold mb-6 leading-tight drop-shadow-2xl tracking-tight text-white',
         isVisible ? 'animate-slide-in-top-bounce' : ''
       ]" :style="!isVisible ? { transform: 'translateY(-200px)' } : undefined">
-        Are you ready to find your greatest love?
+        Are you ready to begin your greatest love journey?
       </h1>
+      <p :class="[
+        'font-sans text-xl md:text-2xl lg:text-3xl text-white/95 mb-8 md:mb-10 leading-relaxed max-w-2xl mx-auto px-4 drop-shadow-lg transition-all duration-1000 delay-300',
+        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
+      ]">
+        It starts with learning to date yourself first.<br /> I went from buying a single bed to finding <br />soulmate love in just one year.<br />
+        <br />If I can - you can too!
+      </p>
       <div :class="[
         'flex flex-col sm:flex-row gap-5 justify-center transition-all duration-1000 delay-700',
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'

@@ -43,28 +43,9 @@
             'transition-all duration-1000 delay-300',
             contentVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
           ]">
-            <article class="prose prose-lg max-w-none">
+            <article class="prose prose-lg max-w-none about-content">
               <ContentRenderer :value="contentData" />
             </article>
-          </div>
-          <div :class="[
-            'grid grid-cols-2 gap-6 transition-all duration-1000 delay-700',
-            contentVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
-          ]">
-            <div class="flex items-start space-x-3 group">
-              <Heart class="text-brand-ltPurple w-6 h-6 mt-1 transition-transform duration-300 group-hover:scale-110" />
-              <div>
-                <h4 class="font-bold text-brand-charcoal">Compassionate</h4>
-                <p class="text-sm text-gray-500">Empathy first approach</p>
-              </div>
-            </div>
-            <div class="flex items-start space-x-3 group">
-              <Sparkles class="text-brand-ltPurple w-6 h-6 mt-1 transition-transform duration-300 group-hover:scale-110" />
-              <div>
-                <h4 class="font-bold text-brand-charcoal">Empowering</h4>
-                <p class="text-sm text-gray-500">Tools for real change</p>
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -92,4 +73,10 @@ const handleImgError = () => {
   }
 }
 </script>
+
+<style scoped>
+.about-content :deep(h1) {
+  color: #488B98; /* brand-seaBlue */
+}
+</style>
 
