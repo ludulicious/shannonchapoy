@@ -8,9 +8,10 @@
           headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
         ]"
       >
-        <h2 class="font-serif text-2xl font-bold text-brand-charcoal mb-4">Ways I support you</h2>
-        <h3 class="font-serif text-3xl font-bold text-brand-dkPurple mb-4">Choose the path that best fits your journey</h3>
-        <p class="text-brand-charcoal max-w-2xl mx-auto mb-16">Whether you prefer a small group support and transformation journey or a private deeper love journey, I have a program for you.</p>
+        <h2 class="font-serif text-3xl font-bold text-brand-seaBlue mb-4">Ways I support you</h2>
+        <h3 class="font-serif text-3xl font-bold text-brand-dkPurple mb-4">Choose your Greatest Love Adventure</h3>
+        <p class="text-brand-charcoal max-w-2xl mx-auto mb-16">Every journey to self-love is unique.  Pick the one that feels right for you.<br />
+          Whether you prefer a small group or a private deeper love journey, I have a program for you.</p>
       </div>
 
       <div
