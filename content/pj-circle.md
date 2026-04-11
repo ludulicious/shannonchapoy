@@ -8,7 +8,6 @@
 
 ## Join a Circle
 
-Claim your spot for $ 197 per quarter (6 sessions* total) | Group size: up to 6 women to maintain the sacred space and cozy, intimate feeling.
+Claim your spot for $297 for 4 weeks (1 session per week, 4 sessions total) | Group size: up to 10 women to maintain the sacred space and cozy, intimate feeling.
 
-*Each online session lasts 90 minutes.
-
+*Each online session lasts 60+ minutes.

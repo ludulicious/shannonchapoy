@@ -7,7 +7,6 @@
 
 ## Join a Circle
 
-Investment: First session is FREE!
-$ 197 per quarter for biweekly sessions | When: Quarterly | Group size: up to 6 women
+Claim your spot for $297 for 4 weeks (1 session per week, 4 sessions total) | Group size: up to 10 women
 
 
