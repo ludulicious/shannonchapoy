@@ -12,9 +12,10 @@ const {
   queryCollection('content').path('/art-of-dating-yourself').first()
 )
 
-useHead({
-  title: 'The Art of Dating Yourself - Shannon Chapoy'
-})
+usePageSeo(
+  'The Art of Dating Yourself - Shannon Chapoy',
+  'Learn to enjoy your own company with self-love workshops from Shannon Chapoy. Explore boundaries, mindfulness, self-care, and practices that build confidence.'
+)
 
 onMounted(() => {
   if (import.meta.client) {

@@ -5,9 +5,10 @@ const { data, pending, error } = await useAsyncData('content-privacy', () =>
   queryCollection('content').path('/privacy').first()
 )
 
-useHead({
-  title: 'Privacy Policy - Shannon Chapoy'
-})
+usePageSeo(
+  'Privacy Policy - Shannon Chapoy',
+  'Read how Shannon Chapoy collects, uses, and protects personal information when you visit this website or use her love coaching services.'
+)
 </script>
 
 <template>

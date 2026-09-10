@@ -1,4 +1,13 @@
 <script setup lang="ts">
+if (import.meta.server) {
+  const event = useRequestEvent()
+  if (event) {
+    setResponseStatus(event, 404)
+  }
+}
+
+useSeoMeta({ robots: 'noindex, follow' })
+
 useHead({
   title: '404 - Page Not Found - Shannon Chapoy'
 })

@@ -4,7 +4,7 @@
 
 export default defineNuxtConfig({
   compatibilityDate: '2025-11-29',
-  ssr: false,
+  ssr: true,
   devtools: { enabled: true },
   eslint: { config: { stylistic: { commaDangle: 'never', braceStyle: '1tbs' } } },
   modules: ['@nuxt/eslint', '@nuxt/content', '@nuxtjs/tailwindcss'],

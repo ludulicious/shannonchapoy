@@ -5,9 +5,10 @@ const { data, pending, error } = await useAsyncData('content-terms', () =>
   queryCollection('content').path('/terms').first()
 )
 
-useHead({
-  title: 'Terms of Service - Shannon Chapoy'
-})
+usePageSeo(
+  'Terms of Service - Shannon Chapoy',
+  'Review the terms for using this website and coaching services from Shannon Chapoy, including bookings, payments, cancellations, and responsibilities.'
+)
 </script>
 
 <template>

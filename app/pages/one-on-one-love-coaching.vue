@@ -10,9 +10,10 @@ const {
   error: contentError
 } = await useAsyncData('content-one-on-one', () => queryCollection('content').path('/one-on-one-love-coaching').first())
 
-useHead({
-  title: '1:1 Love Coaching - Shannon Chapoy'
-})
+usePageSeo(
+  '1:1 Love Coaching - Shannon Chapoy',
+  'Build confidence, clarity, and deeper connections with personalized love coaching from Shannon Chapoy. Explore your relationship goals and create your next chapter.'
+)
 
 onMounted(() => {
   if (import.meta.client) {

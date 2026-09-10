@@ -4,9 +4,10 @@ definePageMeta({
   key: 'landing'
 })
 
-useHead({
-  title: 'Shannon Chapoy'
-})
+usePageSeo(
+  'Self-Love & Relationship Coaching - Shannon Chapoy',
+  'Rediscover yourself with Shannon Chapoy. Explore self-love workshops, one-on-one relationship coaching, and Peace & Joy Circles for successful women.'
+)
 
 const route = useRoute()
 const { handleHashNavigation } = useScrollToSection()

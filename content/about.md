@@ -1,4 +1,4 @@
-# Hi, I'm Shannon
+## Hi, I'm Shannon
 
 Six years ago at 52, after 30+ years in international business, I had achieved everything that looked impressive on paper. But I came home to profound loneliness.
 
