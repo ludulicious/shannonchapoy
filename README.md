@@ -34,7 +34,11 @@ Personal website for Shannon Chapoy built with Nuxt 4, Nuxt Content, and Tailwin
 pnpm build
 ```
 
-The built files will be in the `.output/` folder.
+The build pre-renders the homepage, its four section URLs, all three program pages, and both legal pages into `.output/public/` as HTML with content and SEO metadata. The explicit route list is in `nuxt.config.ts`; linked pages are also discovered during pre-rendering. Rendering errors fail the build.
+
+The Docker build runs this same command. Run `.output/server/index.mjs` in production: it serves the generated pages and keeps the form-validation API and proper 404 responses available. Rebuild after changing Markdown content.
+
+`pnpm generate` is available for a static-only export, but static hosting alone cannot run `server/api/validate-code.ts`.
 
 ## Docker Deployment
 

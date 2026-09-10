@@ -49,6 +49,23 @@ export default defineNuxtConfig({
   },
 
   nitro: {
+    // Pre-render content while retaining the server for form validation and 404s.
+    prerender: {
+      crawlLinks: true,
+      failOnError: true,
+      routes: [
+        '/',
+        '/about',
+        '/services',
+        '/philosophy',
+        '/contact',
+        '/pj-circle',
+        '/one-on-one-love-coaching',
+        '/art-of-dating-yourself',
+        '/privacy',
+        '/terms'
+      ]
+    },
     routeRules: {
       '/**': {
         headers: {

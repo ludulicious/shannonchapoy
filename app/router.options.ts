@@ -1,5 +1,6 @@
 import type { RouterConfig } from '@nuxt/schema'
-import { useNuxtApp, useRouter } from '#app'
+// Avoid the #app barrel: route rules import this file during client startup.
+import { useNuxtApp } from '#app/nuxt'
 import { isLandingPath } from './utils/landingRoutes'
 
 export default {
@@ -11,7 +12,7 @@ export default {
       }
 
       const nuxtApp = useNuxtApp()
-      const router = useRouter()
+      const router = nuxtApp.$router
       return new Promise<typeof top | false>((resolve) => {
         nuxtApp.hooks.hookOnce('page:loading:end', () => {
           resolve(router.currentRoute.value.fullPath === to.fullPath ? top : false)

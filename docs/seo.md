@@ -1,6 +1,6 @@
 # SEO and social sharing
 
-The site uses server rendering so page content and metadata are present in the initial HTML. Each content page has a title, description, Open Graph tags, Twitter large-image card, and canonical URL through `app/composables/usePageSeo.ts`.
+The build pre-renders all ten content and section URLs so page content and metadata are present in static HTML. The Nuxt server remains available for form validation and missing-page responses. Content is visible before JavaScript loads; offscreen entrance animations are enabled only after hydration. Each content page has a title, description, Open Graph tags, Twitter large-image card, and canonical URL through `app/composables/usePageSeo.ts`.
 
 The production origin is `https://shannonchapoy.com`. The homepage section routes share the homepage canonical. The sitemap lists the six canonical pages, and robots.txt points to it. Update the sitemap when adding pages. Canonical handling follows [Google's guidance](https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls).
 

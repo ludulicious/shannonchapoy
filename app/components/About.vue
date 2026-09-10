@@ -8,7 +8,7 @@ const {
   error: contentError
 } = await useAsyncData('content-about', () => queryCollection('content').path('/about').first())
 
-const imgSrc = ref(`/shannon-cropped.png?v=${Date.now()}`)
+const imgSrc = ref('/shannon-cropped.png')
 const hasError = ref(false)
 
 const handleImgError = () => {
@@ -86,7 +86,7 @@ const handleImgError = () => {
 </template>
 
 <style scoped>
-.about-content :deep(h1) {
+.about-content :deep(h2) {
   color: #488b98; /* brand-seaBlue */
 }
 </style>
