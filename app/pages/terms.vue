@@ -1,4 +1,6 @@
 <script setup lang="ts">
+definePageMeta({ pageTransition: false })
+
 const { data, pending, error } = await useAsyncData('content-terms', () =>
   queryCollection('content').path('/terms').first()
 )
@@ -6,18 +8,10 @@ const { data, pending, error } = await useAsyncData('content-terms', () =>
 useHead({
   title: 'Terms of Service - Shannon Chapoy'
 })
-
-onMounted(() => {
-  if (import.meta.client) {
-    window.scrollTo(0, 0)
-    document.documentElement.scrollTop = 0
-    document.body.scrollTop = 0
-  }
-})
 </script>
 
 <template>
-  <div class="flex-1 pt-24 pb-16">
+  <div class="flex-1 pt-32 md:pt-40 pb-16">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       <div v-if="pending" class="flex justify-center items-center py-12">
         <div class="text-brand-charcoal">Loading...</div>

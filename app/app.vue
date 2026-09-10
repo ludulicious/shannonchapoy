@@ -2,6 +2,12 @@
 const route = useRoute()
 const pageKey = computed(() => (isLandingPath(route.path) ? 'landing' : route.fullPath))
 
+useHead(() => ({
+  htmlAttrs: {
+    class: route.path === '/privacy' || route.path === '/terms' ? 'legal-document' : ''
+  }
+}))
+
 if (import.meta.client && 'scrollRestoration' in window.history) {
   window.history.scrollRestoration = 'manual'
 }
@@ -16,6 +22,12 @@ if (import.meta.client && 'scrollRestoration' in window.history) {
 </template>
 
 <style>
+html.legal-document,
+html.legal-document body {
+  overflow-anchor: none;
+  scroll-behavior: auto;
+}
+
 html {
   scroll-padding-top: 40px;
 }

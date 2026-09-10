@@ -1,4 +1,10 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const releaseLinkFocus = (event: MouseEvent) => {
+  if (event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey) {
+    ;(event.currentTarget as HTMLAnchorElement).blur()
+  }
+}
+</script>
 
 <template>
   <footer class="bg-brand-charcoal text-white py-12">
@@ -9,8 +15,12 @@
       </div>
 
       <div class="flex space-x-8 mb-6 md:mb-0 text-sm text-gray-400">
-        <NuxtLink to="/privacy" class="hover:text-brand-ltPurple transition-colors">Privacy Policy</NuxtLink>
-        <NuxtLink to="/terms" class="hover:text-brand-ltPurple transition-colors">Terms of Service</NuxtLink>
+        <NuxtLink to="/privacy" class="hover:text-brand-ltPurple transition-colors" @click="releaseLinkFocus"
+          >Privacy Policy</NuxtLink
+        >
+        <NuxtLink to="/terms" class="hover:text-brand-ltPurple transition-colors" @click="releaseLinkFocus"
+          >Terms of Service</NuxtLink
+        >
       </div>
 
       <div class="text-gray-500 text-sm">

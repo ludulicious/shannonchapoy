@@ -69,7 +69,7 @@ watch(
       </NuxtLink>
 
       <!-- Desktop Menu -->
-      <div class="hidden md:flex space-x-8 items-center">
+      <div class="hidden lg:flex gap-3 xl:gap-6 items-center">
         <NuxtLink
           v-for="item in menuItems"
           :key="item.name"
@@ -78,12 +78,12 @@ watch(
           exact-active-class=""
           :aria-current="isActive(item.path) ? 'page' : undefined"
           :class="[
-            'text-sm font-medium transition-colors',
+            'px-2 py-2 rounded-md text-lg font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-current',
             isActive(item.path)
-              ? 'text-brand-seaBlue font-semibold'
+              ? 'text-brand-seaBlue hover:text-brand-seaBlue hover:bg-[#eee5f3]'
               : shouldShowBackground
-                ? 'text-brand-charcoal hover:text-brand-ltPurple'
-                : 'text-white drop-shadow-sm hover:text-brand-ltPurple'
+                ? 'text-[#685574] hover:text-brand-dkPurple hover:bg-[#eee5f3]'
+                : 'text-white drop-shadow-sm hover:text-white hover:bg-white/15'
           ]"
         >
           {{ item.name }}
@@ -91,12 +91,12 @@ watch(
         <NuxtLink
           to="/pj-circle"
           :class="[
-            'px-6 py-2 rounded-full text-sm font-semibold transition-all transform hover:scale-105',
+            'px-5 py-3 rounded-full text-lg font-semibold whitespace-nowrap transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-current',
             route.path === '/pj-circle'
-              ? 'bg-brand-seaBlue text-white hover:bg-brand-seaBlue/90'
+              ? 'bg-brand-skyBlue text-white hover:bg-brand-dkPurple hover:text-white'
               : shouldShowBackground
-                ? 'bg-brand-dkPurple text-white hover:bg-brand-ltPurple'
-                : 'bg-white/90 text-brand-dkPurple hover:bg-white'
+                ? 'bg-brand-dkPurple text-white hover:bg-brand-ltPurple hover:text-white'
+                : 'bg-white/90 text-brand-dkPurple hover:bg-white hover:text-brand-dkPurple'
           ]"
         >
           Start Your Journey
@@ -104,24 +104,29 @@ watch(
       </div>
 
       <!-- Mobile Menu Button -->
-      <button class="md:hidden" @click="isMobileMenuOpen = !isMobileMenuOpen">
+      <button
+        class="lg:hidden"
+        :aria-expanded="isMobileMenuOpen"
+        :aria-label="isMobileMenuOpen ? 'Close menu' : 'Open menu'"
+        @click="isMobileMenuOpen = !isMobileMenuOpen"
+      >
         <X v-if="isMobileMenuOpen" :class="shouldShowBackground ? 'text-brand-charcoal' : 'text-white'" />
         <Menu v-else :class="shouldShowBackground ? 'text-brand-charcoal' : 'text-white'" />
       </button>
     </div>
 
     <!-- Mobile Menu Dropdown -->
-    <div v-if="isMobileMenuOpen" class="md:hidden bg-white absolute w-full shadow-xl border-t border-gray-100">
+    <div v-if="isMobileMenuOpen" class="lg:hidden bg-white absolute w-full shadow-xl border-t border-gray-100">
       <div class="px-4 pt-2 pb-6 space-y-2">
         <NuxtLink
           v-for="item in menuItems"
           :key="item.name"
           :to="item.path"
           :class="[
-            'block px-3 py-2 text-base font-medium rounded-md transition-colors',
+            'block px-3 py-3 text-lg font-semibold rounded-md transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-dkPurple',
             isActive(item.path)
-              ? 'text-brand-seaBlue bg-brand-seaBlue/10 font-semibold'
-              : 'text-brand-charcoal hover:text-brand-ltPurple hover:bg-brand-soft'
+              ? 'text-brand-seaBlue hover:text-brand-seaBlue hover:bg-[#eee5f3]'
+              : 'text-[#685574] hover:text-brand-dkPurple hover:bg-[#eee5f3]'
           ]"
           @click="isMobileMenuOpen = false"
         >

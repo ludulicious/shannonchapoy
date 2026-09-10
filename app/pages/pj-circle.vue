@@ -21,7 +21,7 @@ useHead({
 </script>
 
 <template>
-  <div class="flex-1 pt-24 pb-16">
+  <div class="flex-1 pt-32 md:pt-40 pb-16">
     <!-- Title Section -->
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
       <div class="flex items-center gap-6">
