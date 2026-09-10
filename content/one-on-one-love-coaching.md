@@ -13,6 +13,7 @@ Through our personalized coaching sessions, you'll discover:
 Our one-on-one coaching is designed to meet you where you are and guide you toward your relationship goals. Each session is tailored to your specific needs, challenges, and aspirations.
 
 Whether you're looking to:
+
 - Find your life partner
 - Improve your current relationship
 - Heal from past relationship wounds
@@ -24,4 +25,3 @@ We'll work together to create a personalized path forward.
 ## Investment in Your Future
 
 Investing in yourself and your love life is one of the most important decisions you can make. Our coaching sessions provide you with the tools, insights, and support you need to create the relationship you deserve.
-

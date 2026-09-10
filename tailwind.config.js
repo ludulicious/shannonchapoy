@@ -1,18 +1,18 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./app/components/**/*.{js,vue,ts}",
-    "./app/layouts/**/*.vue",
-    "./app/pages/**/*.vue",
-    "./app/plugins/**/*.{js,ts}",
-    "./app/app.vue",
-    "./app/error.vue",
+    './app/components/**/*.{js,vue,ts}',
+    './app/layouts/**/*.vue',
+    './app/pages/**/*.vue',
+    './app/plugins/**/*.{js,ts}',
+    './app/app.vue',
+    './app/error.vue'
   ],
   theme: {
     extend: {
       fontFamily: {
         sans: ['Lato', 'sans-serif'],
-        serif: ['Playfair Display', 'serif'],
+        serif: ['Playfair Display', 'serif']
       },
       colors: {
         brand: {
@@ -22,52 +22,52 @@ module.exports = {
           skyBlue: '#3A5F85',
           ltPurple: '#7D337D',
           dkPurple: '#543178',
-          soft: '#F9F5FA',
+          soft: '#F9F5FA'
         }
       },
       keyframes: {
         fadeInUp: {
-          'from': {
+          from: {
             opacity: '0',
-            transform: 'translateY(30px)',
+            transform: 'translateY(30px)'
           },
-          'to': {
+          to: {
             opacity: '1',
-            transform: 'translateY(0)',
+            transform: 'translateY(0)'
           }
         },
         fadeIn: {
-          'from': { opacity: '0' },
-          'to': { opacity: '1' }
+          from: { opacity: '0' },
+          to: { opacity: '1' }
         },
         slideInLeft: {
-          'from': {
+          from: {
             opacity: '0',
-            transform: 'translateX(-50px)',
+            transform: 'translateX(-50px)'
           },
-          'to': {
+          to: {
             opacity: '1',
-            transform: 'translateX(0)',
+            transform: 'translateX(0)'
           }
         },
         slideInRight: {
-          'from': {
+          from: {
             opacity: '0',
-            transform: 'translateX(50px)',
+            transform: 'translateX(50px)'
           },
-          'to': {
+          to: {
             opacity: '1',
-            transform: 'translateX(0)',
+            transform: 'translateX(0)'
           }
         },
         scaleIn: {
-          'from': {
+          from: {
             opacity: '0',
-            transform: 'scale(0.9)',
+            transform: 'scale(0.9)'
           },
-          'to': {
+          to: {
             opacity: '1',
-            transform: 'scale(1)',
+            transform: 'scale(1)'
           }
         },
         float: {
@@ -87,11 +87,10 @@ module.exports = {
         'slide-in-left': 'slideInLeft 0.8s ease-out forwards',
         'slide-in-right': 'slideInRight 0.8s ease-out forwards',
         'scale-in': 'scaleIn 0.6s ease-out forwards',
-        'float': 'float 3s ease-in-out infinite',
-        'slide-in-top-bounce': 'slideInFromTopBounce 1.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards',
+        float: 'float 3s ease-in-out infinite',
+        'slide-in-top-bounce': 'slideInFromTopBounce 1.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards'
       }
-    },
+    }
   },
-  plugins: [],
+  plugins: []
 }
-

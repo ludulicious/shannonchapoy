@@ -1,3 +1,21 @@
+<script setup lang="ts">
+const { data, pending, error } = await useAsyncData('content-privacy', () =>
+  queryCollection('content').path('/privacy').first()
+)
+
+useHead({
+  title: 'Privacy Policy - Shannon Chapoy'
+})
+
+onMounted(() => {
+  if (import.meta.client) {
+    window.scrollTo(0, 0)
+    document.documentElement.scrollTop = 0
+    document.body.scrollTop = 0
+  }
+})
+</script>
+
 <template>
   <div class="flex-1 pt-24 pb-16">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -14,21 +32,3 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-const { data, pending, error } = await useAsyncData('content-privacy', () => 
-  queryCollection('content').path('/privacy').first()
-)
-
-useHead({
-  title: 'Privacy Policy - Shannon Chapoy'
-})
-
-onMounted(() => {
-  if (process.client) {
-    window.scrollTo(0, 0)
-    document.documentElement.scrollTop = 0
-    document.body.scrollTop = 0
-  }
-})
-</script>

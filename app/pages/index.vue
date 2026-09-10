@@ -1,13 +1,3 @@
-<template>
-  <div>
-    <Hero />
-    <About />
-    <Services />
-    <Philosophy />
-    <Contact />
-  </div>
-</template>
-
 <script setup lang="ts">
 definePageMeta({
   path: '/:section(about|services|philosophy|contact)?',
@@ -25,7 +15,20 @@ onMounted(() => {
   handleHashNavigation()
 })
 
-watch(() => route.path, () => {
-  handleHashNavigation()
-})
+watch(
+  () => route.path,
+  () => {
+    handleHashNavigation()
+  }
+)
 </script>
+
+<template>
+  <div>
+    <Hero />
+    <About />
+    <Services />
+    <Philosophy />
+    <Contact />
+  </div>
+</template>

@@ -15,11 +15,13 @@ Personal website for Shannon Chapoy built with Nuxt 4, Nuxt Content, and Tailwin
 **Prerequisites:** Node.js 20+
 
 1. Install dependencies:
+
    ```bash
    pnpm install
    ```
 
 2. Run the development server:
+
    ```bash
    pnpm dev
    ```
@@ -87,6 +89,11 @@ Markdown files in the `content/` directory are automatically available via Nuxt 
 - `pnpm build` - Build for production
 - `pnpm generate` - Generate static site
 - `pnpm preview` - Preview production build
+- `pnpm format` - Format files and apply ESLint fixes
+- `pnpm format:check` - Check formatting and ESLint rules
+- `pnpm lint` - Check ESLint rules
+
+Run `pnpm format` after every batch of changes.
 
 ## Migration Notes
 

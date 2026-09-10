@@ -4,7 +4,9 @@ export const useScrollAnimation = (threshold: number = 0.1) => {
   let observer: IntersectionObserver | null = null
 
   onMounted(() => {
-    if (!elementRef.value) return
+    if (!elementRef.value) {
+      return
+    }
 
     observer = new IntersectionObserver(
       ([entry]) => {
@@ -26,4 +28,3 @@ export const useScrollAnimation = (threshold: number = 0.1) => {
 
   return { elementRef, isVisible }
 }
-

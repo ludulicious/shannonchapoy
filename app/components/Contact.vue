@@ -1,7 +1,13 @@
+<script setup lang="ts">
+import { Mail, Instagram, Facebook, Linkedin } from 'lucide-vue-next'
+
+const { elementRef, isVisible } = useScrollAnimation(0.2)
+</script>
+
 <template>
   <section id="contact" class="py-20 bg-brand-soft">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div 
+      <div
         ref="elementRef"
         :class="[
           'bg-white rounded-3xl shadow-xl overflow-hidden flex flex-col md:flex-row transition-all duration-1000',
@@ -11,7 +17,9 @@
         <div class="bg-brand-dkPurple p-10 md:w-2/5 text-white flex flex-col justify-between">
           <div>
             <h3 class="font-serif text-3xl font-bold mb-6">Let's Talk</h3>
-            <p class="text-white/80 mb-8">Ready to start your transformation? Send me a message and let's discuss how we can work together.</p>
+            <p class="text-white/80 mb-8">
+              Ready to start your transformation? Send me a message and let's discuss how we can work together.
+            </p>
           </div>
           <div class="space-y-4">
             <div class="flex items-center space-x-3">
@@ -34,9 +42,9 @@
 
         <div class="md:w-4/5 min-h-[542px] bg-white">
           <iframe
-            src="https://actions.shannonchapoy.com/widget/form/WQ1oAQmkwYDHYsFWlOV9"
-            style="width: 100%; height: 542px; border: none; border-radius: 4px;"
             id="inline-WQ1oAQmkwYDHYsFWlOV9"
+            src="https://actions.shannonchapoy.com/widget/form/WQ1oAQmkwYDHYsFWlOV9"
+            style="width: 100%; height: 542px; border: none; border-radius: 4px"
             data-layout="{'id':'INLINE'}"
             data-trigger-type="alwaysShow"
             data-trigger-value=""
@@ -59,10 +67,3 @@
     </div>
   </section>
 </template>
-
-<script setup lang="ts">
-import { Mail, Instagram, Facebook, Linkedin } from 'lucide-vue-next'
-
-const { elementRef, isVisible } = useScrollAnimation(0.2)
-</script>
-

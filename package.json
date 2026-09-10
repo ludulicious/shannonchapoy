@@ -8,7 +8,10 @@
     "build": "nuxt build",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "format": "prettier --write . && eslint . --fix && prettier --write . && eslint .",
+    "format:check": "prettier --check . && eslint .",
+    "lint": "eslint ."
   },
   "dependencies": {
     "@nuxt/content": "^3.8.2",
@@ -21,7 +24,11 @@
   },
   "devDependencies": {
     "@types/node": "^22.14.0",
-    "typescript": "~5.8.2"
+    "typescript": "~5.8.2",
+    "eslint": "^10.8.0",
+    "eslint-config-prettier": "^10.1.8",
+    "prettier": "^3.9.6",
+    "@nuxt/eslint": "^1.16.0"
   },
   "packageManager": "pnpm@12.3.4"
 }

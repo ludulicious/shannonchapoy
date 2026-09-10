@@ -21,4 +21,3 @@ Our series covers essential aspects of dating yourself:
 ## Why Date Yourself?
 
 Dating yourself is one of the most important relationships you'll ever have. When you learn to love, care for, and invest in yourself, you create a foundation for all other relationships in your life.
-

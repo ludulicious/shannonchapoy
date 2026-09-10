@@ -1,3 +1,29 @@
+<script setup lang="ts">
+import { Heart } from 'lucide-vue-next'
+
+const isVisible = ref(false)
+const { elementRef, isVisible: formVisible } = useScrollAnimation(0.2)
+
+const {
+  data: contentData,
+  pending: contentPending,
+  error: contentError
+} = await useAsyncData('content-one-on-one', () => queryCollection('content').path('/one-on-one-love-coaching').first())
+
+useHead({
+  title: '1:1 Love Coaching - Shannon Chapoy'
+})
+
+onMounted(() => {
+  if (import.meta.client) {
+    window.scrollTo(0, 0)
+    document.documentElement.scrollTop = 0
+    document.body.scrollTop = 0
+    isVisible.value = true
+  }
+})
+</script>
+
 <template>
   <div class="flex-1 pt-24 pb-16">
     <!-- Title Section -->
@@ -12,7 +38,8 @@
 
     <!-- Markdown Content Section -->
     <p class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
-      Transform your love life with personalized, one-on-one coaching sessions designed to help you find and maintain meaningful relationships.
+      Transform your love life with personalized, one-on-one coaching sessions designed to help you find and maintain
+      meaningful relationships.
     </p>
 
     <!-- Contact Form Section -->
@@ -29,15 +56,18 @@
             <div>
               <h3 class="font-serif text-3xl font-bold mb-6">Sign up for my waiting list</h3>
               <p class="text-white/80 mb-8">Be the first to know when I launch my one-on-one love coaching program.</p>
-              <p class="text-white/80 mb-8">While I'm  still working on the program, You will receive some emails with inspirational content and tips to help you on your journey.</p>
+              <p class="text-white/80 mb-8">
+                While I'm still working on the program, You will receive some emails with inspirational content and tips
+                to help you on your journey.
+              </p>
             </div>
           </div>
 
           <div class="md:w-4/5 min-h-[555px] bg-white">
             <iframe
-              src="https://actions.shannonchapoy.com/widget/form/5fdGTG9XZ2bT8OBLidJk"
-              style="width: 100%; height: 555px; border: none; border-radius: 4px;"
               id="inline-5fdGTG9XZ2bT8OBLidJk"
+              src="https://actions.shannonchapoy.com/widget/form/5fdGTG9XZ2bT8OBLidJk"
+              style="width: 100%; height: 555px; border: none; border-radius: 4px"
               data-layout="{'id':'INLINE'}"
               data-trigger-type="alwaysShow"
               data-trigger-value=""
@@ -73,27 +103,3 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import { Heart } from 'lucide-vue-next'
-
-const isVisible = ref(false)
-const { elementRef, isVisible: formVisible } = useScrollAnimation(0.2)
-
-const { data: contentData, pending: contentPending, error: contentError } = await useAsyncData('content-one-on-one', () => 
-  queryCollection('content').path('/one-on-one-love-coaching').first()
-)
-
-useHead({
-  title: '1:1 Love Coaching - Shannon Chapoy'
-})
-
-onMounted(() => {
-  if (process.client) {
-    window.scrollTo(0, 0)
-    document.documentElement.scrollTop = 0
-    document.body.scrollTop = 0
-    isVisible.value = true
-  }
-})
-</script>

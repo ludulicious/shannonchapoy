@@ -6,10 +6,8 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-11-29',
   ssr: false,
   devtools: { enabled: true },
-  modules: [
-    '@nuxt/content',
-    '@nuxtjs/tailwindcss'
-  ],
+  eslint: { config: { stylistic: { commaDangle: 'never', braceStyle: '1tbs' } } },
+  modules: ['@nuxt/eslint', '@nuxt/content', '@nuxtjs/tailwindcss'],
 
   css: ['~/assets/css/main.css'],
 
@@ -24,7 +22,8 @@ export default defineNuxtConfig({
         { name: 'viewport', content: 'width=device-width, initial-scale=1.0' },
         {
           'http-equiv': 'Permissions-Policy',
-          content: 'autoplay=*, camera=(), microphone=(), geolocation=(), payment=(self "https://actions.shannonchapoy.com")'
+          content:
+            'autoplay=*, camera=(), microphone=(), geolocation=(), payment=(self "https://actions.shannonchapoy.com")'
         }
       ],
       link: [
@@ -35,11 +34,12 @@ export default defineNuxtConfig({
         { rel: 'shortcut icon', href: '/fav/favicon.ico' },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
-        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap' }
+        {
+          rel: 'stylesheet',
+          href: 'https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap'
+        }
       ],
-      script: [
-        { src: 'https://actions.shannonchapoy.com/js/form_embed.js', defer: true }
-      ]
+      script: [{ src: 'https://actions.shannonchapoy.com/js/form_embed.js', defer: true }]
     },
     pageTransition: { name: 'page', mode: 'out-in' }
   },
@@ -64,7 +64,7 @@ export default defineNuxtConfig({
             "base-uri 'self'",
             "form-action 'self' https://actions.shannonchapoy.com",
             "frame-ancestors 'self'"
-          ].join('; ')          
+          ].join('; ')
         }
       }
     }

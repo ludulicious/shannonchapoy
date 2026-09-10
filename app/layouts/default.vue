@@ -1,3 +1,5 @@
+<script setup></script>
+
 <template>
   <div class="antialiased text-brand-charcoal bg-brand-soft min-h-screen flex flex-col">
     <Navigation />
@@ -7,7 +9,3 @@
     <Footer />
   </div>
 </template>
-
-<script setup>
-</script>
-

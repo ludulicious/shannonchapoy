@@ -1,3 +1,25 @@
+<script setup lang="ts">
+import { Users } from 'lucide-vue-next'
+
+const { elementRef, isVisible: formVisible } = useScrollAnimation(0.2)
+
+const {
+  data: introData,
+  pending: introPending,
+  error: introError
+} = await useAsyncData('content-pj-intro', () => queryCollection('content').path('/pj-circle-intro').first())
+
+const {
+  data: contentData,
+  pending: contentPending,
+  error: contentError
+} = await useAsyncData('content-pj-circle', () => queryCollection('content').path('/pj-circle').first())
+
+useHead({
+  title: 'PJ Circle - Shannon Chapoy'
+})
+</script>
+
 <template>
   <div class="flex-1 pt-24 pb-16">
     <!-- Title Section -->
@@ -6,7 +28,7 @@
         <div class="w-16 h-16 rounded-full flex items-center justify-center shadow-md bg-brand-seaBlue flex-shrink-0">
           <Users class="w-8 h-8 text-white" />
         </div>
-        <h1 class="font-serif text-4xl md:text-5xl font-bold text-brand-seaBlue">Peace & Joy Circle  (PJ Circle)</h1>
+        <h1 class="font-serif text-4xl md:text-5xl font-bold text-brand-seaBlue">Peace & Joy Circle (PJ Circle)</h1>
       </div>
     </div>
 
@@ -38,16 +60,21 @@
             <div>
               <div>
                 <h3 class="font-serif text-3xl font-bold mb-6">Start Your Journey</h3>
-                <p class="text-white/80 mb-8">Ready to start your journey? <br/> <br/> Sign up to join a PJ Circle and start your transformation of reconnecting to yourself and your divine essence.</p>
+                <p class="text-white/80 mb-8">
+                  Ready to start your journey? <br />
+                  <br />
+                  Sign up to join a PJ Circle and start your transformation of reconnecting to yourself and your divine
+                  essence.
+                </p>
               </div>
             </div>
           </div>
 
           <div class="md:w-4/5 min-h-[555px] bg-white">
             <iframe
-              src="https://actions.shannonchapoy.com/widget/form/6lN7WgzfJecJjmfppVfx"
-              style="width: 100%; height: 555px; border: none; border-radius: 4px;"
               id="inline-6lN7WgzfJecJjmfppVfx"
+              src="https://actions.shannonchapoy.com/widget/form/6lN7WgzfJecJjmfppVfx"
+              style="width: 100%; height: 555px; border: none; border-radius: 4px"
               data-layout="{'id':'INLINE'}"
               data-trigger-type="alwaysShow"
               data-trigger-value=""
@@ -83,23 +110,3 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import { Users } from 'lucide-vue-next'
-
-const { elementRef, isVisible: formVisible } = useScrollAnimation(0.2)
-
-const { data: introData, pending: introPending, error: introError } = await useAsyncData('content-pj-intro', () => 
-  queryCollection('content').path('/pj-circle-intro').first()
-)
-
-const { data: contentData, pending: contentPending, error: contentError } = await useAsyncData('content-pj-circle', () => 
-  queryCollection('content').path('/pj-circle').first()
-)
-
-useHead({
-  title: 'PJ Circle - Shannon Chapoy'
-})
-
-</script>
-

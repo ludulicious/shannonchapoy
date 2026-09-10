@@ -1,0 +1,4 @@
+Transparent logo created with the built-in image generation tool.
+The dark-background variant uses CSS brightness(0) invert(1) on the same transparent asset, preserving identical geometry and alpha.
+
+Edit target: supplied Shannon Chapoy logo. Use case: background-extraction. Remove the white background to genuine alpha transparency, including all white areas inside letters and butterfly wings. Preserve exactly the original butterfly linework, typography, wording 'Shannon Chapoy', two-line arrangement, proportions and teal-blue-purple gradient colors. Do not redesign or add anything. Tight crop with small equal transparent margin, wide aspect approximately 739:329. High quality crisp edges. Output one transparent PNG logo only, no checkerboard baked into pixels, no mockup.
