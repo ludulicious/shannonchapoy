@@ -3,26 +3,28 @@ const { elementRef: contentRef, isVisible } = useScrollAnimation(0.2)
 </script>
 
 <template>
-  <section id="philosophy" class="py-24 relative text-white overflow-hidden">
-    <div class="absolute inset-0">
+  <section id="philosophy" class="py-32 md:py-24 relative bg-brand-dkPurple text-white overflow-hidden">
+    <div class="philosophy-background absolute inset-0">
       <!-- Background Image -->
-      <img
-        src="https://images.unsplash.com/photo-1518173946687-a4c8892bbd9f?q=80&w=2000&auto=format&fit=crop"
-        alt="Nature background"
-        class="w-full h-full object-cover brightness-110"
-      />
-      <!-- Light Overlay to Brighten Background -->
-      <div class="absolute inset-0 bg-white/30"></div>
-      <!-- Purple Tint Overlay -->
-      <div class="absolute inset-0 bg-brand-ltPurple/20"></div>
-      <!-- Dark Overlay for Text Readability -->
-      <div class="absolute inset-0 bg-brand-dkPurple/60 mix-blend-multiply"></div>
+      <picture>
+        <source media="(max-width: 767px)" srcset="/images/philosophy-butterflies-mobile.jpg" />
+        <img
+          src="/images/philosophy-butterflies.jpg"
+          alt=""
+          width="2172"
+          height="724"
+          loading="lazy"
+          class="philosophy-image w-full h-full object-cover"
+        />
+      </picture>
+      <!-- Keep the quote crisp while preserving the butterflies around the edges. -->
+      <div class="absolute inset-0 bg-black/15"></div>
     </div>
 
     <div
       ref="contentRef"
       :class="[
-        'relative z-10 max-w-4xl mx-auto px-4 text-center transition-all duration-1000',
+        'relative z-10 max-w-4xl mx-auto px-6 text-center transition-all duration-1000',
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
       ]"
     >
@@ -36,7 +38,7 @@ const { elementRef: contentRef, isVisible } = useScrollAnimation(0.2)
       </span>
       <h2
         :class="[
-          'font-serif text-4xl md:text-5xl font-bold mb-8 leading-tight transition-all duration-1000 delay-300',
+          'font-serif text-3xl md:text-5xl font-bold mb-8 leading-tight text-balance drop-shadow-lg transition-all duration-1000 delay-300',
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
         ]"
       >
@@ -66,3 +68,21 @@ const { elementRef: contentRef, isVisible } = useScrollAnimation(0.2)
     </div>
   </section>
 </template>
+
+<style scoped>
+/* Preserve the full butterfly border where the panoramic image would crop at the sides. */
+@media (min-width: 768px) and (max-width: 1535px) {
+  .philosophy-background {
+    background: #211529;
+  }
+
+  .philosophy-image {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    height: auto;
+    transform: translateY(-50%);
+    mask-image: linear-gradient(to bottom, transparent, black 12%, black 88%, transparent);
+  }
+}
+</style>
