@@ -17,8 +17,6 @@ const { elementRef: contentRef, isVisible } = useScrollAnimation(0.2)
           class="philosophy-image w-full h-full object-cover"
         />
       </picture>
-      <!-- Keep the quote crisp while preserving the butterflies around the edges. -->
-      <div class="absolute inset-0 bg-black/15"></div>
     </div>
 
     <div
@@ -82,7 +80,6 @@ const { elementRef: contentRef, isVisible } = useScrollAnimation(0.2)
     width: 100%;
     height: auto;
     transform: translateY(-50%);
-    mask-image: linear-gradient(to bottom, transparent, black 12%, black 88%, transparent);
   }
 }
 </style>

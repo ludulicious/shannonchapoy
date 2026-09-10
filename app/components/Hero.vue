@@ -19,12 +19,6 @@ const { elementRef: contentRef, isVisible } = useScrollAnimation(0.2)
       />
     </picture>
 
-    <!-- A restrained plum shade preserves the flowers and contrast behind the white copy. -->
-    <div
-      class="absolute inset-0 bg-gradient-to-b from-brand-dkPurple/30 via-brand-dkPurple/20 to-brand-dkPurple/40 z-10"
-    ></div>
-    <div class="absolute inset-0 bg-black/10 z-10"></div>
-
     <!-- Main Content -->
     <div
       ref="contentRef"
