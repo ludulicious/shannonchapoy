@@ -16,12 +16,12 @@ Personal website for Shannon Chapoy built with Nuxt 4, Nuxt Content, and Tailwin
 
 1. Install dependencies:
    ```bash
-   npm install
+   pnpm install
    ```
 
 2. Run the development server:
    ```bash
-   npm run dev
+   pnpm dev
    ```
 
 3. Open [http://localhost:3000](http://localhost:3000) in your browser
@@ -29,7 +29,7 @@ Personal website for Shannon Chapoy built with Nuxt 4, Nuxt Content, and Tailwin
 ## Build for Production
 
 ```bash
-npm run build
+pnpm build
 ```
 
 The built files will be in the `.output/` folder.
@@ -83,10 +83,10 @@ Markdown files in the `content/` directory are automatically available via Nuxt 
 
 ## Scripts
 
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run generate` - Generate static site
-- `npm run preview` - Preview production build
+- `pnpm dev` - Start development server
+- `pnpm build` - Build for production
+- `pnpm generate` - Generate static site
+- `pnpm preview` - Preview production build
 
 ## Migration Notes
 

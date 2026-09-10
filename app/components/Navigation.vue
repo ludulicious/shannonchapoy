@@ -14,6 +14,9 @@
           v-for="item in menuItems"
           :key="item.name"
           :to="item.path"
+          active-class=""
+          exact-active-class=""
+          :aria-current="isActive(item.path) ? 'page' : undefined"
           :class="[
             'text-sm font-medium transition-colors',
             isActive(item.path)
@@ -86,28 +89,47 @@ const menuItems = [
   { name: 'Contact', path: '/contact' }
 ]
 
-const isHomePage = computed(() => {
-  return ['/', '/about', '/services', '/philosophy', '/contact'].includes(route.path)
-})
-
-const shouldShowBackground = computed(() => {
-  return !isHomePage.value || isScrolled.value
-})
-
 const isActive = (path: string) => {
   return route.path === path
 }
 
-onMounted(() => {
-  if (process.client) {
-    const handleScroll = () => {
-      isScrolled.value = window.scrollY > 50
-    }
-    window.addEventListener('scroll', handleScroll)
-    onBeforeUnmount(() => {
-      window.removeEventListener('scroll', handleScroll)
-    })
+const pagePath = () => {
+  if (import.meta.client) {
+    return window.location.pathname
   }
+  return route.path
+}
+
+const updateScrolled = () => {
+  if (!import.meta.client) {
+    return
+  }
+  if (pagePath() !== '/') {
+    isScrolled.value = true
+    return
+  }
+  isScrolled.value = window.scrollY > 50
+}
+
+const shouldShowBackground = computed(() => {
+  void route.fullPath
+  return pagePath() !== '/' || isScrolled.value
 })
+
+onMounted(() => {
+  updateScrolled()
+  window.addEventListener('scroll', updateScrolled, { passive: true })
+  onBeforeUnmount(() => {
+    window.removeEventListener('scroll', updateScrolled)
+  })
+})
+
+watch(
+  () => route.fullPath,
+  () => {
+    updateScrolled()
+  },
+  { flush: 'sync' }
+)
 </script>
 

@@ -1,40 +1,33 @@
-# Build stage
-FROM node:20-alpine AS builder
+FROM node:22-bookworm-slim AS builder
 
 WORKDIR /app
 
-# Copy package files
-COPY package*.json ./
+ENV PNPM_FETCH_TIMEOUT=600000
+ENV npm_config_nodedir=/usr/local
 
-# Install dependencies
-RUN npm ci
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends python3 make g++ \
+  && rm -rf /var/lib/apt/lists/* \
+  && npm install -g pnpm@12.3.4
 
-# Copy source files
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+RUN pnpm install --frozen-lockfile
+
 COPY . .
+RUN pnpm build
 
-# Build the application
-RUN npm run build
-
-# Production stage
-FROM node:20-alpine AS runner
+FROM node:22-bookworm-slim AS runner
 
 WORKDIR /app
 
-# Copy package files
-COPY package*.json ./
+ENV NODE_ENV=production
+ENV HOST=0.0.0.0
+ENV PORT=3000
+ENV NITRO_HOST=0.0.0.0
+ENV NITRO_PORT=3000
 
-# Install production dependencies only
-RUN npm ci --omit=dev
-
-# Copy built application from builder
 COPY --from=builder /app/.output ./.output
 
-# Expose port
 EXPOSE 3000
 
-# Set environment to production
-ENV NODE_ENV=production
-
-# Start the application
 CMD ["node", ".output/server/index.mjs"]
-

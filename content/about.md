@@ -1,6 +1,6 @@
 # Hi, I'm Shannon
 
-Five years ago at 52, after 30+ years in international business, I had achieved everything that looked impressive on paper. But I came home to profound loneliness.
+Six years ago at 52, after 30+ years in international business, I had achieved everything that looked impressive on paper. But I came home to profound loneliness.
 
 So I bought a single bed, convinced I was destined to be alone.
 Then my coach asked: "What would a date with you look like?"
