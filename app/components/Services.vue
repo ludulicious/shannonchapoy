@@ -153,7 +153,7 @@ const priceNote = (product: CatalogProduct) => {
 .catalog-section {
   background: var(--color-catalog-paper);
   color: var(--color-catalog-ink);
-  padding-block: var(--space-catalog-section);
+  padding-block: clamp(2.5rem, 5vw, 4rem);
 }
 .catalog-shell {
   margin-inline: auto;

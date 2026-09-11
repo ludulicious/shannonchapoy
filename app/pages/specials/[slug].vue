@@ -7,6 +7,7 @@ type CatalogProduct = {
   slug: string
   title: string
   subtitle?: string
+  buyButtonLabel?: string
   secondaryCta?: string
   summary: string
   descriptionHtml: string
@@ -15,8 +16,23 @@ type CatalogProduct = {
   isFree: boolean
   categoryDetails?: { name?: string }
   markdownStyle?: {
+    fontFamily?: 'system' | 'sans' | 'serif'
+    fontSize?: number
+    lineHeight?: number
+    paragraphSpacing?: number
+    headingScale?: number
     bulletStyle?: 'disc' | 'circle' | 'square' | 'dash' | 'check' | 'sparkle'
     bulletColor?: string
+    textColor?: string
+    headingColor?: string
+    h1Color?: string
+    h2Color?: string
+    h3Color?: string
+    h4Color?: string
+    h5Color?: string
+    h6Color?: string
+    linkColor?: string
+    backgroundColor?: string
   }
 }
 type CatalogResponse = { items: CatalogProduct[] }
@@ -67,9 +83,30 @@ const descriptionStyle = computed(() => {
   const bullets = { disc: '•', circle: '◦', square: '▪', dash: '–', check: '✓', sparkle: '✦' }
   const markdownStyle = product.value?.markdownStyle
   const bullet = bullets[markdownStyle?.bulletStyle ?? 'disc']
+  const fonts = {
+    system: 'system-ui, sans-serif',
+    sans: 'Arial, Helvetica, sans-serif',
+    serif: 'Georgia, Times New Roman, serif'
+  }
+  const headingColor = markdownStyle?.headingColor || 'var(--color-catalog-display)'
   return {
     '--product-content-bullet': `"${bullet}  "`,
-    '--product-content-bullet-color': markdownStyle?.bulletColor || 'inherit'
+    '--product-content-bullet-color': markdownStyle?.bulletColor || 'inherit',
+    '--product-content-font': fonts[markdownStyle?.fontFamily ?? 'system'],
+    '--product-content-size': `${markdownStyle?.fontSize ?? 16}px`,
+    '--product-content-leading': String(markdownStyle?.lineHeight ?? 1.7),
+    '--product-content-gap': `${markdownStyle?.paragraphSpacing ?? 1}em`,
+    '--product-content-scale': String(markdownStyle?.headingScale ?? 1.25),
+    '--product-content-text': markdownStyle?.textColor || 'var(--color-catalog-ink)',
+    '--product-content-heading': headingColor,
+    '--product-content-h1': markdownStyle?.h1Color || headingColor,
+    '--product-content-h2': markdownStyle?.h2Color || headingColor,
+    '--product-content-h3': markdownStyle?.h3Color || headingColor,
+    '--product-content-h4': markdownStyle?.h4Color || headingColor,
+    '--product-content-h5': markdownStyle?.h5Color || headingColor,
+    '--product-content-h6': markdownStyle?.h6Color || headingColor,
+    '--product-content-link': markdownStyle?.linkColor || 'var(--color-catalog-accent)',
+    backgroundColor: markdownStyle?.backgroundColor || undefined
   }
 })
 watchEffect(() => {
@@ -126,7 +163,7 @@ const buyNow = () => {
 
           <button type="button" class="special-buy" @click="buyNow">
             <ShoppingBag aria-hidden="true" />
-            Buy now
+            {{ product.buyButtonLabel || 'Buy now' }}
           </button>
           <p v-if="buyMessageVisible" class="special-message" role="status">
             <Check aria-hidden="true" />
@@ -147,7 +184,7 @@ const buyNow = () => {
             </div>
             <button type="button" class="special-buy" @click="buyNow">
               <ShoppingBag aria-hidden="true" />
-              Buy now
+              {{ product.buyButtonLabel || 'Buy now' }}
             </button>
             <p v-if="buyMessageVisible" class="special-message" role="status">
               <Check aria-hidden="true" />
@@ -295,15 +332,56 @@ const buyNow = () => {
   margin-block-end: 1.5rem;
 }
 .special-description__body {
-  color: var(--color-catalog-ink);
-  font-size: 1.05rem;
-  line-height: 1.8;
+  color: var(--product-content-text);
+  font-family: var(--product-content-font);
+  font-size: var(--product-content-size);
+  line-height: var(--product-content-leading);
   max-width: 48rem;
+  overflow-wrap: anywhere;
 }
 .special-description__body :deep(p),
 .special-description__body :deep(ul),
-.special-description__body :deep(ol) {
-  margin-block: 0 1rem;
+.special-description__body :deep(ol),
+.special-description__body :deep(pre) {
+  margin-block: 0 var(--product-content-gap);
+}
+.special-description__body :deep(h1),
+.special-description__body :deep(h2),
+.special-description__body :deep(h3),
+.special-description__body :deep(h4),
+.special-description__body :deep(h5),
+.special-description__body :deep(h6) {
+  color: var(--product-content-heading);
+  font-family: inherit;
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 1.5em 0 0.6em;
+}
+.special-description__body :deep(h1) {
+  color: var(--product-content-h1);
+  font-size: calc(1.8em * var(--product-content-scale));
+}
+.special-description__body :deep(h2) {
+  color: var(--product-content-h2);
+  font-size: calc(1.5em * var(--product-content-scale));
+}
+.special-description__body :deep(h3) {
+  color: var(--product-content-h3);
+  font-size: calc(1.2em * var(--product-content-scale));
+}
+.special-description__body :deep(h4) {
+  color: var(--product-content-h4);
+}
+.special-description__body :deep(h5) {
+  color: var(--product-content-h5);
+}
+.special-description__body :deep(h6) {
+  color: var(--product-content-h6);
+}
+.special-description__body :deep(h4),
+.special-description__body :deep(h5),
+.special-description__body :deep(h6) {
+  font-size: calc(1em * var(--product-content-scale));
 }
 .special-description__body :deep(ul),
 .special-description__body :deep(ol) {
@@ -341,6 +419,11 @@ const buyNow = () => {
 }
 .special-description__body :deep(blockquote > :last-child) {
   margin-block-end: 0;
+}
+.special-description__body :deep(a) {
+  color: var(--product-content-link);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
 }
 .special-bottom-cta {
   align-items: center;
