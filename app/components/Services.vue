@@ -61,18 +61,18 @@ const priceNote = (product: CatalogProduct) => {
 </script>
 
 <template>
-  <section id="services" class="catalog-section">
+  <section id="offerings" class="catalog-section">
     <div class="catalog-shell">
       <div
         ref="headerRef"
         :class="['catalog-heading', headerVisible ? 'catalog-heading--visible' : 'catalog-heading--hidden']"
       >
-        <p class="catalog-heading__intro">Ways I support you</p>
+        <p class="catalog-heading__intro">Offerings</p>
         <h2>Choose your Greatest Love Adventure</h2>
         <p class="catalog-heading__copy">
           Every journey to self-love is unique. Explore the offering that feels right for where you are now.
         </p>
-        <CatalogCurrencySelect />
+        <CatalogCurrencySelect v-if="products.length > 0" />
       </div>
 
       <div v-if="status === 'pending'" class="catalog-grid" aria-label="Loading offerings" aria-busy="true">

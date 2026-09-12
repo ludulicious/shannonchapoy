@@ -7,7 +7,7 @@ const isMobileMenuOpen = ref(false)
 
 const menuItems = [
   { name: 'About', path: '/about' },
-  { name: 'Services', path: '/services' },
+  { name: 'Offerings', path: '/offerings' },
   { name: 'Philosophy', path: '/philosophy' },
   { name: 'Contact', path: '/contact' }
 ]

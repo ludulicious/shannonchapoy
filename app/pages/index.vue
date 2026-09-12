@@ -1,6 +1,6 @@
 <script setup lang="ts">
 definePageMeta({
-  path: '/:section(about|services|philosophy|contact)?',
+  path: '/:section(about|offerings|philosophy|contact)?',
   key: 'landing'
 })
 

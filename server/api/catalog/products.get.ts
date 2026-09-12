@@ -3,6 +3,7 @@ type CatalogResponse = {
     images: string[]
     thumbnailImage: string | null
     detailImages: string[]
+    nextSteps: string
     [key: string]: unknown
   }>
   pagination: { page: number; pageSize: number; totalItems: number; totalPages: number }
@@ -12,6 +13,7 @@ export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
   const requestedCurrency = String(getQuery(event).currency ?? 'EUR').toUpperCase()
   const currency = requestedCurrency === 'USD' ? 'USD' : 'EUR'
+  const locale = getQuery(event).locale === 'nl' ? 'nl' : 'en'
   if (!config.portalApiKey) {
     throw createError({ statusCode: 503, statusMessage: 'Catalog API credentials are not configured' })
   }
@@ -19,7 +21,7 @@ export default defineEventHandler(async (event) => {
   try {
     const catalog = await $fetch<CatalogResponse>('/api/store/v1/products', {
       baseURL: config.portalUrl,
-      query: { status: 'draft', locale: 'en', currency },
+      query: { status: 'published', locale, currency },
       headers: { Authorization: `Bearer ${config.portalApiKey}` }
     })
     const portalOrigin = new URL(config.portalUrl).origin

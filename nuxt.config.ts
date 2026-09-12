@@ -63,7 +63,7 @@ export default defineNuxtConfig({
       routes: [
         '/',
         '/about',
-        '/services',
+        '/offerings',
         '/philosophy',
         '/contact',
         '/pj-circle',
@@ -74,6 +74,7 @@ export default defineNuxtConfig({
       ]
     },
     routeRules: {
+      '/services': { redirect: '/offerings' },
       '/**': {
         headers: {
           'Content-Security-Policy': [

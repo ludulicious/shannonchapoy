@@ -39,9 +39,20 @@ type CatalogProduct = {
 type CatalogResponse = { items: CatalogProduct[] }
 
 const route = useRoute()
+const requestUrl = useRequestURL()
 const currency = useCatalogCurrency()
 const { data, error } = await useFetch<CatalogResponse>('/api/catalog/products', { query: { currency } })
 const product = computed(() => data.value?.items.find((item) => item.slug === route.params.slug))
+const checkoutUrl = computed(() => {
+  if (!product.value) {
+    return ''
+  }
+  const url = new URL(product.value.purchaseUrl)
+  url.searchParams.set('locale', 'en')
+  url.searchParams.set('currency', currency.value)
+  url.searchParams.set('returnUrl', new URL(route.fullPath, requestUrl.origin).toString())
+  return url.toString()
+})
 
 if (!error.value && data.value && !product.value) {
   throw createError({ statusCode: 404, statusMessage: 'Offering not found' })
@@ -123,7 +134,7 @@ watchEffect(() => {
   <main class="special-page">
     <div class="special-shell">
       <div class="special-toolbar">
-        <NuxtLink to="/services#services" class="special-back">
+        <NuxtLink to="/offerings" class="special-back">
           <ArrowLeft aria-hidden="true" />
           All offerings
         </NuxtLink>
@@ -157,7 +168,7 @@ watchEffect(() => {
             <span v-if="taxNote">{{ taxNote }}</span>
           </div>
 
-          <NuxtLink :to="product.purchaseUrl" external class="special-buy">
+          <NuxtLink :to="checkoutUrl" external class="special-buy">
             <ShoppingBag aria-hidden="true" />
             {{ product.buyButtonLabel || 'Buy now' }}
           </NuxtLink>
@@ -174,7 +185,7 @@ watchEffect(() => {
               <strong>{{ formattedPrice }}</strong>
               <span v-if="taxNote">{{ taxNote }}</span>
             </div>
-            <NuxtLink :to="product.purchaseUrl" external class="special-buy">
+            <NuxtLink :to="checkoutUrl" external class="special-buy">
               <ShoppingBag aria-hidden="true" />
               {{ product.buyButtonLabel || 'Buy now' }}
             </NuxtLink>
