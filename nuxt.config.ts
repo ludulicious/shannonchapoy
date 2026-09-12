@@ -9,7 +9,9 @@ export default defineNuxtConfig({
   eslint: { config: { stylistic: { commaDangle: 'never', braceStyle: '1tbs' } } },
   modules: ['@nuxt/eslint', '@nuxt/content', '@nuxtjs/tailwindcss'],
 
-  css: ['~/assets/css/main.css'],
+  tailwindcss: {
+    cssPath: '~/assets/css/main.css'
+  },
 
   runtimeConfig: {
     portalApiKey: '',
