@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ArrowLeft, Check, ShoppingBag } from 'lucide-vue-next'
+import { ArrowLeft, ShoppingBag } from 'lucide-vue-next'
 
 type CatalogPrice = { amount: number; currency: string; taxBehavior: 'exclusive' | 'inclusive' | 'unspecified' }
 type CatalogProduct = {
@@ -12,6 +12,7 @@ type CatalogProduct = {
   summary: string
   descriptionHtml: string
   thumbnailImage: string | null
+  purchaseUrl: string
   prices: CatalogPrice[]
   isFree: boolean
   categoryDetails?: { name?: string }
@@ -38,7 +39,6 @@ type CatalogProduct = {
 type CatalogResponse = { items: CatalogProduct[] }
 
 const route = useRoute()
-const buyMessageVisible = ref(false)
 const currency = useCatalogCurrency()
 const { data, error } = await useFetch<CatalogResponse>('/api/catalog/products', { query: { currency } })
 const product = computed(() => data.value?.items.find((item) => item.slug === route.params.slug))
@@ -117,10 +117,6 @@ watchEffect(() => {
     })
   }
 })
-
-const buyNow = () => {
-  buyMessageVisible.value = true
-}
 </script>
 
 <template>
@@ -161,14 +157,10 @@ const buyNow = () => {
             <span v-if="taxNote">{{ taxNote }}</span>
           </div>
 
-          <button type="button" class="special-buy" @click="buyNow">
+          <NuxtLink :to="product.purchaseUrl" external class="special-buy">
             <ShoppingBag aria-hidden="true" />
             {{ product.buyButtonLabel || 'Buy now' }}
-          </button>
-          <p v-if="buyMessageVisible" class="special-message" role="status">
-            <Check aria-hidden="true" />
-            To be implemented
-          </p>
+          </NuxtLink>
         </div>
 
         <section v-if="product.descriptionHtml" class="special-description">
@@ -182,14 +174,10 @@ const buyNow = () => {
               <strong>{{ formattedPrice }}</strong>
               <span v-if="taxNote">{{ taxNote }}</span>
             </div>
-            <button type="button" class="special-buy" @click="buyNow">
+            <NuxtLink :to="product.purchaseUrl" external class="special-buy">
               <ShoppingBag aria-hidden="true" />
               {{ product.buyButtonLabel || 'Buy now' }}
-            </button>
-            <p v-if="buyMessageVisible" class="special-message" role="status">
-              <Check aria-hidden="true" />
-              To be implemented
-            </p>
+            </NuxtLink>
           </div>
         </section>
       </article>
@@ -223,8 +211,7 @@ const buyNow = () => {
   margin-block-end: 2rem;
 }
 .special-back svg,
-.special-buy svg,
-.special-message svg {
+.special-buy svg {
   height: 1.1rem;
   width: 1.1rem;
 }
@@ -302,6 +289,7 @@ const buyNow = () => {
   font-weight: 800;
   gap: 0.65rem;
   padding: 0.95rem 1.6rem;
+  text-decoration: none;
   transition:
     transform 180ms ease,
     box-shadow 180ms ease;
@@ -314,14 +302,6 @@ const buyNow = () => {
 .special-back:focus-visible {
   outline: 3px solid color-mix(in srgb, var(--color-catalog-accent) 45%, transparent);
   outline-offset: 4px;
-}
-.special-message {
-  align-items: center;
-  color: var(--color-catalog-accent);
-  display: flex;
-  font-weight: 700;
-  gap: 0.5rem;
-  margin-block-start: 1rem;
 }
 .special-description {
   border-top: 1px solid color-mix(in srgb, var(--color-catalog-accent) 14%, transparent);
@@ -455,10 +435,6 @@ const buyNow = () => {
 .special-bottom-price span {
   color: var(--color-catalog-muted);
   font-size: 0.78rem;
-}
-.special-bottom-cta .special-message {
-  flex-basis: 100%;
-  margin-block-start: 0;
 }
 .special-state {
   background: white;
