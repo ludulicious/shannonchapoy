@@ -3,6 +3,9 @@ import { ArrowLeft, ShoppingBag } from 'lucide-vue-next'
 
 type CatalogPrice = { amount: number; currency: string; taxBehavior: 'exclusive' | 'inclusive' | 'unspecified' }
 type CatalogProduct = {
+  type: 'digital' | 'service'
+  planningEnabled?: boolean
+  durationMinutes?: number | null
   id: string
   slug: string
   title: string
@@ -161,6 +164,7 @@ watchEffect(() => {
           <p v-if="product.categoryDetails?.name" class="special-eyebrow">{{ product.categoryDetails.name }}</p>
           <p v-if="product.subtitle" class="special-subtitle">{{ product.subtitle }}</p>
           <h1>{{ product.title }}</h1>
+          <CatalogAppointmentDuration :product="product" />
           <p class="special-summary">{{ product.summary }}</p>
 
           <div class="special-price">

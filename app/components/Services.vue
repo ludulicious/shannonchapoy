@@ -3,6 +3,9 @@ import { ArrowRight, PackageOpen, RefreshCw } from 'lucide-vue-next'
 
 type CatalogPrice = { amount: number; currency: string; taxBehavior: 'exclusive' | 'inclusive' | 'unspecified' }
 type CatalogProduct = {
+  type: 'digital' | 'service'
+  planningEnabled?: boolean
+  durationMinutes?: number | null
   id: string
   slug: string
   title: string
@@ -116,6 +119,7 @@ const priceNote = (product: CatalogProduct) => {
             <div class="product-card__price">
               <strong>{{ formatPrice(product) }}</strong>
               <span v-if="priceNote(product)">{{ priceNote(product) }}</span>
+              <CatalogAppointmentDuration :product="product" />
             </div>
           </div>
 
