@@ -3,10 +3,15 @@ export const useScrollAnimation = (threshold: number = 0.1) => {
   const isVisible = ref(true)
   const elementRef = ref<HTMLElement | null>(null)
   let observer: IntersectionObserver | null = null
+  let isMounted = false
 
-  onMounted(() => {
+  const observeElement = (element: HTMLElement | null) => {
+    observer?.disconnect()
+    observer = null
+
     if (
-      !elementRef.value ||
+      !isMounted ||
+      !element ||
       !('IntersectionObserver' in window) ||
       window.matchMedia('(prefers-reduced-motion: reduce)').matches
     ) {
@@ -14,8 +19,9 @@ export const useScrollAnimation = (threshold: number = 0.1) => {
     }
 
     // Only hide offscreen elements after hydration, for their entrance animation.
-    const bounds = elementRef.value.getBoundingClientRect()
+    const bounds = element.getBoundingClientRect()
     if (bounds.top < window.innerHeight && bounds.bottom > 0) {
+      isVisible.value = true
       return
     }
     isVisible.value = false
@@ -30,13 +36,18 @@ export const useScrollAnimation = (threshold: number = 0.1) => {
       { threshold }
     )
 
-    observer.observe(elementRef.value)
+    observer.observe(element)
+  }
+
+  watch(elementRef, observeElement, { flush: 'post' })
+
+  onMounted(() => {
+    isMounted = true
+    observeElement(elementRef.value)
   })
 
   onUnmounted(() => {
-    if (observer) {
-      observer.disconnect()
-    }
+    observer?.disconnect()
   })
 
   return { elementRef, isVisible }
