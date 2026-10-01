@@ -4,10 +4,9 @@ definePageMeta({
   key: 'landing'
 })
 
-usePageSeo(
-  'Self-Love & Relationship Coaching - Shannon Chapoy',
-  'Rediscover yourself with Shannon Chapoy. Explore self-love workshops, one-on-one relationship coaching, and Peace & Joy Circles for successful women.'
-)
+const { data: contentData } = await useAsyncData('content-home', () => queryCollection('content').path('/').first())
+
+usePageSeo(contentData)
 
 const route = useRoute()
 const { handleHashNavigation } = useScrollToSection()
@@ -30,6 +29,7 @@ watch(
     <About />
     <Services />
     <Philosophy />
+    <PageFaq :items="contentData?.faq" />
     <Contact />
   </div>
 </template>

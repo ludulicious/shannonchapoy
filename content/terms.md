@@ -1,3 +1,17 @@
+---
+title: 'Terms of Service'
+description: 'Review the terms for using this website and coaching services from Shannon Chapoy, including bookings, payments, cancellations, and responsibilities.'
+seo:
+  title: 'Terms of Service - Shannon Chapoy'
+  description: 'Review the terms for using this website and coaching services from Shannon Chapoy, including bookings, payments, cancellations, and responsibilities.'
+  image: '/images/og-shannon-chapoy.jpg'
+  imageAlt: 'Shannon Chapoy — Your greatest love lives within you. Self-love & relationship coaching.'
+  canonical: '/terms'
+  noindex: false
+structuredData:
+  type: 'WebPage'
+---
+
 # Terms of Service
 
 **Last Updated: November 22, 2025**

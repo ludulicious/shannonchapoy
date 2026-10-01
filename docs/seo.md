@@ -1,21 +1,49 @@
-# SEO and social sharing
+# SEO and AI discoverability
 
-The build pre-renders all ten content and section URLs so page content and metadata are present in static HTML. The Nuxt server remains available for form validation and missing-page responses. Content is visible before JavaScript loads; offscreen entrance animations are enabled only after hydration. Each content page has a title, description, Open Graph tags, Twitter large-image card, and canonical URL through `app/composables/usePageSeo.ts`.
+## Audit and implementation
 
-The production origin is `https://shannonchapoy.com`. The homepage section routes share the homepage canonical. The sitemap lists the six canonical pages, and robots.txt points to it. Update the sitemap when adding pages. Canonical handling follows [Google's guidance](https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls).
+The site pre-renders its six canonical pages and four homepage section URLs. Content is available in HTML before JavaScript loads, the homepage has one H1, images have dimensions, and decorative images have empty alt text. The four section URLs represent the same homepage and intentionally share its canonical. Robots allows crawling; purchase confirmation pages and missing pages are excluded from indexing.
 
-Missing pages return HTTP 404 and `noindex, follow`. The homepage has one H1; the About heading is H2.
+Previously, search descriptions, titles, and social previews were hardcoded in Vue. They now come from Markdown frontmatter, with reactive metadata shared by search, Open Graph, and Twitter. All canonical pages have explicit frontmatter. The homepage settings live in `content/index.md`; `/about`, `/offerings`, `/philosophy`, and `/contact` use those same settings. `about.md` and `pj-circle-intro.md` are content fragments, not separate canonical pages.
+
+JSON-LD describes the website, Shannon as a Person, each page, and the three coaching services. Frontmatter FAQs are rendered visibly and used for FAQPage structured data. They provide direct answers grounded in existing content. Google generally restricts FAQ rich results to authoritative government and health websites; this markup does not promise a rich result. No prices, credentials, addresses, ratings, or external profiles were invented.
+
+Catalog offering pages now also receive canonical URLs and social metadata from their portal-managed title, summary, and thumbnail. Purchase pages stay `noindex, nofollow`. Catalog content continues to be edited in the customer portal.
+
+[Google's AI guidance](https://developers.google.com/search/docs/appearance/ai-features) recommends the same fundamentals as SEO: crawlable, helpful text, internal links, and structured data that matches visible content. It does not require a special AI metadata format or an `llms.txt` file. Schema and FAQs help describe content; they do not guarantee indexing, rankings, or AI citations.
+
+## Editing in Marpos Studio
+
+The explicit Zod schema in `content.config.ts` exposes all fields as labelled Studio editors, including optional objects, booleans, lists, and the structured-data type selector. No Studio code change or Nuxt Studio installation is needed. After these website changes reach the live branch, use **Get latest website** in Marpos Studio to refresh the content and schema, then open the page's properties.
+
+| Property                                            | Effect                                                                                                |
+| --------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| `title`, `description`                              | Page identity and fallback metadata                                                                   |
+| `seo.title`, `seo.description`                      | Search title/description and social preview text                                                      |
+| `seo.image`, `seo.imageAlt`                         | Social image path/HTTPS URL and accessible description; omitted images use the existing card          |
+| `seo.canonical`                                     | Preferred path or HTTPS URL; omitted values use the route, with homepage sections consolidated to `/` |
+| `seo.noindex`                                       | Exclude the page from search indexing                                                                 |
+| `structuredData.type`                               | `WebPage` or `Service`                                                                                |
+| `structuredData.name`, `serviceType`, `audience`    | Service facts that must match the visible content                                                     |
+| `profile.name`, `jobTitle`, `description`, `sameAs` | Homepage coach identity; only add verified public profile URLs                                        |
+| `faq[].question`, `faq[].answer`                    | Visible FAQ content and corresponding structured data                                                 |
+
+Keep descriptions accurate and concise. Change the visible story as well when changing service facts. Edit `content/`, which Nuxt and Studio read; the old `public/content/` copies are not the site's content source. Rebuild after publishing content changes.
+
+The sitemap is generated from the six implemented canonical routes and their frontmatter. It excludes pages marked `noindex`, excludes off-site canonicals, and deduplicates URLs. New standalone routes still need to be implemented and added to the route list; creating arbitrary Markdown files does not create page templates here.
+
+## Content issues requiring owner review
+
+- PJ Circle's introduction says biweekly gatherings; its main story says weekly sessions for four weeks. Confirm the current schedule before changing either claim. FAQ answers deliberately omit the conflicting schedule and price.
+- The terms contain unfinished cancellation, package expiry, session format, and governing-law placeholders. These reduce trust and need confirmed business information.
+- Privacy text lists analytics and service providers as examples. Confirm it matches the services actually used.
+- Shannon's story uses relative ages and dates that will become stale; consider confirmed calendar dates when updating it.
+- Additional first-hand details about the coaching approach, qualifications, formats, and outcomes would make the content more useful and distinctive. Add only confirmed facts and permissioned testimonials.
 
 ## Verification
 
-The production build and formatting checks passed. Local production HTTP checks passed for all six pages, four homepage section routes, the 404 response, robots.txt, sitemap.xml, and the social image. HTML checks confirmed descriptions, social tags, canonical links, one H1 per page, and no content-loading error messages.
-
-Deployment and live search indexing were not checked. After deployment, verify the public image URL and submit the sitemap through Google Search Console. Social platforms may cache earlier previews.
+The production build passed. Generated HTML checks passed for all ten page URLs: search and social metadata, canonical URLs, parseable JSON-LD, visible FAQ answers, and one H1. The sitemap contained all six canonical URLs. Marpos Studio's own `scripts/inspect-project.mjs` recognized every new field and nested editor type. Additional checks passed for reactive metadata overrides, noindex, invalid image/URL fallbacks, canonical query removal, and JSON-LD script escaping. Live website access and search indexing could not be checked in this environment. After deployment, use Search Console and validate representative URLs with the Rich Results Test; social platforms may cache older cards.
 
 ## Open Graph image
 
-Asset: `public/images/og-shannon-chapoy.jpg`, 1200 × 630 JPEG. Created with the built-in image generation tool using `public/images/hero-flowers-butterflies.jpg` as a reference, then resized and compressed for delivery.
-
-Generation prompt:
-
-> Create a finished Open Graph social sharing card for Shannon Chapoy's self-love coaching website. Use the reference floral butterfly photograph as the full-bleed background, adapting it to a wide 1200 x 630 landscape composition. Elegant deep plum background, purple flowers and pale butterflies at outer edges. Keep a generous quiet dark center with crisp perfectly legible ivory typography. Center exact large elegant serif text 'Shannon Chapoy'. Below in smaller clean sans serif text 'Your greatest love lives within you'. Below that a small line 'Self-love & relationship coaching'. At bottom center small 'shannonchapoy.com'. No extra text, borders, badges, or logos. All text safely inset at least 100 pixels. Produce a polished premium social preview image, 1200 x 630.
+Default asset: `public/images/og-shannon-chapoy.jpg`, 1200 × 630 JPEG. Custom social images should ideally have the same aspect ratio; their dimensions are not guessed. The existing image was created from the floral butterfly hero reference.

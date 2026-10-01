@@ -1,3 +1,25 @@
+---
+title: 'Peace & Joy Circle'
+description: 'Connect with a supportive circle of women. Peace & Joy Circles help you reconnect with yourself and rediscover playfulness, self-love, and joy.'
+seo:
+  title: 'Peace & Joy Circle - Shannon Chapoy'
+  description: 'Connect with a supportive circle of women. Peace & Joy Circles help you reconnect with yourself and rediscover playfulness, self-love, and joy.'
+  image: '/images/og-shannon-chapoy.jpg'
+  imageAlt: 'Shannon Chapoy — Your greatest love lives within you. Self-love & relationship coaching.'
+  canonical: '/pj-circle'
+  noindex: false
+structuredData:
+  type: 'Service'
+  name: 'Peace & Joy Circle'
+  serviceType: 'Group self-love coaching'
+  audience: 'Successful women'
+faq:
+  - question: 'What is a Peace & Joy Circle?'
+    answer: 'A Peace & Joy Circle is an intimate group for successful women to reconnect with themselves, explore self-love, and find support in community.'
+  - question: 'How large is a Peace & Joy Circle?'
+    answer: 'Each circle welcomes up to 10 women to keep the space intimate and supportive.'
+---
+
 ## What You'll Experience
 
 - Feel seen, supported and safe to open up

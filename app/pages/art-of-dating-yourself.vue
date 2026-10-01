@@ -12,10 +12,7 @@ const {
   queryCollection('content').path('/art-of-dating-yourself').first()
 )
 
-usePageSeo(
-  'The Art of Dating Yourself - Shannon Chapoy',
-  'Learn to enjoy your own company with self-love workshops from Shannon Chapoy. Explore boundaries, mindfulness, self-care, and practices that build confidence.'
-)
+usePageSeo(contentData)
 
 onMounted(() => {
   if (import.meta.client) {
@@ -108,5 +105,6 @@ onMounted(() => {
         <ContentRenderer :value="contentData" />
       </article>
     </div>
+    <PageFaq :items="contentData?.faq" />
   </div>
 </template>

@@ -85,7 +85,7 @@ Nuxt 4 uses a preferred folder structure with the `app/` directory:
 
 ## Content Management
 
-Markdown files in the `content/` directory are automatically available via Nuxt Content. Use the `<ContentDoc>` component to render markdown content.
+Markdown files in the `content/` directory are automatically available via Nuxt Content. The page templates use `<ContentRenderer>` to render Markdown. Search metadata, social previews, structured service information, and visible FAQs are editable in frontmatter through Marpos Studio. Homepage metadata lives in `content/index.md`. See [SEO and AI discoverability](docs/seo.md) for the field reference and audit findings.
 
 ## Scripts
 

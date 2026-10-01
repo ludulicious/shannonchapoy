@@ -123,14 +123,11 @@ const descriptionStyle = computed(() => {
     backgroundColor: markdownStyle?.backgroundColor || undefined
   }
 })
-watchEffect(() => {
-  if (product.value) {
-    useSeoMeta({
-      title: `${product.value.title} - Shannon Chapoy`,
-      description: product.value.summary
-    })
-  }
-})
+usePageSeo(() => ({
+  title: product.value ? `${product.value.title} - Shannon Chapoy` : 'Offering - Shannon Chapoy',
+  description: product.value?.summary || '',
+  seo: { image: product.value?.thumbnailImage || undefined, imageAlt: product.value?.title, noindex: !!error.value }
+}))
 </script>
 
 <template>

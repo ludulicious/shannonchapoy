@@ -15,10 +15,7 @@ const {
   error: contentError
 } = await useAsyncData('content-pj-circle', () => queryCollection('content').path('/pj-circle').first())
 
-usePageSeo(
-  'Peace & Joy Circle - Shannon Chapoy',
-  'Connect with a supportive circle of women. Peace & Joy Circles help you reconnect with yourself and rediscover playfulness, self-love, and joy.'
-)
+usePageSeo(contentData)
 </script>
 
 <template>
@@ -109,5 +106,6 @@ usePageSeo(
         <ContentRenderer :value="contentData" />
       </article>
     </div>
+    <PageFaq :items="contentData?.faq" />
   </div>
 </template>

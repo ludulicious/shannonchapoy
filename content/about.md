@@ -1,3 +1,8 @@
+---
+title: About Shannon Chapoy
+description: Shannon shares her journey from loneliness to self-love and now guides successful women through coaching and workshops.
+---
+
 ## Hi, I'm Shannon
 
 Six years ago at 52, after 30+ years in international business, I had achieved everything that looked impressive on paper. But I came home to profound loneliness.

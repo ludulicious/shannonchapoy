@@ -70,7 +70,8 @@ export default defineNuxtConfig({
         '/one-on-one-love-coaching',
         '/art-of-dating-yourself',
         '/privacy',
-        '/terms'
+        '/terms',
+        '/sitemap.xml'
       ]
     },
     routeRules: {

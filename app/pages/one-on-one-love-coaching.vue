@@ -10,10 +10,7 @@ const {
   error: contentError
 } = await useAsyncData('content-one-on-one', () => queryCollection('content').path('/one-on-one-love-coaching').first())
 
-usePageSeo(
-  '1:1 Love Coaching - Shannon Chapoy',
-  'Build confidence, clarity, and deeper connections with personalized love coaching from Shannon Chapoy. Explore your relationship goals and create your next chapter.'
-)
+usePageSeo(contentData)
 
 onMounted(() => {
   if (import.meta.client) {
@@ -102,5 +99,6 @@ onMounted(() => {
         <ContentRenderer :value="contentData" />
       </article>
     </div>
+    <PageFaq :items="contentData?.faq" />
   </div>
 </template>
