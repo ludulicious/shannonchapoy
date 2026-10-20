@@ -3,6 +3,7 @@ import { ArrowLeft, ShoppingBag } from 'lucide-vue-next'
 
 type CatalogPrice = { amount: number; currency: string; taxBehavior: 'exclusive' | 'inclusive' | 'unspecified' }
 type CatalogProduct = {
+  visibility?: 'listed' | 'unlisted'
   type: 'digital' | 'service'
   planningEnabled?: boolean
   durationMinutes?: number | null
@@ -39,13 +40,17 @@ type CatalogProduct = {
     backgroundColor?: string
   }
 }
-type CatalogResponse = { items: CatalogProduct[] }
 
 const route = useRoute()
 const requestUrl = useRequestURL()
 const currency = useCatalogCurrency()
-const { data, error } = await useFetch<CatalogResponse>('/api/catalog/products', { query: { currency } })
-const product = computed(() => data.value?.items.find((item) => item.slug === route.params.slug))
+const { data: product, error } = await useFetch<CatalogProduct>(
+  () => `/api/catalog/products/${encodeURIComponent(String(route.params.slug))}`,
+  { query: { currency } }
+)
+if (import.meta.server) {
+  useResponseHeader('Cache-Control').value = 'private, no-store'
+}
 const checkoutUrl = computed(() => {
   if (!product.value) {
     return ''
@@ -57,7 +62,7 @@ const checkoutUrl = computed(() => {
   return url.toString()
 })
 
-if (!error.value && data.value && !product.value) {
+if (error.value?.statusCode === 404) {
   throw createError({ statusCode: 404, statusMessage: 'Offering not found' })
 }
 
@@ -126,7 +131,11 @@ const descriptionStyle = computed(() => {
 usePageSeo(() => ({
   title: product.value ? `${product.value.title} - Shannon Chapoy` : 'Offering - Shannon Chapoy',
   description: product.value?.summary || '',
-  seo: { image: product.value?.thumbnailImage || undefined, imageAlt: product.value?.title, noindex: !!error.value }
+  seo: {
+    image: product.value?.thumbnailImage || undefined,
+    imageAlt: product.value?.title,
+    noindex: !!error.value || product.value?.visibility === 'unlisted'
+  }
 }))
 </script>
 
