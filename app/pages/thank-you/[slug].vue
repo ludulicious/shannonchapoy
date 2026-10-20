@@ -45,7 +45,7 @@ const {
   watch: false
 })
 const orderPending = computed(() => purchase.value?.status === 'pending')
-const orderConfirmed = computed(() => !purchaseToken || purchase.value?.status === 'paid')
+const orderConfirmed = computed(() => !purchaseToken || ['paid', 'accepted'].includes(purchase.value?.status ?? ''))
 const orderReceived = computed(() => orderConfirmed.value || orderPending.value)
 let pollTimer: ReturnType<typeof setTimeout> | undefined
 let pollCount = 0
@@ -74,6 +74,7 @@ const copy = {
     retry: 'Check again',
     title: 'Thank you for your order',
     intro: 'Your order is confirmed. Here is what happens next.',
+    invoice: 'Your order is confirmed. An invoice will follow separately.',
     reference: 'Booking reference',
     next: 'Your next steps',
     empty: 'Your order is confirmed. We’ll contact you with the next steps.',
@@ -94,6 +95,7 @@ const copy = {
     retry: 'Opnieuw controleren',
     title: 'Bedankt voor je bestelling',
     intro: 'Je bestelling is bevestigd. Hieronder lees je wat er nu gebeurt.',
+    invoice: 'Je bestelling is bevestigd. Je ontvangt de factuur later apart.',
     reference: 'Boekingsnummer',
     next: 'Je volgende stappen',
     empty: 'Je bestelling is bevestigd. We nemen contact met je op over de volgende stappen.',
@@ -132,7 +134,9 @@ useSeoMeta({ title: `${copy.title} - Shannon Chapoy`, robots: 'noindex, nofollow
         <p class="thanks-intro">
           {{
             orderConfirmed
-              ? copy.intro
+              ? purchase?.status === 'accepted'
+                ? copy.invoice
+                : copy.intro
               : orderPending || purchaseStatus === 'pending' || purchaseStatus === 'idle'
                 ? copy.pending
                 : copy.unconfirmed
