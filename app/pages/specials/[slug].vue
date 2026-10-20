@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ArrowLeft, ShoppingBag } from 'lucide-vue-next'
 
-type CatalogPrice = { amount: number; currency: string; taxBehavior: 'exclusive' | 'inclusive' | 'unspecified' }
+import type { CatalogPrice } from '~/utils/catalogPrice'
+
 type CatalogProduct = {
   visibility?: 'listed' | 'unlisted'
   type: 'digital' | 'service'
@@ -58,45 +59,16 @@ const checkoutUrl = computed(() => {
   const url = new URL(product.value.purchaseUrl)
   url.searchParams.set('locale', 'en')
   url.searchParams.set('currency', currency.value)
-  url.searchParams.set('returnUrl', new URL(route.fullPath, requestUrl.origin).toString())
+  const returnUrl = new URL(`/thank-you/${encodeURIComponent(product.value.slug)}`, requestUrl.origin)
+  returnUrl.searchParams.set('locale', 'en')
+  returnUrl.searchParams.set('currency', currency.value)
+  url.searchParams.set('returnUrl', returnUrl.toString())
   return url.toString()
 })
 
 if (error.value?.statusCode === 404) {
   throw createError({ statusCode: 404, statusMessage: 'Offering not found' })
 }
-
-const formattedPrice = computed(() => {
-  if (!product.value) {
-    return ''
-  }
-  if (product.value.isFree) {
-    return 'Free'
-  }
-  const price = product.value.prices[0]
-  if (!price) {
-    return 'Price on request'
-  }
-  return new Intl.NumberFormat('en', {
-    style: 'currency',
-    currency: price.currency,
-    minimumFractionDigits: price.amount % 100 === 0 ? 0 : 2
-  }).format(price.amount / 100)
-})
-
-const taxNote = computed(() => {
-  const price = product.value?.prices[0]
-  if (!price || product.value?.isFree) {
-    return ''
-  }
-  if (price.taxBehavior === 'inclusive') {
-    return 'Tax included'
-  }
-  if (price.taxBehavior === 'exclusive') {
-    return 'Excluding tax'
-  }
-  return ''
-})
 
 const descriptionStyle = computed(() => {
   const bullets = { disc: '•', circle: '◦', square: '▪', dash: '–', check: '✓', sparkle: '✦' }
@@ -174,8 +146,7 @@ usePageSeo(() => ({
           <p class="special-summary">{{ product.summary }}</p>
 
           <div class="special-price">
-            <strong>{{ formattedPrice }}</strong>
-            <span v-if="taxNote">{{ taxNote }}</span>
+            <CatalogProductPrice :prices="product.prices" :is-free="product.isFree" />
           </div>
 
           <NuxtLink :to="checkoutUrl" external class="special-buy">
@@ -192,8 +163,7 @@ usePageSeo(() => ({
           <div v-if="product.secondaryCta" class="special-bottom-cta">
             <p>{{ product.secondaryCta }}</p>
             <div class="special-bottom-price">
-              <strong>{{ formattedPrice }}</strong>
-              <span v-if="taxNote">{{ taxNote }}</span>
+              <CatalogProductPrice :prices="product.prices" :is-free="product.isFree" />
             </div>
             <NuxtLink :to="checkoutUrl" external class="special-buy">
               <ShoppingBag aria-hidden="true" />
@@ -286,18 +256,8 @@ usePageSeo(() => ({
   margin-block: 1.5rem;
 }
 .special-price {
-  align-items: baseline;
-  display: flex;
-  gap: 0.75rem;
   margin-block-end: 1.5rem;
-}
-.special-price strong {
-  color: var(--color-catalog-display);
   font-size: 1.6rem;
-}
-.special-price span {
-  color: var(--color-catalog-muted);
-  font-size: 0.85rem;
 }
 .special-buy {
   align-items: center;
@@ -443,19 +403,8 @@ usePageSeo(() => ({
   margin-inline-end: auto;
 }
 .special-bottom-price {
-  display: grid;
-  gap: 0.2rem;
-  text-align: end;
-}
-.special-bottom-price strong {
-  color: var(--color-catalog-display);
   font-size: 1.35rem;
-  font-variant-numeric: tabular-nums;
-  line-height: 1;
-}
-.special-bottom-price span {
-  color: var(--color-catalog-muted);
-  font-size: 0.78rem;
+  text-align: end;
 }
 .special-state {
   background: white;

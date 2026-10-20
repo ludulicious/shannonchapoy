@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ArrowRight, PackageOpen, RefreshCw } from 'lucide-vue-next'
 
-type CatalogPrice = { amount: number; currency: string; taxBehavior: 'exclusive' | 'inclusive' | 'unspecified' }
+import { effectiveCatalogAmount, type CatalogPrice } from '~/utils/catalogPrice'
+
 type CatalogProduct = {
   type: 'digital' | 'service'
   planningEnabled?: boolean
@@ -25,42 +26,13 @@ const { data, status, error, refresh } = await useFetch<CatalogResponse>('/api/c
 })
 const products = computed(() =>
   [...(data.value?.items ?? [])].sort((left, right) => {
-    const leftPrice = left.isFree ? 0 : (left.prices[0]?.amount ?? Number.POSITIVE_INFINITY)
-    const rightPrice = right.isFree ? 0 : (right.prices[0]?.amount ?? Number.POSITIVE_INFINITY)
+    const leftPrice = effectiveCatalogAmount(left)
+    const rightPrice = effectiveCatalogAmount(right)
     return leftPrice - rightPrice
   })
 )
 const { elementRef: headerRef, isVisible: headerVisible } = useScrollAnimation(0.2)
 const { elementRef: cardsRef, isVisible: cardsVisible } = useScrollAnimation(0.1)
-
-const formatPrice = (product: CatalogProduct) => {
-  if (product.isFree) {
-    return 'Free'
-  }
-  const price = product.prices[0]
-  if (!price) {
-    return 'Price on request'
-  }
-  return new Intl.NumberFormat('en', {
-    style: 'currency',
-    currency: price.currency,
-    minimumFractionDigits: price.amount % 100 === 0 ? 0 : 2
-  }).format(price.amount / 100)
-}
-
-const priceNote = (product: CatalogProduct) => {
-  const price = product.prices[0]
-  if (!price || product.isFree) {
-    return ''
-  }
-  if (price.taxBehavior === 'inclusive') {
-    return 'Tax included'
-  }
-  if (price.taxBehavior === 'exclusive') {
-    return 'Excluding tax'
-  }
-  return ''
-}
 </script>
 
 <template>
@@ -117,8 +89,7 @@ const priceNote = (product: CatalogProduct) => {
               <p v-if="product.subtitle" class="product-card__subtitle">{{ product.subtitle }}</p>
             </div>
             <div class="product-card__price">
-              <strong>{{ formatPrice(product) }}</strong>
-              <span v-if="priceNote(product)">{{ priceNote(product) }}</span>
+              <CatalogProductPrice :prices="product.prices" :is-free="product.isFree" />
               <CatalogAppointmentDuration :product="product" />
             </div>
           </div>
@@ -333,20 +304,11 @@ const priceNote = (product: CatalogProduct) => {
 }
 .product-card__price {
   display: grid;
+  font-size: var(--text-catalog-md);
   flex: 0 0 auto;
   gap: var(--space-catalog-2xs);
   justify-items: end;
   text-align: end;
-}
-.product-card__price strong {
-  color: var(--color-catalog-ink);
-  font-size: var(--text-catalog-md);
-  font-variant-numeric: tabular-nums;
-  line-height: 1;
-}
-.product-card__price span {
-  color: var(--color-catalog-muted);
-  font-size: var(--text-catalog-sm);
 }
 .product-card__action {
   align-items: center;

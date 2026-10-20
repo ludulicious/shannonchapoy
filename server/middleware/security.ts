@@ -8,6 +8,10 @@ export default defineEventHandler((event) => {
     return
   }
 
+  if (pathname.startsWith('/thank-you/')) {
+    setHeader(event, 'Cache-Control', 'private, no-store')
+  }
+
   // Set comprehensive CSP headers for iframe and form resources
   setHeaders(event, {
     'Content-Security-Policy': [
@@ -24,7 +28,7 @@ export default defineEventHandler((event) => {
       "frame-ancestors 'self'"
     ].join('; '),
     'X-Frame-Options': 'SAMEORIGIN',
-    'Referrer-Policy': 'strict-origin-when-cross-origin',
+    'Referrer-Policy': pathname.startsWith('/thank-you/') ? 'no-referrer' : 'strict-origin-when-cross-origin',
     'Permissions-Policy':
       'autoplay=*, camera=(), microphone=(), geolocation=(), payment=(self "https://actions.shannonchapoy.com")'
   })

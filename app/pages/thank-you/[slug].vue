@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ArrowLeft, Check } from 'lucide-vue-next'
+import { ArrowLeft, Check, Download } from 'lucide-vue-next'
 
 type CatalogPrice = { amount: number; currency: string }
 type CatalogProduct = {
@@ -28,24 +28,75 @@ if (!error.value && data.value && !product.value) {
   throw createError({ statusCode: 404, statusMessage: 'Purchase not found' })
 }
 
+type PurchaseResponse = {
+  status: string
+  files: Array<{ id: string; name: string; url: string }>
+}
+const purchaseToken = typeof route.query.purchase === 'string' ? route.query.purchase : ''
+const {
+  data: purchase,
+  status: purchaseStatus,
+  error: purchaseError,
+  refresh: refreshPurchase
+} = await useFetch<PurchaseResponse>('/api/catalog/purchase', {
+  query: { purchase: purchaseToken },
+  server: false,
+  immediate: !!purchaseToken,
+  watch: false
+})
+const orderPending = computed(() => purchase.value?.status === 'pending')
+const orderConfirmed = computed(() => !purchaseToken || purchase.value?.status === 'paid')
+const orderReceived = computed(() => orderConfirmed.value || orderPending.value)
+let pollTimer: ReturnType<typeof setTimeout> | undefined
+let pollCount = 0
+watch([purchase, purchaseStatus], () => {
+  clearTimeout(pollTimer)
+  if (import.meta.client && orderPending.value && purchaseStatus.value === 'success' && pollCount < 12) {
+    pollTimer = setTimeout(() => {
+      pollCount++
+      void refreshPurchase()
+    }, 5000)
+  }
+})
+onBeforeUnmount(() => clearTimeout(pollTimer))
+
 const copy = {
   en: {
-    status: 'Payment received',
-    title: 'Thank you for your purchase',
-    intro: 'Your purchase is confirmed. Here is what happens next.',
+    status: 'Order received',
+    checking: 'Checking your order',
+    pending: 'Your order has been received. We’ll email you with confirmation and any next steps.',
+    pendingDownloads: 'Your downloads will appear here once your order is confirmed.',
+    unconfirmed: 'We could not confirm your purchase. Please check your confirmation email or try again.',
+    downloads: 'Download your files',
+    downloadError: 'Your downloads could not be loaded. Please try again or use the links in your confirmation email.',
+    loadingDownloads: 'Loading your downloads…',
+    noDownloads: 'There are no downloadable files available for this purchase.',
+    retry: 'Check again',
+    title: 'Thank you for your order',
+    intro: 'Your order is confirmed. Here is what happens next.',
     reference: 'Booking reference',
     next: 'Your next steps',
-    empty: 'Your purchase is complete. We’ll contact you with the next steps.',
+    empty: 'Your order is confirmed. We’ll contact you with the next steps.',
     back: 'Back to offerings',
     home: 'Return to Shannon Chapoy'
   },
   nl: {
-    status: 'Betaling ontvangen',
-    title: 'Bedankt voor je aankoop',
-    intro: 'Je aankoop is bevestigd. Hieronder lees je wat er nu gebeurt.',
+    status: 'Bestelling ontvangen',
+    checking: 'Je bestelling wordt gecontroleerd',
+    pending: 'Je bestelling is ontvangen. Je ontvangt een e-mail met de bevestiging en eventuele volgende stappen.',
+    pendingDownloads: 'Je downloads verschijnen hier zodra je bestelling is bevestigd.',
+    unconfirmed: 'We konden je aankoop niet bevestigen. Controleer je bevestigingsmail of probeer het opnieuw.',
+    downloads: 'Download je bestanden',
+    downloadError:
+      'Je downloads konden niet worden geladen. Probeer het opnieuw of gebruik de links in je bevestigingsmail.',
+    loadingDownloads: 'Je downloads worden geladen…',
+    noDownloads: 'Er zijn geen downloadbare bestanden beschikbaar voor deze aankoop.',
+    retry: 'Opnieuw controleren',
+    title: 'Bedankt voor je bestelling',
+    intro: 'Je bestelling is bevestigd. Hieronder lees je wat er nu gebeurt.',
     reference: 'Boekingsnummer',
     next: 'Je volgende stappen',
-    empty: 'Je aankoop is voltooid. We nemen contact met je op over de volgende stappen.',
+    empty: 'Je bestelling is bevestigd. We nemen contact met je op over de volgende stappen.',
     back: 'Terug naar het aanbodoverzicht',
     home: 'Terug naar Shannon Chapoy'
   }
@@ -61,7 +112,7 @@ const formattedPrice = computed(() => {
     : ''
 })
 
-useSeoMeta({ title: `${copy.title} - Shannon Chapoy`, robots: 'noindex, nofollow' })
+useSeoMeta({ title: `${copy.title} - Shannon Chapoy`, robots: 'noindex, nofollow', referrer: 'no-referrer' })
 </script>
 
 <template>
@@ -74,11 +125,19 @@ useSeoMeta({ title: `${copy.title} - Shannon Chapoy`, robots: 'noindex, nofollow
     <article v-else-if="product" class="thanks-shell" aria-labelledby="thanks-title">
       <section class="thanks-message">
         <div class="thanks-status">
-          <span class="thanks-check"><Check aria-hidden="true" /></span>
-          <span>{{ copy.status }}</span>
+          <span v-if="orderReceived" class="thanks-check"><Check aria-hidden="true" /></span>
+          <span>{{ orderReceived ? copy.status : copy.checking }}</span>
         </div>
-        <h1 id="thanks-title">{{ copy.title }}</h1>
-        <p class="thanks-intro">{{ copy.intro }}</p>
+        <h1 id="thanks-title">{{ orderReceived ? copy.title : copy.checking }}</h1>
+        <p class="thanks-intro">
+          {{
+            orderConfirmed
+              ? copy.intro
+              : orderPending || purchaseStatus === 'pending' || purchaseStatus === 'idle'
+                ? copy.pending
+                : copy.unconfirmed
+          }}
+        </p>
         <dl v-if="reference" class="booking-reference">
           <dt>{{ copy.reference }}</dt>
           <dd>{{ reference }}</dd>
@@ -90,7 +149,7 @@ useSeoMeta({ title: `${copy.title} - Shannon Chapoy`, robots: 'noindex, nofollow
       </section>
 
       <aside class="purchase-summary">
-        <div class="purchase-heading">
+        <div class="purchase-heading" :class="{ 'purchase-heading--without-image': !product.thumbnailImage }">
           <img
             v-if="product.thumbnailImage"
             :src="product.thumbnailImage"
@@ -104,7 +163,31 @@ useSeoMeta({ title: `${copy.title} - Shannon Chapoy`, robots: 'noindex, nofollow
             <strong v-if="formattedPrice">{{ formattedPrice }}</strong>
           </div>
         </div>
-        <div class="next-steps">
+        <section v-if="purchaseToken" class="purchase-downloads" aria-labelledby="downloads-title" aria-live="polite">
+          <h3 id="downloads-title">{{ copy.downloads }}</h3>
+          <p v-if="purchaseError" role="alert">{{ copy.downloadError }}</p>
+          <ul v-else-if="purchase?.files.length" class="download-list">
+            <li v-for="file in purchase.files" :key="file.id">
+              <a :href="file.url" class="download-link" referrerpolicy="no-referrer" rel="noreferrer">
+                <Download aria-hidden="true" />
+                {{ file.name }}
+              </a>
+            </li>
+          </ul>
+          <p v-else-if="orderPending">{{ copy.pendingDownloads }}</p>
+          <p v-else-if="purchaseStatus === 'pending' || purchaseStatus === 'idle'">{{ copy.loadingDownloads }}</p>
+          <p v-else>{{ orderConfirmed ? copy.noDownloads : copy.unconfirmed }}</p>
+          <button
+            v-if="purchaseError || orderPending || (purchase && !orderConfirmed)"
+            type="button"
+            class="download-retry"
+            :disabled="purchaseStatus === 'pending'"
+            @click="refreshPurchase()"
+          >
+            {{ copy.retry }}
+          </button>
+        </section>
+        <div v-if="orderConfirmed" class="next-steps">
           <h3>{{ copy.next }}</h3>
           <p>{{ product.nextSteps || copy.empty }}</p>
         </div>
@@ -234,6 +317,9 @@ h1 {
   gap: var(--space-catalog-lg);
   align-items: center;
 }
+.purchase-heading--without-image {
+  grid-template-columns: minmax(0, 1fr);
+}
 .purchase-heading img {
   width: 88px;
   height: 88px;
@@ -253,20 +339,60 @@ h1 {
   margin-top: var(--space-catalog-sm);
   color: var(--color-catalog-display);
 }
-.next-steps {
+.next-steps,
+.purchase-downloads {
   margin-top: var(--space-catalog-xl);
   padding-top: var(--space-catalog-xl);
   border-top: var(--rule-catalog-thin) solid var(--color-catalog-rule);
 }
-.next-steps h3 {
+.next-steps h3,
+.purchase-downloads h3 {
   font-size: var(--text-catalog-lg);
 }
-.next-steps p {
+.next-steps p,
+.purchase-downloads p {
   max-width: 65ch;
   margin: var(--space-catalog-md) 0 0;
   line-height: 1.7;
   white-space: pre-line;
 }
+.download-list {
+  display: grid;
+  gap: var(--space-catalog-sm);
+  list-style: none;
+  margin: var(--space-catalog-md) 0 0;
+  padding: 0;
+}
+.download-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-catalog-sm);
+  min-height: 44px;
+  color: var(--color-catalog-action);
+  font-weight: 700;
+  overflow-wrap: anywhere;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+.download-link svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+.download-retry {
+  margin-top: var(--space-catalog-md);
+  padding: var(--space-catalog-sm) var(--space-catalog-md);
+  border: 1px solid var(--color-catalog-action);
+  border-radius: var(--radius-catalog-small);
+  color: var(--color-catalog-action);
+  cursor: pointer;
+}
+.download-retry:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+.download-link:focus-visible,
+.download-retry:focus-visible,
 .thanks-back:focus-visible {
   outline: var(--rule-catalog-focus) solid var(--color-catalog-focus);
   outline-offset: 3px;
