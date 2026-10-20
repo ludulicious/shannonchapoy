@@ -11,7 +11,8 @@
     "postinstall": "nuxt prepare",
     "format": "prettier --write . && eslint . --fix && prettier --write . && eslint .",
     "format:check": "prettier --check . && eslint .",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "test": "node --experimental-strip-types --test test/*.test.mjs"
   },
   "dependencies": {
     "@nuxt/content": "^3.8.2",
