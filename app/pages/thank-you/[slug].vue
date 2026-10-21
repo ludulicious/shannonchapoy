@@ -11,7 +11,6 @@ type CatalogProduct = {
   prices: CatalogPrice[]
   isFree: boolean
 }
-type CatalogResponse = { items: CatalogProduct[] }
 
 const route = useRoute()
 const locale = route.query.locale === 'nl' ? 'nl' : 'en'
@@ -21,15 +20,18 @@ const reference =
   typeof route.query.reference === 'string' && /^BK-[A-F0-9]{12}$/.test(route.query.reference)
     ? route.query.reference
     : ''
-const { data, error } = await useFetch<CatalogResponse>('/api/catalog/products', { query: { locale, currency } })
-const product = computed(() => data.value?.items.find((item) => item.slug === route.params.slug))
+const { data: product, error } = await useFetch<CatalogProduct>(
+  () => `/api/catalog/products/${encodeURIComponent(String(route.params.slug))}`,
+  { query: { locale, currency } }
+)
 
-if (!error.value && data.value && !product.value) {
+if (error.value?.statusCode === 404) {
   throw createError({ statusCode: 404, statusMessage: 'Purchase not found' })
 }
 
 type PurchaseResponse = {
   status: string
+  variant?: 'free' | 'paid'
   files: Array<{ id: string; name: string; url: string }>
 }
 const purchaseToken = typeof route.query.purchase === 'string' ? route.query.purchase : ''
@@ -104,6 +106,11 @@ const copy = {
   }
 }[locale]
 
+const contentVariant = computed(() => purchase.value?.variant || (product.value?.isFree ? 'free' : 'paid'))
+const { data: editableCopy } = await useFetch('/api/thank-you/content', {
+  query: { slug: String(route.params.slug), locale, variant: contentVariant }
+})
+
 const formattedPrice = computed(() => {
   if (product.value?.isFree) {
     return locale === 'nl' ? 'Gratis' : 'Free'
@@ -128,20 +135,20 @@ useSeoMeta({ title: `${copy.title} - Shannon Chapoy`, robots: 'noindex, nofollow
       <section class="thanks-message">
         <div class="thanks-status">
           <span v-if="orderReceived" class="thanks-check"><Check aria-hidden="true" /></span>
-          <span>{{ orderReceived ? copy.status : copy.checking }}</span>
+          <span>{{ orderReceived ? editableCopy?.statusLabel || copy.status : copy.checking }}</span>
         </div>
-        <h1 id="thanks-title">{{ orderReceived ? copy.title : copy.checking }}</h1>
+        <h1 id="thanks-title">{{ orderReceived ? editableCopy?.heading || copy.title : copy.checking }}</h1>
         <p class="thanks-intro">
           {{
             orderConfirmed
-              ? purchase?.status === 'accepted'
-                ? copy.invoice
-                : copy.intro
+              ? editableCopy?.message || copy.intro
               : orderPending || purchaseStatus === 'pending' || purchaseStatus === 'idle'
                 ? copy.pending
                 : copy.unconfirmed
           }}
         </p>
+        <p v-if="orderConfirmed && purchase?.status === 'accepted'" class="thanks-intro">{{ copy.invoice }}</p>
+        <p v-if="orderConfirmed && editableCopy?.helpText" class="thanks-intro">{{ editableCopy.helpText }}</p>
         <dl v-if="reference" class="booking-reference">
           <dt>{{ copy.reference }}</dt>
           <dd>{{ reference }}</dd>
@@ -168,7 +175,7 @@ useSeoMeta({ title: `${copy.title} - Shannon Chapoy`, robots: 'noindex, nofollow
           </div>
         </div>
         <section v-if="purchaseToken" class="purchase-downloads" aria-labelledby="downloads-title" aria-live="polite">
-          <h3 id="downloads-title">{{ copy.downloads }}</h3>
+          <h3 id="downloads-title">{{ editableCopy?.downloadsHeading || copy.downloads }}</h3>
           <p v-if="purchaseError" role="alert">{{ copy.downloadError }}</p>
           <ul v-else-if="purchase?.files.length" class="download-list">
             <li v-for="file in purchase.files" :key="file.id">
@@ -358,6 +365,7 @@ h1 {
   max-width: 65ch;
   margin: var(--space-catalog-md) 0 0;
   line-height: 1.7;
+  white-space: pre-line;
   white-space: pre-line;
 }
 .download-list {

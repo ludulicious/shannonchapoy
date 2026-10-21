@@ -16,7 +16,7 @@ export default defineEventHandler((event) => {
   setHeaders(event, {
     'Content-Security-Policy': [
       "default-src 'self'",
-      "frame-src 'self' https://actions.shannonchapoy.com https://storage.googleapis.com https://*.googleapis.com",
+      `frame-src 'self' ${new URL(useRuntimeConfig().public.portalUrl).origin} https://actions.shannonchapoy.com https://storage.googleapis.com https://*.googleapis.com`,
       "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://actions.shannonchapoy.com https://storage.googleapis.com https://*.googleapis.com",
       "connect-src 'self' https://actions.shannonchapoy.com https://backend.leadconnectorhq.com https://storage.googleapis.com https://*.googleapis.com https://*.leadconnectorhq.com",
       "img-src 'self' data: https: blob:",

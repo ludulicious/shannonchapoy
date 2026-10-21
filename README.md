@@ -108,3 +108,5 @@ This project has been migrated from React to Nuxt 4 using the preferred folder s
 `/specials/:slug` loads a single published product through the server-side `/api/catalog/products/:slug` proxy. This allows unlisted portal products to use the existing detail page without appearing in the offerings catalog. The portal generates the unguessable slug; no separate share token is used. Anyone with the URL can view and purchase it.
 
 Product detail responses and pages use `private, no-store`; unlisted pages are marked `noindex`. Keep these URLs out of navigation and sitemaps. Configure the existing portal URL and catalog API key on the server, and deploy portal unlisted-product support before deploying this website change.
+
+Thank-you text can be edited in Marpos Studio with free/paid defaults, exact-product overrides and a safe checkout preview. See [Editing thank-you text](docs/thank-you-content.md) for the editor workflow and one-time portal integration.

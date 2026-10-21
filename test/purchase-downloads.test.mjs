@@ -39,3 +39,9 @@ test('invalid purchase tokens are rejected', async () => {
   token = 'invalid'
   await assert.rejects(purchase({}), { statusCode: 400 })
 })
+
+test('the original order variant is retained for thank-you content selection', async () => {
+  token = 'a'.repeat(64)
+  response = { status: 'paid', variant: 'free', files }
+  assert.deepEqual(await purchase({}), { status: 'paid', variant: 'free', files })
+})

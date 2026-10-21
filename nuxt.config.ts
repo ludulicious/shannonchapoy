@@ -15,7 +15,8 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     portalApiKey: '',
-    portalUrl: 'http://localhost:3052'
+    portalUrl: 'http://localhost:3052',
+    public: { portalUrl: 'https://lovecircle.shannonchapoy.com' }
   },
 
   app: {
@@ -80,7 +81,7 @@ export default defineNuxtConfig({
         headers: {
           'Content-Security-Policy': [
             "default-src 'self'",
-            "frame-src 'self' https://actions.shannonchapoy.com https://storage.googleapis.com https://*.googleapis.com",
+            `frame-src 'self' ${new URL(process.env.NUXT_PUBLIC_PORTAL_URL || 'https://lovecircle.shannonchapoy.com').origin} https://actions.shannonchapoy.com https://storage.googleapis.com https://*.googleapis.com`,
             "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://actions.shannonchapoy.com https://storage.googleapis.com https://*.googleapis.com",
             "connect-src 'self' https://actions.shannonchapoy.com https://backend.leadconnectorhq.com https://storage.googleapis.com https://*.googleapis.com https://*.leadconnectorhq.com",
             "img-src 'self' data: https: blob:",

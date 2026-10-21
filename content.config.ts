@@ -2,9 +2,29 @@ import { defineCollection, defineContentConfig, z } from '@nuxt/content'
 
 export default defineContentConfig({
   collections: {
+    thankYou: defineCollection({
+      type: 'page',
+      source: 'thank-you-texts/**/*.md',
+      schema: z.object({
+        title: z.string().min(1).describe('Name in Marpos Studio'),
+        locale: z.enum(['en', 'nl']).describe('Language'),
+        variant: z.enum(['free', 'paid']).describe('Free or paid order'),
+        productSlug: z.string().max(200).default('').describe('Exact product slug; leave empty for the default'),
+        previewSlug: z
+          .string()
+          .max(200)
+          .default('')
+          .describe('Product slug to show in Studio preview; does not change which products use this text'),
+        statusLabel: z.string().max(120).default('').describe('Small confirmation label'),
+        heading: z.string().max(240).default('').describe('Main thank-you heading'),
+        messageText: z.string().max(4000).default('').describe('Thank-you message; blank fields inherit the default'),
+        helpText: z.string().max(2000).default('').describe('Additional information'),
+        downloadsHeading: z.string().max(120).default('').describe('Heading above download links')
+      })
+    }),
     content: defineCollection({
       type: 'page',
-      source: '**/*.md',
+      source: { include: '**/*.md', exclude: ['thank-you-texts/**'] },
       schema: z.object({
         title: z.string().min(1).describe('Page title'),
         description: z.string().min(1).describe('Short page summary'),

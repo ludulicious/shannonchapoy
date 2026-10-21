@@ -1,5 +1,6 @@
 type PurchaseResponse = {
   status: string
+  variant?: 'free' | 'paid'
   files: Array<{ id: string; name: string; url: string }>
 }
 
@@ -14,7 +15,11 @@ export default defineEventHandler(async (event) => {
     const purchase = await $fetch<PurchaseResponse>(`/api/store/purchases/${token}`, {
       baseURL: config.portalUrl
     })
-    return { status: purchase.status, files: ['paid', 'accepted'].includes(purchase.status) ? purchase.files : [] }
+    return {
+      status: purchase.status,
+      ...(purchase.variant ? { variant: purchase.variant } : {}),
+      files: ['paid', 'accepted'].includes(purchase.status) ? purchase.files : []
+    }
   } catch {
     throw createError({ statusCode: 502, statusMessage: 'Purchase downloads are currently unavailable' })
   }
