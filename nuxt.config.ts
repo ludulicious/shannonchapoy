@@ -15,7 +15,10 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     portalApiKey: '',
-    portalUrl: 'http://localhost:3052'
+    portalUrl: 'http://localhost:3052',
+    public: {
+      featuredOfferingSlug: 'intake'
+    }
   },
 
   app: {

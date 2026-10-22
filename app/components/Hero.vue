@@ -1,66 +1,88 @@
 <script setup lang="ts">
-const { elementRef: contentRef, isVisible } = useScrollAnimation(0.2)
+import { ArrowRight } from 'lucide-vue-next'
+import type { catalogOfferDeadline } from '~/utils/catalogOffer'
+import type { CatalogProduct } from '~/utils/catalogProduct'
+
+defineProps<{ product?: CatalogProduct; offerDeadline?: ReturnType<typeof catalogOfferDeadline> }>()
 </script>
 
 <template>
-  <div
-    class="relative min-h-[100svh] md:min-h-screen w-full overflow-hidden flex items-start md:items-center justify-center bg-brand-charcoal pt-32 pb-64 md:py-32"
-  >
-    <!-- Background Image -->
-    <picture class="absolute inset-0 z-0">
-      <source media="(max-width: 767px)" srcset="/images/hero-flowers-butterflies-mobile.jpg" />
-      <img
-        src="/images/hero-flowers-butterflies.jpg"
-        alt=""
-        width="1536"
-        height="1024"
-        fetchpriority="high"
-        class="w-full h-full object-cover"
-      />
+  <section class="conversion-hero" aria-labelledby="hero-title">
+    <picture class="conversion-hero__background" aria-hidden="true">
+      <source media="(max-width: 1023px)" srcset="/images/hero-botanical-white-mobile.jpg" width="1024" height="1536" />
+      <img src="/images/hero-botanical-white.jpg" alt="" width="1942" height="809" fetchpriority="high" />
     </picture>
-
-    <!-- Main Content -->
-    <div
-      ref="contentRef"
-      :class="[
-        'relative z-20 w-full text-center px-6 md:px-4 max-w-5xl mx-auto transition-all duration-1000',
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-      ]"
-    >
-      <h1
-        :class="[
-          'font-serif text-4xl sm:text-5xl md:text-7xl font-bold mb-6 leading-tight drop-shadow-2xl tracking-tight text-white text-balance',
-          isVisible ? 'animate-slide-in-top-bounce' : ''
-        ]"
-        :style="!isVisible ? { transform: 'translateY(-200px)' } : undefined"
-      >
-        Are you ready to begin your greatest love journey?
-      </h1>
-      <div
-        :class="[
-          'font-sans font-semibold text-lg md:text-2xl lg:text-3xl text-white/95 mb-8 md:mb-10 leading-relaxed max-w-sm md:max-w-2xl mx-auto md:px-4 drop-shadow-lg transition-all duration-1000 delay-300',
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
-        ]"
-      >
-        <p class="text-balance">It starts with learning to date yourself first.</p>
-        <p class="mt-3 md:mt-0 text-pretty">
-          I went from buying a single bed to finding soulmate love in just one year.
-        </p>
-        <p class="mt-5 md:mt-8">If I can - you can too!</p>
-      </div>
-      <div
-        :class="[
-          'flex flex-col sm:flex-row gap-5 justify-center transition-all duration-1000 delay-700',
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
-        ]"
-      >
-        <NuxtLink
-          to="/pj-circle"
-          class="px-10 py-4 bg-brand-ltPurple text-white rounded-full font-bold text-lg hover:bg-brand-dkPurple transition-all shadow-xl hover:shadow-2xl transform hover:-translate-y-1 hover:scale-105"
-        >
-          Start Your Journey
-        </NuxtLink>
-      </div>
+    <div class="conversion-hero__layout">
+      <h1 id="hero-title">Ready for your greatest love?</h1>
+      <p class="conversion-hero__copy">
+        Start by dating yourself. I went from a single bed to soulmate love in a year. If I can, you can too!
+      </p>
+      <FeaturedSessionCard v-if="product" id="offerings" :product="product" :offer-deadline="offerDeadline" />
+      <NuxtLink v-else to="/offerings" class="conversion-button">
+        Explore offerings <ArrowRight aria-hidden="true" />
+      </NuxtLink>
     </div>
-  </div>
+  </section>
 </template>
+
+<style scoped>
+/* Hallmark · component: hero · theme: inherited · anchor hue: purple
+ * pre-emit critique: P4 H5 E5 S5 R5 V4 · white botanical artwork, clear copy, one booking action */
+.conversion-hero {
+  position: relative;
+  isolation: isolate;
+  background: var(--color-catalog-surface);
+  color: var(--color-catalog-muted);
+  padding: 6.5rem var(--space-catalog-lg) clamp(16rem, 75vw, 22rem);
+}
+.conversion-hero__background {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+.conversion-hero__background img {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: min(100%, 28rem);
+  height: auto;
+}
+.conversion-hero__layout {
+  max-width: 76rem;
+  margin-inline: auto;
+  min-width: 0;
+}
+.conversion-hero h1 {
+  color: var(--color-catalog-display);
+  font-family: var(--font-catalog-display);
+  font-size: clamp(2.25rem, 5.2vw, 4.25rem);
+  font-weight: 700;
+  font-style: normal;
+  letter-spacing: -0.035em;
+  line-height: 1.08;
+  max-width: 20ch;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.conversion-hero__copy {
+  max-width: 54ch;
+  font-size: clamp(var(--text-catalog-base), 2vw, var(--text-catalog-md));
+  line-height: 1.5;
+  margin-block: var(--space-catalog-sm) var(--space-catalog-lg);
+}
+@media (min-width: 64rem) {
+  .conversion-hero {
+    padding: 9rem var(--space-catalog-xl) var(--space-catalog-2xl);
+  }
+  .conversion-hero__background {
+    inset-block-start: 7rem;
+    clip-path: inset(0 0 0 50%);
+  }
+  .conversion-hero__background img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: right bottom;
+  }
+}
+</style>

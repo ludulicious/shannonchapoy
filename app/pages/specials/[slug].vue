@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ArrowLeft, ShoppingBag } from 'lucide-vue-next'
 
+import { catalogActionLabel } from '~/utils/catalogProduct'
 import type { CatalogPrice } from '~/utils/catalogPrice'
 
 type CatalogProduct = {
@@ -43,7 +44,7 @@ type CatalogProduct = {
 }
 
 const route = useRoute()
-const requestUrl = useRequestURL()
+const getCheckoutUrl = useCatalogCheckout()
 const currency = useCatalogCurrency()
 const {
   data: product,
@@ -57,19 +58,7 @@ const offerDeadline = computed(() => deadlineFor(product.value?.prices[0]))
 if (import.meta.server) {
   useResponseHeader('Cache-Control').value = 'private, no-store'
 }
-const checkoutUrl = computed(() => {
-  if (!product.value) {
-    return ''
-  }
-  const url = new URL(product.value.purchaseUrl)
-  url.searchParams.set('locale', 'en')
-  url.searchParams.set('currency', currency.value)
-  const returnUrl = new URL(`/thank-you/${encodeURIComponent(product.value.slug)}`, requestUrl.origin)
-  returnUrl.searchParams.set('locale', 'en')
-  returnUrl.searchParams.set('currency', currency.value)
-  url.searchParams.set('returnUrl', returnUrl.toString())
-  return url.toString()
-})
+const checkoutUrl = computed(() => (product.value ? getCheckoutUrl(product.value) : ''))
 
 if (error.value?.statusCode === 404) {
   throw createError({ statusCode: 404, statusMessage: 'Offering not found' })
@@ -124,7 +113,6 @@ usePageSeo(() => ({
           <ArrowLeft aria-hidden="true" />
           All offerings
         </NuxtLink>
-        <CatalogCurrencySelect />
       </div>
 
       <div v-if="error" class="special-state" role="alert">
@@ -152,9 +140,9 @@ usePageSeo(() => ({
           <div class="special-booking">
             <div class="special-booking__row">
               <CatalogProductPrice class="special-price" :prices="product.prices" :is-free="product.isFree" />
-              <NuxtLink :to="checkoutUrl" external class="special-buy">
+              <NuxtLink v-if="checkoutUrl" :to="checkoutUrl" external class="special-buy">
                 <ShoppingBag aria-hidden="true" />
-                {{ product.buyButtonLabel || 'Buy now' }}
+                {{ catalogActionLabel(product) }}
               </NuxtLink>
             </div>
             <CatalogOfferBadge v-if="offerDeadline" :deadline="offerDeadline" />
@@ -171,9 +159,9 @@ usePageSeo(() => ({
             <div class="special-booking">
               <div class="special-booking__row">
                 <CatalogProductPrice class="special-price" :prices="product.prices" :is-free="product.isFree" />
-                <NuxtLink :to="checkoutUrl" external class="special-buy">
+                <NuxtLink v-if="checkoutUrl" :to="checkoutUrl" external class="special-buy">
                   <ShoppingBag aria-hidden="true" />
-                  {{ product.buyButtonLabel || 'Buy now' }}
+                  {{ catalogActionLabel(product) }}
                 </NuxtLink>
               </div>
               <CatalogOfferBadge v-if="offerDeadline" :deadline="offerDeadline" />

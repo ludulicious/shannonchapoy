@@ -1,11 +1,12 @@
 <script setup lang="ts">
+defineProps<{ compact?: boolean }>()
 const currency = useCatalogCurrency()
 </script>
 
 <template>
   <label class="currency-select">
-    <span>Currency</span>
-    <select v-model="currency" aria-label="Currency">
+    <span :class="{ 'sr-only': compact }">Currency</span>
+    <select v-model="currency" aria-label="Currency" title="Currency for prices and bookings">
       <option value="EUR">EUR</option>
       <option value="USD">USD</option>
     </select>
@@ -23,7 +24,7 @@ const currency = useCatalogCurrency()
 }
 .currency-select select {
   appearance: none;
-  background: white
+  background: var(--color-catalog-surface)
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b5068' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")
     no-repeat right 0.8rem center;
   border: 1px solid color-mix(in srgb, var(--color-catalog-accent) 25%, transparent);
@@ -32,6 +33,7 @@ const currency = useCatalogCurrency()
   cursor: pointer;
   font: inherit;
   min-width: 5.4rem;
+  min-height: 2.75rem;
   padding: 0.55rem 2rem 0.55rem 0.9rem;
 }
 .currency-select select:focus-visible {

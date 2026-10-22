@@ -17,7 +17,8 @@ export const useScrollToSection = () => {
         return
       }
 
-      const offset = 80
+      const navigation = document.querySelector('nav[aria-label="Main navigation"]')
+      const offset = (navigation?.getBoundingClientRect().height ?? 80) + 16
       const offsetPosition = rect.top + window.scrollY - offset
 
       window.scrollTo({

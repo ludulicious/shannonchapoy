@@ -1,59 +1,28 @@
 <script setup lang="ts">
 import { ArrowRight, PackageOpen, RefreshCw } from 'lucide-vue-next'
+import type { catalogOfferDeadline } from '~/utils/catalogOffer'
+import type { CatalogPrice } from '~/utils/catalogPrice'
+import { catalogActionLabel, type CatalogProduct } from '~/utils/catalogProduct'
 
-import { effectiveCatalogAmount, type CatalogPrice } from '~/utils/catalogPrice'
-
-type CatalogProduct = {
-  type: 'digital' | 'service'
-  planningEnabled?: boolean
-  durationMinutes?: number | null
-  id: string
-  slug: string
-  title: string
-  subtitle: string
-  summary: string
-  thumbnailImage: string
-  prices: CatalogPrice[]
-  purchaseUrl: string
-  categoryDetails?: { name?: string }
-  isFree: boolean
-}
-type CatalogResponse = { items: CatalogProduct[] }
-
-const currency = useCatalogCurrency()
-const { data, status, error, refresh } = await useFetch<CatalogResponse>('/api/catalog/products', {
-  query: { currency }
-})
-const { deadlineFor } = useCatalogOffers(
-  () => (data.value?.items ?? []).flatMap((product) => product.prices.slice(0, 1)),
-  refresh
-)
-const products = computed(() =>
-  (data.value?.items ?? [])
-    .map((product) => ({ ...product, offerDeadline: deadlineFor(product.prices[0]) }))
-    .sort((left, right) => {
-      const leftPrice = effectiveCatalogAmount(left)
-      const rightPrice = effectiveCatalogAmount(right)
-      return leftPrice - rightPrice
-    })
-)
-const { elementRef: headerRef, isVisible: headerVisible } = useScrollAnimation(0.2)
-const { elementRef: cardsRef, isVisible: cardsVisible } = useScrollAnimation(0.1)
+defineProps<{
+  products: CatalogProduct[]
+  status: string
+  hasError: boolean
+  hasFeatured?: boolean
+  deadlineFor: (price: CatalogPrice | undefined) => ReturnType<typeof catalogOfferDeadline>
+}>()
+defineEmits<{ retry: [] }>()
+const checkoutUrl = useCatalogCheckout()
 </script>
 
 <template>
-  <section id="offerings" class="catalog-section">
+  <section :id="hasFeatured ? 'more-offerings' : 'offerings'" class="catalog-section">
     <div class="catalog-shell">
-      <div
-        ref="headerRef"
-        :class="['catalog-heading', headerVisible ? 'catalog-heading--visible' : 'catalog-heading--hidden']"
-      >
-        <p class="catalog-heading__intro">Offerings</p>
-        <h2>Choose your Greatest Love Adventure</h2>
+      <div class="catalog-heading">
+        <h2>{{ hasFeatured ? 'Explore more sessions' : 'Choose your next step' }}</h2>
         <p class="catalog-heading__copy">
-          Every journey to self-love is unique. Explore the offering that feels right for where you are now.
+          Explore the available sessions and choose the support that fits where you are now.
         </p>
-        <CatalogCurrencySelect v-if="products.length > 0" />
       </div>
 
       <div v-if="status === 'pending'" class="catalog-grid" aria-label="Loading offerings" aria-busy="true">
@@ -67,11 +36,11 @@ const { elementRef: cardsRef, isVisible: cardsVisible } = useScrollAnimation(0.1
         </article>
       </div>
 
-      <div v-else-if="error" class="catalog-state" role="alert">
+      <div v-else-if="hasError" class="catalog-state" role="alert">
         <RefreshCw aria-hidden="true" />
         <h3>The offerings couldn’t be loaded</h3>
         <p>The catalog may be temporarily unavailable. Please try again in a moment.</p>
-        <button type="button" class="catalog-state__button" @click="refresh">Try again</button>
+        <button type="button" class="catalog-state__button" @click="$emit('retry')">Try again</button>
       </div>
 
       <div v-else-if="products.length === 0" class="catalog-state">
@@ -80,18 +49,13 @@ const { elementRef: cardsRef, isVisible: cardsVisible } = useScrollAnimation(0.1
         <p>There are no available catalog items right now. Please check back soon.</p>
       </div>
 
-      <div v-else ref="cardsRef" class="catalog-grid">
-        <NuxtLink
-          v-for="(product, index) in products"
-          :key="product.id"
-          :to="`/specials/${product.slug}`"
-          class="product-card"
-          :class="cardsVisible ? 'product-card--visible' : 'product-card--hidden'"
-          :style="{ transitionDelay: `${index * 100}ms` }"
-        >
+      <div v-else class="catalog-grid" :class="{ 'catalog-grid--single': products.length === 1 }">
+        <article v-for="product in products" :key="product.id" class="product-card">
           <div class="product-card__heading">
             <div class="product-card__title">
-              <h3>{{ product.title }}</h3>
+              <h3>
+                <NuxtLink :to="`/specials/${product.slug}`">{{ product.title }}</NuxtLink>
+              </h3>
               <p v-if="product.subtitle" class="product-card__subtitle">{{ product.subtitle }}</p>
             </div>
             <div class="product-card__price">
@@ -99,14 +63,19 @@ const { elementRef: cardsRef, isVisible: cardsVisible } = useScrollAnimation(0.1
               <CatalogAppointmentDuration :product="product" />
             </div>
             <CatalogOfferBadge
-              v-if="product.offerDeadline"
-              :deadline="product.offerDeadline"
+              v-if="deadlineFor(product.prices[0])"
+              :deadline="deadlineFor(product.prices[0])!"
               class="product-card__offer"
             />
           </div>
 
-          <div class="product-card__media">
+          <NuxtLink
+            :to="`/specials/${product.slug}`"
+            class="product-card__media"
+            :aria-label="`Explore ${product.title}`"
+          >
             <img
+              v-if="product.thumbnailImage"
               :src="product.thumbnailImage"
               :alt="`${product.title} offering`"
               width="400"
@@ -116,15 +85,25 @@ const { elementRef: cardsRef, isVisible: cardsVisible } = useScrollAnimation(0.1
             <span v-if="product.categoryDetails?.name" class="product-card__category">
               {{ product.categoryDetails.name }}
             </span>
-          </div>
+          </NuxtLink>
 
           <div class="product-card__body">
             <p class="product-card__summary">{{ product.summary }}</p>
             <div class="product-card__footer">
-              <span class="product-card__action">View offering <ArrowRight aria-hidden="true" /></span>
+              <NuxtLink :to="`/specials/${product.slug}`" class="product-card__action"
+                >View details <ArrowRight aria-hidden="true"
+              /></NuxtLink>
+              <NuxtLink
+                v-if="checkoutUrl(product)"
+                :to="checkoutUrl(product)"
+                external
+                class="conversion-button"
+                :aria-label="`${catalogActionLabel(product)}: ${product.title}`"
+                >{{ catalogActionLabel(product) }}</NuxtLink
+              >
             </div>
           </div>
-        </NuxtLink>
+        </article>
       </div>
     </div>
   </section>
@@ -149,17 +128,6 @@ const { elementRef: cardsRef, isVisible: cardsVisible } = useScrollAnimation(0.1
 .catalog-heading {
   margin-block-end: var(--space-catalog-lg);
   max-width: 47rem;
-  transition:
-    opacity var(--dur-catalog-reveal) var(--ease-catalog-out),
-    transform var(--dur-catalog-reveal) var(--ease-catalog-out);
-}
-.catalog-heading--hidden {
-  opacity: 0;
-  transform: translateY(var(--space-catalog-md));
-}
-.catalog-heading--visible {
-  opacity: 1;
-  transform: translateY(0);
 }
 .catalog-heading__intro {
   color: var(--color-catalog-accent);
@@ -167,9 +135,6 @@ const { elementRef: cardsRef, isVisible: cardsVisible } = useScrollAnimation(0.1
   font-size: var(--text-catalog-base);
   font-weight: 700;
   margin-block-end: var(--space-catalog-xs);
-}
-.catalog-heading :deep(.currency-select) {
-  margin-block-start: var(--space-catalog-lg);
 }
 .catalog-heading h2 {
   color: var(--color-catalog-display);
@@ -290,7 +255,7 @@ const { elementRef: cardsRef, isVisible: cardsVisible } = useScrollAnimation(0.1
   align-content: start;
   display: grid;
   gap: var(--space-catalog-md);
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr);
   padding: clamp(var(--space-catalog-md), 4vw, var(--space-catalog-lg));
 }
 .product-card__title {
@@ -321,7 +286,7 @@ const { elementRef: cardsRef, isVisible: cardsVisible } = useScrollAnimation(0.1
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-catalog-md);
-  justify-content: flex-end;
+  justify-content: space-between;
   padding-block-start: var(--space-catalog-md);
 }
 .product-card__price {
@@ -329,8 +294,8 @@ const { elementRef: cardsRef, isVisible: cardsVisible } = useScrollAnimation(0.1
   font-size: var(--text-catalog-md);
   flex: 0 0 auto;
   gap: var(--space-catalog-2xs);
-  justify-items: end;
-  text-align: end;
+  justify-items: start;
+  text-align: start;
 }
 .product-card__action {
   align-items: center;
@@ -424,12 +389,29 @@ const { elementRef: cardsRef, isVisible: cardsVisible } = useScrollAnimation(0.1
   .catalog-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+  .catalog-grid--single {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .catalog-grid--single .product-card {
+    grid-row: auto;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    grid-template-rows: auto 1fr;
+  }
+  .catalog-grid--single .product-card__media {
+    grid-column: 1;
+    grid-row: 1 / 3;
+    aspect-ratio: auto;
+  }
+  .catalog-grid--single .product-card__heading {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .catalog-grid--single .product-card__body {
+    grid-column: 2;
+    grid-row: 2;
+  }
 }
 @media (hover: hover) and (pointer: fine) {
-  .product-card:hover {
-    box-shadow: var(--shadow-catalog-card-hover);
-    transform: translateY(calc(var(--space-catalog-xs) * -1));
-  }
   .product-card:hover .product-card__media img {
     transform: scale(1.025);
   }
@@ -458,6 +440,22 @@ const { elementRef: cardsRef, isVisible: cardsVisible } = useScrollAnimation(0.1
   }
   to {
     opacity: 1;
+  }
+}
+.product-card a:focus-visible {
+  outline: var(--rule-catalog-focus) solid var(--color-catalog-focus);
+  outline-offset: var(--space-catalog-2xs);
+}
+.product-card__media {
+  display: block;
+}
+@media (min-width: 60rem) {
+  .product-card__heading {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .product-card__price {
+    justify-items: end;
+    text-align: end;
   }
 }
 </style>

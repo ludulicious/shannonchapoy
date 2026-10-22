@@ -108,3 +108,11 @@ This project has been migrated from React to Nuxt 4 using the preferred folder s
 `/specials/:slug` loads a single published product through the server-side `/api/catalog/products/:slug` proxy. This allows unlisted portal products to use the existing detail page without appearing in the offerings catalog. The portal generates the unguessable slug; no separate share token is used. Anyone with the URL can view and purchase it.
 
 Product detail responses and pages use `private, no-store`; unlisted pages are marked `noindex`. Keep these URLs out of navigation and sitemaps. Configure the existing portal URL and catalog API key on the server, and deploy portal unlisted-product support before deploying this website change.
+
+## Promoted homepage offering
+
+Set `NUXT_PUBLIC_FEATURED_OFFERING_SLUG` to the public catalog slug to recommend on the homepage. It defaults to `intake` (Discover Yourself). Set it in the build and deployment environment and rebuild, because landing pages are pre-rendered.
+
+The hero, recommendation label, catalog ordering, and final booking prompt all use this setting. Product names, prices, discounts, duration, and checkout URLs come from the configured portal for the selected currency. Development and production can therefore show different prices. No free-session price is hardcoded in the website.
+
+Only products returned in the public catalog are eligible; unlisted products are excluded. An empty or unavailable configured slug produces a general offerings introduction and no featured booking prompt. Hidden offering links continue to work on their individual detail pages.
