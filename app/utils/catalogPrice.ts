@@ -1,6 +1,7 @@
 export type CatalogPrice = {
   amount: number
   originalAmount?: number
+  offer?: { id: string; startsAt: string; endsAt: string } | null
   currency: string
   taxBehavior: 'exclusive' | 'inclusive' | 'unspecified'
 }

@@ -24,12 +24,18 @@ const currency = useCatalogCurrency()
 const { data, status, error, refresh } = await useFetch<CatalogResponse>('/api/catalog/products', {
   query: { currency }
 })
+const { deadlineFor } = useCatalogOffers(
+  () => (data.value?.items ?? []).flatMap((product) => product.prices.slice(0, 1)),
+  refresh
+)
 const products = computed(() =>
-  [...(data.value?.items ?? [])].sort((left, right) => {
-    const leftPrice = effectiveCatalogAmount(left)
-    const rightPrice = effectiveCatalogAmount(right)
-    return leftPrice - rightPrice
-  })
+  (data.value?.items ?? [])
+    .map((product) => ({ ...product, offerDeadline: deadlineFor(product.prices[0]) }))
+    .sort((left, right) => {
+      const leftPrice = effectiveCatalogAmount(left)
+      const rightPrice = effectiveCatalogAmount(right)
+      return leftPrice - rightPrice
+    })
 )
 const { elementRef: headerRef, isVisible: headerVisible } = useScrollAnimation(0.2)
 const { elementRef: cardsRef, isVisible: cardsVisible } = useScrollAnimation(0.1)
@@ -84,7 +90,7 @@ const { elementRef: cardsRef, isVisible: cardsVisible } = useScrollAnimation(0.1
           :style="{ transitionDelay: `${index * 100}ms` }"
         >
           <div class="product-card__heading">
-            <div>
+            <div class="product-card__title">
               <h3>{{ product.title }}</h3>
               <p v-if="product.subtitle" class="product-card__subtitle">{{ product.subtitle }}</p>
             </div>
@@ -92,6 +98,11 @@ const { elementRef: cardsRef, isVisible: cardsVisible } = useScrollAnimation(0.1
               <CatalogProductPrice :prices="product.prices" :is-free="product.isFree" />
               <CatalogAppointmentDuration :product="product" />
             </div>
+            <CatalogOfferBadge
+              v-if="product.offerDeadline"
+              :deadline="product.offerDeadline"
+              class="product-card__offer"
+            />
           </div>
 
           <div class="product-card__media">
@@ -189,8 +200,10 @@ const { elementRef: cardsRef, isVisible: cardsVisible } = useScrollAnimation(0.1
   border-radius: var(--radius-catalog-card);
   box-shadow: var(--shadow-catalog-card);
   color: var(--color-catalog-ink);
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-row: span 3;
+  grid-template-rows: subgrid;
+  row-gap: 0;
   min-width: 0;
   outline: var(--rule-catalog-focus) solid transparent;
   outline-offset: var(--space-catalog-2xs);
@@ -205,6 +218,11 @@ const { elementRef: cardsRef, isVisible: cardsVisible } = useScrollAnimation(0.1
 .product-card--hidden {
   opacity: 0;
   transform: translateY(var(--space-catalog-md));
+}
+.product-card--loading {
+  display: flex;
+  flex-direction: column;
+  grid-row: auto;
 }
 .product-card--visible {
   opacity: 1;
@@ -269,13 +287,17 @@ const { elementRef: cardsRef, isVisible: cardsVisible } = useScrollAnimation(0.1
 }
 .product-card__heading {
   align-items: start;
-  display: flex;
+  align-content: start;
+  display: grid;
   gap: var(--space-catalog-md);
-  justify-content: space-between;
+  grid-template-columns: minmax(0, 1fr) auto;
   padding: clamp(var(--space-catalog-md), 4vw, var(--space-catalog-lg));
 }
-.product-card__heading > div:first-child {
+.product-card__title {
   min-width: 0;
+}
+.product-card__offer {
+  grid-column: 1 / -1;
 }
 .product-card h3 {
   color: var(--color-catalog-display);

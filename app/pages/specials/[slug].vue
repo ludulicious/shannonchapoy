@@ -45,10 +45,15 @@ type CatalogProduct = {
 const route = useRoute()
 const requestUrl = useRequestURL()
 const currency = useCatalogCurrency()
-const { data: product, error } = await useFetch<CatalogProduct>(
-  () => `/api/catalog/products/${encodeURIComponent(String(route.params.slug))}`,
-  { query: { currency } }
-)
+const {
+  data: product,
+  error,
+  refresh
+} = await useFetch<CatalogProduct>(() => `/api/catalog/products/${encodeURIComponent(String(route.params.slug))}`, {
+  query: { currency }
+})
+const { deadlineFor } = useCatalogOffers(() => product.value?.prices.slice(0, 1) ?? [], refresh)
+const offerDeadline = computed(() => deadlineFor(product.value?.prices[0]))
 if (import.meta.server) {
   useResponseHeader('Cache-Control').value = 'private, no-store'
 }
@@ -145,14 +150,16 @@ usePageSeo(() => ({
           <CatalogAppointmentDuration :product="product" />
           <p class="special-summary">{{ product.summary }}</p>
 
-          <div class="special-price">
-            <CatalogProductPrice :prices="product.prices" :is-free="product.isFree" />
+          <div class="special-booking">
+            <div class="special-booking__row">
+              <CatalogProductPrice class="special-price" :prices="product.prices" :is-free="product.isFree" />
+              <NuxtLink :to="checkoutUrl" external class="special-buy">
+                <ShoppingBag aria-hidden="true" />
+                {{ product.buyButtonLabel || 'Buy now' }}
+              </NuxtLink>
+            </div>
+            <CatalogOfferBadge v-if="offerDeadline" :deadline="offerDeadline" />
           </div>
-
-          <NuxtLink :to="checkoutUrl" external class="special-buy">
-            <ShoppingBag aria-hidden="true" />
-            {{ product.buyButtonLabel || 'Buy now' }}
-          </NuxtLink>
         </div>
 
         <section v-if="product.descriptionHtml" class="special-description">
@@ -162,13 +169,16 @@ usePageSeo(() => ({
           <div class="special-description__body" :style="descriptionStyle" v-html="product.descriptionHtml"></div>
           <div v-if="product.secondaryCta" class="special-bottom-cta">
             <p>{{ product.secondaryCta }}</p>
-            <div class="special-bottom-price">
-              <CatalogProductPrice :prices="product.prices" :is-free="product.isFree" />
+            <div class="special-booking">
+              <div class="special-booking__row">
+                <CatalogProductPrice class="special-price" :prices="product.prices" :is-free="product.isFree" />
+                <NuxtLink :to="checkoutUrl" external class="special-buy">
+                  <ShoppingBag aria-hidden="true" />
+                  {{ product.buyButtonLabel || 'Buy now' }}
+                </NuxtLink>
+              </div>
+              <CatalogOfferBadge v-if="offerDeadline" :deadline="offerDeadline" />
             </div>
-            <NuxtLink :to="checkoutUrl" external class="special-buy">
-              <ShoppingBag aria-hidden="true" />
-              {{ product.buyButtonLabel || 'Buy now' }}
-            </NuxtLink>
           </div>
         </section>
       </article>
@@ -226,6 +236,7 @@ usePageSeo(() => ({
 }
 .special-content {
   align-self: center;
+  min-width: 0;
   padding: clamp(2rem, 5vw, 4.5rem);
 }
 .special-eyebrow,
@@ -248,6 +259,7 @@ usePageSeo(() => ({
   letter-spacing: -0.035em;
   line-height: 1;
   margin: 0;
+  overflow-wrap: anywhere;
 }
 .special-summary {
   color: var(--color-catalog-muted);
@@ -256,8 +268,21 @@ usePageSeo(() => ({
   margin-block: 1.5rem;
 }
 .special-price {
-  margin-block-end: 1.5rem;
   font-size: 1.6rem;
+}
+.special-booking {
+  display: grid;
+  gap: var(--space-catalog-md);
+  max-width: 23rem;
+  min-width: 0;
+  width: 100%;
+}
+.special-booking__row {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-catalog-sm) var(--space-catalog-lg);
 }
 .special-buy {
   align-items: center;
@@ -271,6 +296,7 @@ usePageSeo(() => ({
   gap: 0.65rem;
   padding: 0.95rem 1.6rem;
   text-decoration: none;
+  white-space: nowrap;
   transition:
     transform 180ms ease,
     box-shadow 180ms ease;
@@ -389,8 +415,8 @@ usePageSeo(() => ({
 .special-bottom-cta {
   align-items: center;
   border-block-start: 1px solid color-mix(in srgb, var(--color-catalog-accent) 18%, transparent);
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 23rem);
   gap: 1rem 1.5rem;
   margin-block-start: 2.5rem;
   padding-block-start: 2rem;
@@ -400,11 +426,7 @@ usePageSeo(() => ({
   font-family: var(--font-catalog-display);
   font-size: 1.35rem;
   font-weight: 700;
-  margin-inline-end: auto;
-}
-.special-bottom-price {
-  font-size: 1.35rem;
-  text-align: end;
+  margin: 0;
 }
 .special-state {
   background: white;
@@ -412,12 +434,24 @@ usePageSeo(() => ({
   padding: 3rem;
   text-align: center;
 }
-@media (max-width: 720px) {
+@media (max-width: 900px) {
   .special-card {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
   .special-image {
     aspect-ratio: 16 / 10;
+  }
+}
+@media (max-width: 720px) {
+  .special-bottom-cta {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-catalog-lg);
+  }
+  .special-buy {
+    padding-inline: var(--space-catalog-md);
+  }
+  .special-booking__row {
+    column-gap: var(--space-catalog-xs);
   }
 }
 </style>
