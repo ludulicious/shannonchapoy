@@ -144,9 +144,8 @@ usePageSeo(() => ({
         </div>
 
         <div class="special-content">
-          <p v-if="product.categoryDetails?.name" class="special-eyebrow">{{ product.categoryDetails.name }}</p>
-          <p v-if="product.subtitle" class="special-subtitle">{{ product.subtitle }}</p>
           <h1>{{ product.title }}</h1>
+          <p v-if="product.subtitle" class="special-subtitle">{{ product.subtitle }}</p>
           <CatalogAppointmentDuration :product="product" />
           <p class="special-summary">{{ product.summary }}</p>
 
@@ -239,7 +238,6 @@ usePageSeo(() => ({
   min-width: 0;
   padding: clamp(2rem, 5vw, 4.5rem);
 }
-.special-eyebrow,
 .special-description__label {
   color: var(--color-catalog-accent);
   font-size: 0.75rem;
@@ -248,9 +246,11 @@ usePageSeo(() => ({
   text-transform: uppercase;
 }
 .special-subtitle {
-  color: var(--color-catalog-muted);
-  font-weight: 600;
-  margin-block: 0.75rem 0.25rem;
+  color: var(--color-catalog-accent);
+  font-size: var(--text-catalog-sm);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  margin-block: var(--space-catalog-xs) 0;
 }
 .special-content h1 {
   color: var(--color-catalog-display);
