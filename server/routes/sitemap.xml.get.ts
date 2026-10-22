@@ -1,7 +1,15 @@
 import { queryCollection } from '@nuxt/content/server'
 
 const siteUrl = 'https://shannonchapoy.com'
-const pagePaths = ['/', '/pj-circle', '/one-on-one-love-coaching', '/art-of-dating-yourself', '/privacy', '/terms']
+const pagePaths = [
+  '/',
+  '/contact',
+  '/pj-circle',
+  '/one-on-one-love-coaching',
+  '/art-of-dating-yourself',
+  '/privacy',
+  '/terms'
+]
 
 export default defineEventHandler(async (event) => {
   const pages = await queryCollection(event, 'content').all()

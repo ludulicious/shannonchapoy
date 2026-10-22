@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ArrowLeft, ShoppingBag } from 'lucide-vue-next'
+import { ShoppingBag } from 'lucide-vue-next'
 
 import { catalogActionLabel } from '~/utils/catalogProduct'
 import type { CatalogPrice } from '~/utils/catalogPrice'
@@ -108,13 +108,6 @@ usePageSeo(() => ({
 <template>
   <main class="special-page">
     <div class="special-shell">
-      <div class="special-toolbar">
-        <NuxtLink to="/offerings" class="special-back">
-          <ArrowLeft aria-hidden="true" />
-          All offerings
-        </NuxtLink>
-      </div>
-
       <div v-if="error" class="special-state" role="alert">
         <h1>This offering is unavailable</h1>
         <p>Please return to the offerings and try again in a moment.</p>
@@ -184,21 +177,6 @@ usePageSeo(() => ({
   margin-inline: auto;
   max-width: 72rem;
 }
-.special-back {
-  align-items: center;
-  color: var(--color-catalog-accent);
-  display: inline-flex;
-  font-weight: 700;
-  gap: 0.5rem;
-  text-decoration: none;
-}
-.special-toolbar {
-  align-items: center;
-  display: flex;
-  justify-content: space-between;
-  margin-block-end: 2rem;
-}
-.special-back svg,
 .special-buy svg {
   height: 1.1rem;
   width: 1.1rem;
@@ -274,10 +252,10 @@ usePageSeo(() => ({
 }
 .special-buy {
   align-items: center;
-  background: var(--color-catalog-accent);
+  background: var(--color-catalog-action);
   border: 0;
   border-radius: 999px;
-  color: white;
+  color: var(--color-catalog-action-ink);
   cursor: pointer;
   display: inline-flex;
   font-weight: 800;
@@ -290,12 +268,12 @@ usePageSeo(() => ({
     box-shadow 180ms ease;
 }
 .special-buy:hover {
-  box-shadow: 0 0.8rem 1.8rem color-mix(in srgb, var(--color-catalog-accent) 25%, transparent);
+  background: var(--color-catalog-display);
+  box-shadow: 0 0.8rem 1.8rem color-mix(in srgb, var(--color-catalog-action) 25%, transparent);
   transform: translateY(-2px);
 }
-.special-buy:focus-visible,
-.special-back:focus-visible {
-  outline: 3px solid color-mix(in srgb, var(--color-catalog-accent) 45%, transparent);
+.special-buy:focus-visible {
+  outline: var(--rule-catalog-focus) solid var(--color-catalog-focus);
   outline-offset: 4px;
 }
 .special-description {

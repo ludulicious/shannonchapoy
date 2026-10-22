@@ -6,9 +6,9 @@ const isScrolled = ref(false)
 const isMobileMenuOpen = ref(false)
 
 const menuItems = [
-  { name: 'Offerings', path: '/offerings' },
   { name: 'Meet Shannon', path: '/about' },
-  { name: 'Questions?', path: '/contact' }
+  { name: 'Questions?', path: '/faq' },
+  { name: 'Contact', path: '/contact' }
 ]
 
 const isActive = (path: string) => {
@@ -89,17 +89,6 @@ watch(
           >
             {{ item.name }}
           </NuxtLink>
-          <NuxtLink
-            to="/offerings"
-            :class="[
-              'px-5 py-3 rounded-full text-lg font-semibold whitespace-nowrap transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-current',
-              route.path === '/offerings'
-                ? 'bg-brand-skyBlue text-white hover:bg-brand-dkPurple hover:text-white'
-                : 'bg-brand-dkPurple text-white hover:bg-brand-ltPurple hover:text-white'
-            ]"
-          >
-            Book a session
-          </NuxtLink>
         </div>
 
         <CatalogCurrencySelect compact />
@@ -138,9 +127,6 @@ watch(
           @click="isMobileMenuOpen = false"
         >
           {{ item.name }}
-        </NuxtLink>
-        <NuxtLink to="/offerings" class="conversion-button w-full" @click="isMobileMenuOpen = false">
-          Book a session
         </NuxtLink>
       </div>
     </div>

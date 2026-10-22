@@ -5,7 +5,7 @@ import { isLandingPath } from './utils/landingRoutes'
 
 export default {
   scrollBehavior(to, from, savedPosition) {
-    if (to.path === '/privacy' || to.path === '/terms') {
+    if (to.path === '/privacy' || to.path === '/terms' || to.path === '/contact') {
       const top = { top: 0, left: 0, behavior: 'instant' as const }
       if (!from.matched.length || to.path === from.path) {
         return top

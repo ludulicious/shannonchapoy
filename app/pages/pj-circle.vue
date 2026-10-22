@@ -16,6 +16,7 @@ const {
 } = await useAsyncData('content-pj-circle', () => queryCollection('content').path('/pj-circle').first())
 
 usePageSeo(contentData)
+useHead({ script: [{ src: 'https://actions.shannonchapoy.com/js/form_embed.js', defer: true }] })
 </script>
 
 <template>

@@ -13,6 +13,7 @@ const {
 )
 
 usePageSeo(contentData)
+useHead({ script: [{ src: 'https://actions.shannonchapoy.com/js/form_embed.js', defer: true }] })
 
 onMounted(() => {
   if (import.meta.client) {

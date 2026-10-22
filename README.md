@@ -34,11 +34,32 @@ Personal website for Shannon Chapoy built with Nuxt 4, Nuxt Content, and Tailwin
 pnpm build
 ```
 
-The build pre-renders the homepage, its four section URLs, all three program pages, and both legal pages into `.output/public/` as HTML with content and SEO metadata. The explicit route list is in `nuxt.config.ts`; linked pages are also discovered during pre-rendering. Rendering errors fail the build.
+The build pre-renders the homepage, its three section URLs, the dedicated contact page, all three program pages, and both legal pages into `.output/public/` as HTML with content and SEO metadata. The explicit route list is in `nuxt.config.ts`; linked pages are also discovered during pre-rendering. Rendering errors fail the build.
 
 The Docker build runs this same command. Run `.output/server/index.mjs` in production: it serves the generated pages and keeps the form-validation API and proper 404 responses available. Rebuild after changing Markdown content.
 
-`pnpm generate` is available for a static-only export, but static hosting alone cannot run `server/api/validate-code.ts`.
+`pnpm generate` is available for a static-only export, but static hosting alone cannot run the contact submission or form-validation APIs.
+
+## Contact form
+
+`/contact` is a standalone page with a native form, based on the Amstelgospel form flow. The homepage's contact prompt and navigation link open this page. Its title, description, and SEO fields are in `content/contact.md`.
+
+Copy the contact settings from `.env.example` into your local `.env` and fill them in. In production, supply them to the Nuxt server environment (for example, Docker `--env-file`); Node does not load `.env` automatically. Also set the public Turnstile site key when building, since `/contact` is pre-rendered. Rebuild after changing it.
+
+- `NUXT_RESEND_API_KEY`: Resend key with permission to send email.
+- `NUXT_RESEND_FROM_EMAIL`: sender address on a domain verified in Resend, optionally `Shannon Chapoy <verified-sender@your-domain>`.
+- `NUXT_CONTACT_TO`: receiving address; defaults to `hello@shannonchapoy.com`.
+- `NUXT_PUBLIC_TURNSTILE_SITE_KEY`: public site key for Shannon's Cloudflare Turnstile widget.
+- `NUXT_TURNSTILE_SECRET_KEY`: private secret for that widget, kept server-only.
+- `NUXT_TURNSTILE_HOSTNAMES`: exact allowed hostnames, comma-separated; defaults to `shannonchapoy.com,www.shannonchapoy.com`. Add these domains to the widget in Cloudflare too.
+
+The server verifies the token's success, `contact` action, and hostname before sending through Resend. The visitor's email is the reply-to address; recipients are controlled only by server configuration. Missing settings prevent delivery. The form preserves the visitor's message on errors and resets the security check after each submission attempt, since Turnstile tokens are single-use. A missing public site key displays a direct email alternative.
+
+Input lengths, consent, and a hidden spam field are checked on the server. Submissions are limited to five attempts per 15 minutes per connection IP per server process. Forwarded IP headers are not trusted. Configure trusted rate limiting at your reverse proxy for multi-instance deployments.
+
+For local development, use a widget allowing `localhost` with `NUXT_TURNSTILE_HOSTNAMES=localhost`, or Cloudflare's documented test keys. Production rejects test keys and loopback hostnames. Automated server tests mock Cloudflare and Resend, including rejected/expired tokens, wrong actions/hosts, and delivery failures; they never send email.
+
+References: [Turnstile validation](https://developers.cloudflare.com/turnstile/get-started/server-side-validation/), [Turnstile testing](https://developers.cloudflare.com/turnstile/troubleshooting/testing/), and [Resend email API](https://resend.com/docs/api-reference/emails/send-email).
 
 ## Docker Deployment
 
@@ -113,6 +134,6 @@ Product detail responses and pages use `private, no-store`; unlisted pages are m
 
 Set `NUXT_PUBLIC_FEATURED_OFFERING_SLUG` to the public catalog slug to recommend on the homepage. It defaults to `intake` (Discover Yourself). Set it in the build and deployment environment and rebuild, because landing pages are pre-rendered.
 
-The hero, recommendation label, catalog ordering, and final booking prompt all use this setting. Product names, prices, discounts, duration, and checkout URLs come from the configured portal for the selected currency. Development and production can therefore show different prices. No free-session price is hardcoded in the website.
+The hero, recommendation label, and catalog ordering all use this setting. Product names, prices, discounts, duration, and checkout URLs come from the configured portal for the selected currency. Development and production can therefore show different prices. No free-session price is hardcoded in the website.
 
 Only products returned in the public catalog are eligible; unlisted products are excluded. An empty or unavailable configured slug produces a general offerings introduction and no featured booking prompt. Hidden offering links continue to work on their individual detail pages.

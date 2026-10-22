@@ -11,6 +11,7 @@ const {
 } = await useAsyncData('content-one-on-one', () => queryCollection('content').path('/one-on-one-love-coaching').first())
 
 usePageSeo(contentData)
+useHead({ script: [{ src: 'https://actions.shannonchapoy.com/js/form_embed.js', defer: true }] })
 
 onMounted(() => {
   if (import.meta.client) {

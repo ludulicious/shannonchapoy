@@ -12,12 +12,12 @@ export default defineEventHandler((event) => {
     setHeader(event, 'Cache-Control', 'private, no-store')
   }
 
-  // Set comprehensive CSP headers for iframe and form resources
+  // Allow Turnstile and the existing external booking resources.
   setHeaders(event, {
     'Content-Security-Policy': [
       "default-src 'self'",
-      "frame-src 'self' https://actions.shannonchapoy.com https://storage.googleapis.com https://*.googleapis.com",
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://actions.shannonchapoy.com https://storage.googleapis.com https://*.googleapis.com",
+      "frame-src 'self' https://challenges.cloudflare.com https://actions.shannonchapoy.com https://storage.googleapis.com https://*.googleapis.com",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://challenges.cloudflare.com https://actions.shannonchapoy.com https://storage.googleapis.com https://*.googleapis.com",
       "connect-src 'self' https://actions.shannonchapoy.com https://backend.leadconnectorhq.com https://storage.googleapis.com https://*.googleapis.com https://*.leadconnectorhq.com",
       "img-src 'self' data: https: blob:",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",

@@ -2,9 +2,9 @@
 
 ## Audit and implementation
 
-The site pre-renders its six canonical pages and four homepage section URLs. Content is available in HTML before JavaScript loads, the homepage has one H1, images have dimensions, and decorative images have empty alt text. The four section URLs represent the same homepage and intentionally share its canonical. Robots allows crawling; purchase confirmation pages and missing pages are excluded from indexing.
+The site pre-renders its seven canonical pages and three homepage section URLs. Content is available in HTML before JavaScript loads, the homepage has one H1, images have dimensions, and decorative images have empty alt text. The three section URLs represent the same homepage and intentionally share its canonical. `/contact` is a separate page with its own canonical and sitemap entry. Robots allows crawling; purchase confirmation pages and missing pages are excluded from indexing.
 
-Previously, search descriptions, titles, and social previews were hardcoded in Vue. They now come from Markdown frontmatter, with reactive metadata shared by search, Open Graph, and Twitter. All canonical pages have explicit frontmatter. The homepage settings live in `content/index.md`; `/about`, `/offerings`, `/philosophy`, and `/contact` use those same settings. `about.md` and `pj-circle-intro.md` are content fragments, not separate canonical pages.
+Previously, search descriptions, titles, and social previews were hardcoded in Vue. They now come from Markdown frontmatter, with reactive metadata shared by search, Open Graph, and Twitter. All canonical pages have explicit frontmatter. The homepage settings live in `content/index.md`; `/about`, `/offerings`, and `/philosophy` use those same settings. The contact page uses `content/contact.md`. `about.md` and `pj-circle-intro.md` are content fragments, not separate canonical pages.
 
 JSON-LD describes the website, Shannon as a Person, each page, and the three coaching services. Frontmatter FAQs are rendered visibly and used for FAQPage structured data. They provide direct answers grounded in existing content. Google generally restricts FAQ rich results to authoritative government and health websites; this markup does not promise a rich result. No prices, credentials, addresses, ratings, or external profiles were invented.
 
@@ -30,7 +30,7 @@ The explicit Zod schema in `content.config.ts` exposes all fields as labelled St
 
 Keep descriptions accurate and concise. Change the visible story as well when changing service facts. Edit `content/`, which Nuxt and Studio read; the old `public/content/` copies are not the site's content source. Rebuild after publishing content changes.
 
-The sitemap is generated from the six implemented canonical routes and their frontmatter. It excludes pages marked `noindex`, excludes off-site canonicals, and deduplicates URLs. New standalone routes still need to be implemented and added to the route list; creating arbitrary Markdown files does not create page templates here.
+The sitemap is generated from the seven implemented canonical routes and their frontmatter. It excludes pages marked `noindex`, excludes off-site canonicals, and deduplicates URLs. New standalone routes still need to be implemented and added to the route list; creating arbitrary Markdown files does not create page templates here.
 
 ## Content issues requiring owner review
 

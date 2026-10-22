@@ -2,7 +2,7 @@
 import { publicCatalogProducts, type CatalogProduct } from '~/utils/catalogProduct'
 
 definePageMeta({
-  path: '/:section(about|offerings|philosophy|contact)?',
+  path: '/:section(about|offerings|philosophy|faq)?',
   key: 'landing'
 })
 
@@ -61,7 +61,6 @@ watch(
     <About />
     <Philosophy v-if="route.path === '/philosophy'" />
     <PageFaq :items="contentData?.faq" />
-    <BookingCallout v-if="featured" :product="featured" :offer-deadline="featuredDeadline" />
     <Contact />
   </main>
 </template>

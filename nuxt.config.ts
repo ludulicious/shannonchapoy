@@ -16,8 +16,14 @@ export default defineNuxtConfig({
   runtimeConfig: {
     portalApiKey: '',
     portalUrl: 'http://localhost:3052',
+    resendApiKey: '',
+    resendFromEmail: '',
+    contactTo: 'hello@shannonchapoy.com',
+    turnstileSecretKey: '',
+    turnstileHostnames: 'shannonchapoy.com,www.shannonchapoy.com',
     public: {
-      featuredOfferingSlug: 'intake'
+      featuredOfferingSlug: 'intake',
+      turnstileSiteKey: ''
     }
   },
 
@@ -48,8 +54,7 @@ export default defineNuxtConfig({
           rel: 'stylesheet',
           href: 'https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap'
         }
-      ],
-      script: [{ src: 'https://actions.shannonchapoy.com/js/form_embed.js', defer: true }]
+      ]
     },
     pageTransition: { name: 'page', mode: 'out-in' }
   },
@@ -68,6 +73,7 @@ export default defineNuxtConfig({
         '/about',
         '/offerings',
         '/philosophy',
+        '/faq',
         '/contact',
         '/pj-circle',
         '/one-on-one-love-coaching',
@@ -83,8 +89,8 @@ export default defineNuxtConfig({
         headers: {
           'Content-Security-Policy': [
             "default-src 'self'",
-            "frame-src 'self' https://actions.shannonchapoy.com https://storage.googleapis.com https://*.googleapis.com",
-            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://actions.shannonchapoy.com https://storage.googleapis.com https://*.googleapis.com",
+            "frame-src 'self' https://challenges.cloudflare.com https://actions.shannonchapoy.com https://storage.googleapis.com https://*.googleapis.com",
+            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://challenges.cloudflare.com https://actions.shannonchapoy.com https://storage.googleapis.com https://*.googleapis.com",
             "connect-src 'self' https://actions.shannonchapoy.com https://backend.leadconnectorhq.com https://storage.googleapis.com https://*.googleapis.com https://*.leadconnectorhq.com",
             "img-src 'self' data: https: blob:",
             "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
