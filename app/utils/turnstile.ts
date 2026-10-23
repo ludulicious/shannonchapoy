@@ -3,7 +3,8 @@ type TurnstileOptions = {
   action: string
   theme: 'light'
   size: 'flexible' | 'compact'
-  'response-field': false
+  'response-field': true
+  'response-field-name': 'turnstileToken'
   callback: (token: string) => void
   'expired-callback': () => void
   'error-callback': () => void

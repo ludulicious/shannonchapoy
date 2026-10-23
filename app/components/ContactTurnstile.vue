@@ -23,7 +23,8 @@ function renderWidget() {
     action: 'contact',
     theme: 'light',
     size: compact?.matches ? 'compact' : 'flexible',
-    'response-field': false,
+    'response-field': true,
+    'response-field-name': 'turnstileToken',
     callback: (token) => {
       model.value = token
       error.value = ''

@@ -49,7 +49,7 @@ Copy the contact settings from `.env.example` into your local `.env` and fill th
 - `NUXT_RESEND_API_KEY`: Resend key with permission to send email.
 - `NUXT_RESEND_FROM_EMAIL`: sender address on a domain verified in Resend, optionally `Shannon Chapoy <verified-sender@your-domain>`.
 - `NUXT_CONTACT_TO`: receiving address; defaults to `hello@shannonchapoy.com`.
-- `NUXT_PUBLIC_TURNSTILE_SITE_KEY`: public site key for Shannon's Cloudflare Turnstile widget.
+- `NUXT_PUBLIC_TURNSTILE_SITE_KEY`: defaults to the existing widget's public site key, `0x4AAAAAAFiE_t8kBJrdW5tA`. Override it when testing locally or switching widgets.
 - `NUXT_TURNSTILE_SECRET_KEY`: private secret for that widget, kept server-only.
 - `NUXT_TURNSTILE_HOSTNAMES`: exact allowed hostnames, comma-separated; defaults to `shannonchapoy.com,www.shannonchapoy.com`. Add these domains to the widget in Cloudflare too.
 
@@ -58,6 +58,8 @@ The server verifies the token's success, `contact` action, and hostname before s
 Input lengths, consent, and a hidden spam field are checked on the server. Submissions are limited to five attempts per 15 minutes per connection IP per server process. Forwarded IP headers are not trusted. Configure trusted rate limiting at your reverse proxy for multi-instance deployments.
 
 For local development, use a widget allowing `localhost` with `NUXT_TURNSTILE_HOSTNAMES=localhost`, or Cloudflare's documented test keys. Production rejects test keys and loopback hostnames. Automated server tests mock Cloudflare and Resend, including rejected/expired tokens, wrong actions/hosts, and delivery failures; they never send email.
+
+The existing production widget requires its matching secret in `NUXT_TURNSTILE_SECRET_KEY`; a site key alone cannot verify submissions. Keep that secret in the ignored local `.env` or your production secret store. Local test keys must be replaced as a pair when switching to the real widget. The production hostname allowlist must contain only the production frontend domains.
 
 References: [Turnstile validation](https://developers.cloudflare.com/turnstile/get-started/server-side-validation/), [Turnstile testing](https://developers.cloudflare.com/turnstile/troubleshooting/testing/), and [Resend email API](https://resend.com/docs/api-reference/emails/send-email).
 
