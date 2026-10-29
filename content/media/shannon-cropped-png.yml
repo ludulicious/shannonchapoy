@@ -1,0 +1,10 @@
+title: "Shannon portrait \u2014 homepage"
+image:
+  src: '/shannon-cropped.png'
+  alt: 'Shannon Chapoy'
+categories:
+  - 'Portraits'
+  - 'Homepage'
+credit: ''
+visible: true
+order: 270

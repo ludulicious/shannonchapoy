@@ -1,4 +1,5 @@
 ---
+path: /pj-circle-intro
 title: Peace & Joy Circle introduction
 description: An introduction to intimate Peace & Joy Circles for successful women seeking self-love and supportive community.
 ---

@@ -3,23 +3,25 @@ import { ArrowRight } from 'lucide-vue-next'
 import type { catalogOfferDeadline } from '~/utils/catalogOffer'
 import type { CatalogProduct } from '~/utils/catalogProduct'
 
-defineProps<{ product?: CatalogProduct; offerDeadline?: ReturnType<typeof catalogOfferDeadline> }>()
+defineProps<{
+  content: { heading: string; intro: string; image: string; mobileImage: string; buttonLabel: string }
+  product?: CatalogProduct
+  offerDeadline?: ReturnType<typeof catalogOfferDeadline>
+}>()
 </script>
 
 <template>
   <section class="conversion-hero" aria-labelledby="hero-title">
     <picture class="conversion-hero__background" aria-hidden="true">
-      <source media="(max-width: 1023px)" srcset="/images/hero-botanical-white-mobile.jpg" width="1024" height="1536" />
-      <img src="/images/hero-botanical-white.jpg" alt="" width="1942" height="809" fetchpriority="high" />
+      <source media="(max-width: 1023px)" :srcset="content.mobileImage" width="1024" height="1536" />
+      <img :src="content.image" alt="" width="1942" height="809" fetchpriority="high" />
     </picture>
     <div class="conversion-hero__layout">
-      <h1 id="hero-title">Ready for your greatest love?</h1>
-      <p class="conversion-hero__copy">
-        Start by dating yourself. I went from a single bed to soulmate love in a year. If I can, you can too!
-      </p>
+      <h1 id="hero-title">{{ content.heading }}</h1>
+      <p class="conversion-hero__copy">{{ content.intro }}</p>
       <FeaturedSessionCard v-if="product" id="offerings" :product="product" :offer-deadline="offerDeadline" />
       <NuxtLink v-else to="/offerings" class="conversion-button">
-        Explore offerings <ArrowRight aria-hidden="true" />
+        {{ content.buttonLabel }} <ArrowRight aria-hidden="true" />
       </NuxtLink>
     </div>
   </section>

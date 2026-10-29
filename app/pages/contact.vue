@@ -3,9 +3,7 @@ import { Mail } from 'lucide-vue-next'
 
 definePageMeta({ pageTransition: false })
 
-const { data: content } = await useAsyncData('content-contact', () =>
-  queryCollection('content').path('/contact').first()
-)
+const { data: content } = await useAsyncData('content-contact', () => queryCollection('pages').path('/contact').first())
 usePageSeo(content)
 </script>
 

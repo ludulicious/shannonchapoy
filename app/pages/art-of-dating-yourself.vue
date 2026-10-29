@@ -9,10 +9,11 @@ const {
   pending: contentPending,
   error: contentError
 } = await useAsyncData('content-art-of-dating', () =>
-  queryCollection('content').path('/art-of-dating-yourself').first()
+  queryCollection('archived_programs').path('/art-of-dating-yourself').first()
 )
 
-usePageSeo(contentData)
+const { items: faqItems, groups: faqGroups } = await useFaqs(contentData)
+usePageSeo(() => ({ ...contentData.value, faq: faqItems.value }))
 useHead({ script: [{ src: 'https://actions.shannonchapoy.com/js/form_embed.js', defer: true }] })
 
 onMounted(() => {
@@ -106,6 +107,6 @@ onMounted(() => {
         <ContentRenderer :value="contentData" />
       </article>
     </div>
-    <PageFaq :items="contentData?.faq" />
+    <PageFaq :groups="faqGroups" />
   </div>
 </template>

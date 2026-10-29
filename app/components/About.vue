@@ -1,42 +1,25 @@
 <script setup lang="ts">
 const route = useRoute()
 const fullStory = computed(() => route.path === '/about')
-const { data: contentData } = await useAsyncData('content-about', () =>
-  queryCollection('content').path('/about').first()
-)
+const { data: contentData } = await useAsyncData('content-about', () => queryCollection('homepage_about').first())
 </script>
 
 <template>
-  <section id="about" class="about-section" aria-labelledby="about-title">
+  <section v-if="contentData" id="about" class="about-section" aria-label="About Shannon">
     <div class="about-layout">
       <img
-        src="/shannon-cropped.png"
-        alt="Shannon Chapoy"
+        :src="contentData.image"
+        :alt="contentData.imageAlt"
         width="600"
         height="700"
         loading="lazy"
         class="about-portrait"
       />
       <div>
-        <template v-if="fullStory && contentData">
-          <h2 id="about-title" class="sr-only">Meet Shannon</h2>
-          <article class="prose prose-lg max-w-none"><ContentRenderer :value="contentData" /></article>
-        </template>
-        <template v-else>
-          <h2 id="about-title">I've been where you are.</h2>
-          <p>
-            After more than 30 years in international business, my life looked successful on paper. But I felt lonely
-            and disconnected from myself.
-          </p>
-          <p>
-            Learning to enjoy my own company changed how I showed up in my life and relationships. Now I support other
-            women as they reconnect with themselves, understand what they need, and decide what comes next.
-          </p>
-          <p class="about-signature">Shannon Chapoy · Self-love &amp; relationship coach</p>
-          <NuxtLink to="/about" class="conversion-text-link">Read my story</NuxtLink>
-        </template>
+        <ContentRenderer :value="contentData" />
+        <NuxtLink v-if="!fullStory" to="/about" class="conversion-text-link">{{ contentData.storyLinkLabel }}</NuxtLink>
         <div class="about-action">
-          <NuxtLink to="/offerings" class="conversion-button">Find your next step</NuxtLink>
+          <NuxtLink to="/offerings" class="conversion-button">{{ contentData.actionLabel }}</NuxtLink>
         </div>
       </div>
     </div>
@@ -63,7 +46,7 @@ const { data: contentData } = await useAsyncData('content-about', () =>
   object-position: left center;
   border-radius: var(--radius-catalog-card);
 }
-.about-section h2 {
+.about-section :deep(h2) {
   color: var(--color-catalog-display);
   font-family: var(--font-catalog-display);
   font-size: clamp(2rem, 3vw, 2.75rem);
@@ -72,12 +55,12 @@ const { data: contentData } = await useAsyncData('content-about', () =>
   overflow-wrap: anywhere;
   margin-bottom: var(--space-catalog-lg);
 }
-.about-section p {
+.about-section :deep(p) {
   color: var(--color-catalog-muted);
   line-height: 1.75;
   margin-bottom: var(--space-catalog-md);
 }
-.about-section .about-signature {
+.about-section :deep(.about-summary > p:last-child) {
   color: var(--color-catalog-display);
   font-weight: 700;
   font-size: var(--text-catalog-sm);

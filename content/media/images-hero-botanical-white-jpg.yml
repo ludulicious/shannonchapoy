@@ -1,0 +1,10 @@
+title: "Homepage hero \u2014 desktop"
+image:
+  src: '/images/hero-botanical-white.jpg'
+  alt: ''
+categories:
+  - 'Homepage'
+  - 'Backgrounds'
+credit: ''
+visible: true
+order: 120

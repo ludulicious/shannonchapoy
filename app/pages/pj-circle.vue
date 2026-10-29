@@ -7,15 +7,16 @@ const {
   data: introData,
   pending: introPending,
   error: introError
-} = await useAsyncData('content-pj-intro', () => queryCollection('content').path('/pj-circle-intro').first())
+} = await useAsyncData('content-pj-intro', () => queryCollection('archived_programs').path('/pj-circle-intro').first())
 
 const {
   data: contentData,
   pending: contentPending,
   error: contentError
-} = await useAsyncData('content-pj-circle', () => queryCollection('content').path('/pj-circle').first())
+} = await useAsyncData('content-pj-circle', () => queryCollection('archived_programs').path('/pj-circle').first())
 
-usePageSeo(contentData)
+const { items: faqItems, groups: faqGroups } = await useFaqs(contentData)
+usePageSeo(() => ({ ...contentData.value, faq: faqItems.value }))
 useHead({ script: [{ src: 'https://actions.shannonchapoy.com/js/form_embed.js', defer: true }] })
 </script>
 
@@ -107,6 +108,6 @@ useHead({ script: [{ src: 'https://actions.shannonchapoy.com/js/form_embed.js', 
         <ContentRenderer :value="contentData" />
       </article>
     </div>
-    <PageFaq :items="contentData?.faq" />
+    <PageFaq :groups="faqGroups" />
   </div>
 </template>

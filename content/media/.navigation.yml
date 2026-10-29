@@ -1,0 +1,13 @@
+title: Media library
+icon: i-lucide-images
+studio:
+  view: media
+  story: false
+  filters:
+    - field: categories
+      label: Category
+    - visible
+  media:
+    directory: images
+    formats: [jpg, jpeg, png, webp, gif]
+    maxBytes: 10485760

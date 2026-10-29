@@ -1,4 +1,5 @@
 ---
+path: /privacy
 title: 'Privacy Policy'
 description: 'Read how Shannon Chapoy collects, uses, and protects personal information when you visit this website or use her love coaching services.'
 seo:

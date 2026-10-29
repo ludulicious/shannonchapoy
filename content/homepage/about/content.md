@@ -1,7 +1,37 @@
 ---
-title: About Shannon Chapoy
-description: Shannon shares her journey from loneliness to self-love and now guides successful women through coaching and workshops.
+path: /about
+title: 'About Shannon'
+description: 'Homepage introduction, portrait, and full story. Edit the homepage text in Summary and the full biography in Story.'
+image: '/shannon-cropped.png'
+imageAlt: 'Shannon Chapoy'
+storyLinkLabel: 'Read my story'
+actionLabel: 'Find your next step'
+studio:
+  blocks:
+    - id: summary
+      label: Summary
+      type: markdown
+      component: about-sections
+      slot: summary
+    - id: story
+      label: Story
+      type: markdown
+      component: about-sections
+      slot: story
 ---
+
+::about-sections
+#summary
+
+## I've been where you are.
+
+After more than 30 years in international business, my life looked successful on paper. But I felt lonely and disconnected from myself.
+
+Learning to enjoy my own company changed how I showed up in my life and relationships. Now I support other women as they reconnect with themselves, understand what they need, and decide what comes next.
+
+**Shannon Chapoy · Self-love & relationship coach**
+
+#story
 
 ## Hi, I'm Shannon
 
@@ -23,3 +53,5 @@ Here's what I learned:
 Now I guide other successful women through this same transformation. Because if I can go from buying a single bed in resignation to finding soulmate love by learning to date myself first, so can you.
 
 > Your greatest love truly lives within you.
+
+::

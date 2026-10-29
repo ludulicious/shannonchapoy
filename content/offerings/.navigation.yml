@@ -1,0 +1,7 @@
+title: Offerings
+studio:
+  story: false
+  previewUrl: /offerings
+  filters:
+    - isActive
+    - isFeatured

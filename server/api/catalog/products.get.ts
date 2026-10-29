@@ -19,11 +19,18 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    const catalog = await $fetch<CatalogResponse>('/api/store/v1/products', {
-      baseURL: config.portalUrl,
-      query: { status: 'published', locale, currency },
-      headers: { Authorization: `Bearer ${config.portalApiKey}` }
-    })
+    const readPage = (page: number) =>
+      $fetch<CatalogResponse>('/api/store/v1/products', {
+        baseURL: config.portalUrl,
+        query: { status: 'published', locale, currency, page },
+        headers: { Authorization: `Bearer ${config.portalApiKey}` }
+      })
+    const catalog = await readPage(1)
+    const items = [...catalog.items]
+    // A Studio-selected slug may be on any page of the portal's public catalog.
+    for (let page = 2; page <= catalog.pagination.totalPages; page++) {
+      items.push(...(await readPage(page)).items)
+    }
     const portalOrigin = new URL(config.portalUrl).origin
     const localImageUrl = (url: string | null) => {
       if (!url) {
@@ -35,8 +42,8 @@ export default defineEventHandler(async (event) => {
     }
 
     return {
-      ...catalog,
-      items: catalog.items.map((product) => ({
+      pagination: { page: 1, pageSize: items.length, totalItems: items.length, totalPages: 1 },
+      items: items.map((product) => ({
         ...product,
         images: product.images.map((url) => localImageUrl(url)!),
         thumbnailImage: localImageUrl(product.thumbnailImage),

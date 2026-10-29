@@ -12,7 +12,12 @@ const pagePaths = [
 ]
 
 export default defineEventHandler(async (event) => {
-  const pages = await queryCollection(event, 'content').all()
+  const [hero, activePages, olderPrograms] = await Promise.all([
+    queryCollection(event, 'homepage_hero').first(),
+    queryCollection(event, 'pages').all(),
+    queryCollection(event, 'archived_programs').all()
+  ])
+  const pages = [...activePages, ...olderPrograms, ...(hero ? [{ ...hero, path: '/' }] : [])]
   const urls = new Set<string>()
   for (const path of pagePaths) {
     const page = pages.find((item) => item.path === path)

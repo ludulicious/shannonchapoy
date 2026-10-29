@@ -1,0 +1,10 @@
+title: "Homepage hero \u2014 mobile"
+image:
+  src: '/images/hero-botanical-white-mobile.jpg'
+  alt: ''
+categories:
+  - 'Homepage'
+  - 'Backgrounds'
+credit: ''
+visible: true
+order: 110

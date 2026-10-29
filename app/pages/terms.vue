@@ -2,7 +2,7 @@
 definePageMeta({ pageTransition: false })
 
 const { data, pending, error } = await useAsyncData('content-terms', () =>
-  queryCollection('content').path('/terms').first()
+  queryCollection('pages').path('/terms').first()
 )
 
 usePageSeo(data)

@@ -1,4 +1,5 @@
 ---
+path: /one-on-one-love-coaching
 title: '1:1 Love Coaching'
 description: 'Build confidence, clarity, and deeper connections with personalized love coaching from Shannon Chapoy. Explore your relationship goals and create your next chapter.'
 seo:
@@ -13,11 +14,9 @@ structuredData:
   name: '1:1 Love Coaching'
   serviceType: 'Personalized relationship coaching'
   audience: 'Successful women'
-faq:
-  - question: 'Who is one-on-one love coaching for?'
-    answer: 'Coaching supports women who want to find a partner, improve a relationship, build dating confidence, or explore deeper emotional intimacy.'
-  - question: 'How are coaching sessions tailored to me?'
-    answer: 'Shannon works with your individual goals, challenges, and aspirations to create a personalized path forward.'
+faqSlugs: []
+faqCategories:
+  - one-on-one
 ---
 
 ## What You'll Gain

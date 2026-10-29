@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { catalogCheckoutUrl, publicCatalogProducts } from '../app/utils/catalogProduct.ts'
+import { catalogCheckoutUrl } from '../app/utils/catalogProduct.ts'
 
 test('checkout retains the booking destination and selected currency through the return', () => {
   for (const currency of ['EUR', 'USD']) {
@@ -26,32 +26,4 @@ test('invalid or unavailable checkout destinations do not produce purchase links
   for (const purchaseUrl of ['', 'not a URL', 'javascript:alert(1)']) {
     assert.equal(catalogCheckoutUrl({ slug: 'intake', purchaseUrl }, 'EUR', 'https://shannon.example'), '')
   }
-})
-
-test('the configured slug takes priority without revealing unlisted products', () => {
-  const products = [
-    { slug: 'intake', visibility: 'listed', isFree: false, prices: [{ amount: 6050 }] },
-    { slug: 'pathway', visibility: 'listed', isFree: false, prices: [{ amount: 22200 }] },
-    { slug: 'private-gift', visibility: 'unlisted', isFree: true, prices: [] }
-  ]
-  assert.deepEqual(
-    publicCatalogProducts(products, 'pathway').map((p) => p.slug),
-    ['pathway', 'intake']
-  )
-  assert.deepEqual(
-    publicCatalogProducts(products, 'intake').map((p) => p.slug),
-    ['intake', 'pathway']
-  )
-  for (const slug of ['private-gift', 'missing', '']) {
-    const visible = publicCatalogProducts(products, slug)
-    assert.deepEqual(
-      visible.map((p) => p.slug),
-      ['intake', 'pathway']
-    )
-    assert.equal(
-      visible.find((p) => p.slug === slug),
-      undefined
-    )
-  }
-  assert.equal(products[0].slug, 'intake')
 })

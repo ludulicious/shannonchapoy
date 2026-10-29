@@ -4,11 +4,11 @@
 
 The site pre-renders its seven canonical pages and three homepage section URLs. Content is available in HTML before JavaScript loads, the homepage has one H1, images have dimensions, and decorative images have empty alt text. The three section URLs represent the same homepage and intentionally share its canonical. `/contact` is a separate page with its own canonical and sitemap entry. Robots allows crawling; purchase confirmation pages and missing pages are excluded from indexing.
 
-Previously, search descriptions, titles, and social previews were hardcoded in Vue. They now come from Markdown frontmatter, with reactive metadata shared by search, Open Graph, and Twitter. All canonical pages have explicit frontmatter. The homepage settings live in `content/index.md`; `/about`, `/offerings`, and `/philosophy` use those same settings. The contact page uses `content/contact.md`. `about.md` and `pj-circle-intro.md` are content fragments, not separate canonical pages.
+Previously, search descriptions, titles, and social previews were hardcoded in Vue. They now come from Markdown frontmatter, with reactive metadata shared by search, Open Graph, and Twitter. All canonical pages have explicit frontmatter. The homepage settings live in `content/homepage/hero/content.yml`; `/about`, `/offerings`, and `/philosophy` use those same settings. The contact page uses `content/pages/contact.md`. `content/homepage/about/content.md` and `content/archive/programs/pj-circle-intro.md` are content fragments, not separate canonical pages.
 
-JSON-LD describes the website, Shannon as a Person, each page, and the three coaching services. Frontmatter FAQs are rendered visibly and used for FAQPage structured data. They provide direct answers grounded in existing content. Google generally restricts FAQ rich results to authoritative government and health websites; this markup does not promise a rich result. No prices, credentials, addresses, ratings, or external profiles were invented.
+JSON-LD describes the website, Shannon as a Person, each page, and the three coaching services. Reusable FAQ collection records are selected through page and offering properties, rendered visibly, and used for FAQPage structured data. They provide direct answers grounded in existing content. Google generally restricts FAQ rich results to authoritative government and health websites; this markup does not promise a rich result. No prices, credentials, addresses, ratings, or external profiles were invented.
 
-Catalog offering pages now also receive canonical URLs and social metadata from their portal-managed title, summary, and thumbnail. Purchase pages stay `noindex, nofollow`. Catalog content continues to be edited in the customer portal.
+Catalog offering pages now also receive canonical URLs and social metadata from their portal-managed title, summary, and thumbnail. Purchase pages stay `noindex, nofollow`. Product content continues to be edited in the customer portal; website selection, ordering, featuring, and reusable FAQs are managed in Marpos Studio.
 
 [Google's AI guidance](https://developers.google.com/search/docs/appearance/ai-features) recommends the same fundamentals as SEO: crawlable, helpful text, internal links, and structured data that matches visible content. It does not require a special AI metadata format or an `llms.txt` file. Schema and FAQs help describe content; they do not guarantee indexing, rankings, or AI citations.
 
@@ -26,7 +26,7 @@ The explicit Zod schema in `content.config.ts` exposes all fields as labelled St
 | `structuredData.type`                               | `WebPage` or `Service`                                                                                |
 | `structuredData.name`, `serviceType`, `audience`    | Service facts that must match the visible content                                                     |
 | `profile.name`, `jobTitle`, `description`, `sameAs` | Homepage coach identity; only add verified public profile URLs                                        |
-| `faq[].question`, `faq[].answer`                    | Visible FAQ content and corresponding structured data                                                 |
+| `faqSlugs`, `faqCategories`                         | Select reusable questions or categories for visible FAQ content and corresponding structured data     |
 
 Keep descriptions accurate and concise. Change the visible story as well when changing service facts. Edit `content/`, which Nuxt and Studio read; the old `public/content/` copies are not the site's content source. Rebuild after publishing content changes.
 

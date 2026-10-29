@@ -1,4 +1,5 @@
 ---
+path: /pj-circle
 title: 'Peace & Joy Circle'
 description: 'Connect with a supportive circle of women. Peace & Joy Circles help you reconnect with yourself and rediscover playfulness, self-love, and joy.'
 seo:
@@ -13,11 +14,9 @@ structuredData:
   name: 'Peace & Joy Circle'
   serviceType: 'Group self-love coaching'
   audience: 'Successful women'
-faq:
-  - question: 'What is a Peace & Joy Circle?'
-    answer: 'A Peace & Joy Circle is an intimate group for successful women to reconnect with themselves, explore self-love, and find support in community.'
-  - question: 'How large is a Peace & Joy Circle?'
-    answer: 'Each circle welcomes up to 10 women to keep the space intimate and supportive.'
+faqSlugs: []
+faqCategories:
+  - pj-circle
 ---
 
 ## What You'll Experience

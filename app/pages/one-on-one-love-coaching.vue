@@ -8,9 +8,12 @@ const {
   data: contentData,
   pending: contentPending,
   error: contentError
-} = await useAsyncData('content-one-on-one', () => queryCollection('content').path('/one-on-one-love-coaching').first())
+} = await useAsyncData('content-one-on-one', () =>
+  queryCollection('archived_programs').path('/one-on-one-love-coaching').first()
+)
 
-usePageSeo(contentData)
+const { items: faqItems, groups: faqGroups } = await useFaqs(contentData)
+usePageSeo(() => ({ ...contentData.value, faq: faqItems.value }))
 useHead({ script: [{ src: 'https://actions.shannonchapoy.com/js/form_embed.js', defer: true }] })
 
 onMounted(() => {
@@ -100,6 +103,6 @@ onMounted(() => {
         <ContentRenderer :value="contentData" />
       </article>
     </div>
-    <PageFaq :items="contentData?.faq" />
+    <PageFaq :groups="faqGroups" />
   </div>
 </template>

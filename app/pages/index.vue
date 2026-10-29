@@ -1,17 +1,19 @@
 <script setup lang="ts">
-import { publicCatalogProducts, type CatalogProduct } from '~/utils/catalogProduct'
+import type { CatalogProduct } from '~/utils/catalogProduct'
+import { managedCatalogProducts } from '~/utils/managedContent'
 
 definePageMeta({
   path: '/:section(about|offerings|philosophy|faq)?',
   key: 'landing'
 })
 
-const { data: contentData } = await useAsyncData('content-home', () => queryCollection('content').path('/').first())
+const { data: contentData } = await useAsyncData('content-home', () => queryCollection('homepage_hero').first())
 
-usePageSeo(contentData)
+const { items: faqItems, groups: faqGroups } = await useFaqs(contentData)
+usePageSeo(() => ({ ...contentData.value, faq: faqItems.value }))
 
-const config = useRuntimeConfig()
-const featuredOfferingSlug = config.public.featuredOfferingSlug
+const { data: offerings } = await useAsyncData('managed-offerings', () => queryCollection('offerings').all())
+
 const currency = useCatalogCurrency()
 const {
   data: catalog,
@@ -25,8 +27,8 @@ const { deadlineFor } = useCatalogOffers(
   () => (catalog.value?.items ?? []).flatMap((product) => product.prices.slice(0, 1)),
   refresh
 )
-const products = computed(() => publicCatalogProducts(catalog.value?.items ?? [], featuredOfferingSlug))
-const featured = computed(() => products.value.find((product) => product.slug === featuredOfferingSlug))
+const products = computed(() => managedCatalogProducts(catalog.value?.items ?? [], offerings.value ?? []))
+const featured = computed(() => products.value.find((product) => product.isFeatured))
 const otherProducts = computed(() => products.value.filter((product) => product.slug !== featured.value?.slug))
 const featuredDeadline = computed(() => deadlineFor(featured.value?.prices[0]))
 
@@ -48,7 +50,7 @@ watch(
 
 <template>
   <main>
-    <Hero :product="featured" :offer-deadline="featuredDeadline" />
+    <Hero v-if="contentData" :content="contentData" :product="featured" :offer-deadline="featuredDeadline" />
     <Services
       v-if="otherProducts.length || !featured"
       :products="otherProducts"
@@ -60,7 +62,7 @@ watch(
     />
     <About />
     <Philosophy v-if="route.path === '/philosophy'" />
-    <PageFaq :items="contentData?.faq" />
+    <PageFaq :groups="faqGroups" />
     <Contact />
   </main>
 </template>

@@ -53,6 +53,13 @@ const {
 } = await useFetch<CatalogProduct>(() => `/api/catalog/products/${encodeURIComponent(String(route.params.slug))}`, {
   query: { currency }
 })
+const { data: offering } = await useAsyncData(
+  () => `offering-content-${String(route.params.slug)}`,
+  () => queryCollection('offerings').where('slug', '=', String(route.params.slug)).first()
+)
+const { items: faqItems, groups: faqGroups } = await useFaqs(() =>
+  product.value && offering.value?.isActive ? offering.value : undefined
+)
 const { deadlineFor } = useCatalogOffers(() => product.value?.prices.slice(0, 1) ?? [], refresh)
 const offerDeadline = computed(() => deadlineFor(product.value?.prices[0]))
 if (import.meta.server) {
@@ -97,6 +104,7 @@ const descriptionStyle = computed(() => {
 usePageSeo(() => ({
   title: product.value ? `${product.value.title} - Shannon Chapoy` : 'Offering - Shannon Chapoy',
   description: product.value?.summary || '',
+  faq: faqItems.value,
   seo: {
     image: product.value?.thumbnailImage || undefined,
     imageAlt: product.value?.title,
@@ -162,6 +170,7 @@ usePageSeo(() => ({
           </div>
         </section>
       </article>
+      <PageFaq v-if="product && !error" :groups="faqGroups" />
     </div>
   </main>
 </template>

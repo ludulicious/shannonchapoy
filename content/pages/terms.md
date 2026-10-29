@@ -1,4 +1,5 @@
 ---
+path: /terms
 title: 'Terms of Service'
 description: 'Review the terms for using this website and coaching services from Shannon Chapoy, including bookings, payments, cancellations, and responsibilities.'
 seo:

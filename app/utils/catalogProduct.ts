@@ -1,4 +1,4 @@
-import { effectiveCatalogAmount, type CatalogPrice } from './catalogPrice.ts'
+import type { CatalogPrice } from './catalogPrice.ts'
 
 export type CatalogProduct = {
   visibility?: 'listed' | 'unlisted'
@@ -52,11 +52,3 @@ export const catalogCheckoutUrl = (
     return ''
   }
 }
-
-export const publicCatalogProducts = (products: CatalogProduct[], featuredSlug: string) =>
-  products
-    .filter((product) => product.visibility !== 'unlisted')
-    .sort((left, right) => {
-      const priority = Number(right.slug === featuredSlug) - Number(left.slug === featuredSlug)
-      return priority || effectiveCatalogAmount(left) - effectiveCatalogAmount(right)
-    })

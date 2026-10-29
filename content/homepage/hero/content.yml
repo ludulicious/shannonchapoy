@@ -1,0 +1,25 @@
+path: /
+title: Hero section
+description: 'Book a session with Shannon Chapoy to reconnect with yourself, explore what you need, and find your next step. Compare offerings and choose your support.'
+seo:
+  title: 'Self-Love & Relationship Coaching - Shannon Chapoy'
+  description: 'Book a session with Shannon Chapoy to reconnect with yourself, explore what you need, and find your next step. Compare offerings and choose your support.'
+  image: '/images/og-shannon-chapoy.jpg'
+  imageAlt: 'Shannon Chapoy — Your greatest love lives within you. Self-love & relationship coaching.'
+  canonical: '/'
+  noindex: false
+structuredData:
+  type: 'WebPage'
+profile:
+  name: 'Shannon Chapoy'
+  jobTitle: 'Self-love and relationship coach'
+  description: 'Shannon guides successful women in self-love and relationships through coaching, workshops, and Peace & Joy Circles.'
+  sameAs: []
+faqSlugs: []
+faqCategories:
+  - general
+heading: Ready for your greatest love?
+intro: Start by dating yourself. I went from a single bed to soulmate love in a year. If I can, you can too!
+image: /images/hero-botanical-white.jpg
+mobileImage: /images/hero-botanical-white-mobile.jpg
+buttonLabel: Explore offerings
