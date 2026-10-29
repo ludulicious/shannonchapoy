@@ -1,0 +1,25 @@
+{
+  "connections": [
+    {
+      "id": "product-catalog",
+      "label": "Product catalog",
+      "description": "Connect your portal to show products and offering details in the local preview.",
+      "fields": [
+        {
+          "env": "NUXT_PORTAL_URL",
+          "label": "Service address",
+          "help": "The address of your running portal, for example https://portal.example.com or http://localhost:3052.",
+          "kind": "url",
+          "required": true
+        },
+        {
+          "env": "NUXT_PORTAL_API_KEY",
+          "label": "Access key",
+          "help": "Use a catalog access key supplied by your developer.",
+          "kind": "secret",
+          "required": true
+        }
+      ]
+    }
+  ]
+}
