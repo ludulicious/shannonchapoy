@@ -22,7 +22,7 @@ export default defineNuxtConfig({
     turnstileSecretKey: '',
     turnstileHostnames: 'shannonchapoy.com,www.shannonchapoy.com',
     public: {
-      featuredOfferingSlug: 'intake',
+      featuredOfferingSlug: '',
       turnstileSiteKey: '0x4AAAAAAFiE_t8kBJrdW5tA'
     }
   },
