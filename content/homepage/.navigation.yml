@@ -1,0 +1,6 @@
+title: Home
+icon: i-lucide-house
+studio:
+  view: list
+  story: true
+  previewUrl: /

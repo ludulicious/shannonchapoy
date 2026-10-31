@@ -3,6 +3,8 @@ slug: discover-yourself
 order: 10
 isActive: true
 isFeatured: false
-faqSlugs: []
-faqCategories:
-  - dating-yourself
+faqSlugs:
+  - booking-a-session
+  - before-booking
+  - tailored-coaching
+  - what-to-work-on

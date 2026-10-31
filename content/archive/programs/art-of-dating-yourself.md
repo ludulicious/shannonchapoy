@@ -1,22 +1,26 @@
 ---
 path: /art-of-dating-yourself
-title: 'The Art of Dating Yourself'
-description: 'Learn to enjoy your own company with self-love workshops from Shannon Chapoy. Explore boundaries, mindfulness, self-care, and practices that build confidence.'
+title: The Art of Dating Yourself
+description: Learn to enjoy your own company with self-love workshops from
+  Shannon Chapoy. Explore boundaries, mindfulness, self-care, and practices that
+  build confidence.
 seo:
-  title: 'The Art of Dating Yourself - Shannon Chapoy'
-  description: 'Learn to enjoy your own company with self-love workshops from Shannon Chapoy. Explore boundaries, mindfulness, self-care, and practices that build confidence.'
-  image: '/images/og-shannon-chapoy.jpg'
-  imageAlt: 'Shannon Chapoy — Your greatest love lives within you. Self-love & relationship coaching.'
-  canonical: '/art-of-dating-yourself'
+  title: The Art of Dating Yourself - Shannon Chapoy
+  description: Learn to enjoy your own company with self-love workshops from
+    Shannon Chapoy. Explore boundaries, mindfulness, self-care, and practices
+    that build confidence.
+  image: /images/og-shannon-chapoy.jpg
+  imageAlt: Shannon Chapoy — Your greatest love lives within you. Self-love &
+    relationship coaching.
+  canonical: /art-of-dating-yourself
   noindex: false
 structuredData:
-  type: 'Service'
-  name: 'The Art of Dating Yourself'
-  serviceType: 'Self-love workshops'
-  audience: 'Successful women'
-faqSlugs: []
-faqCategories:
-  - dating-yourself
+  type: Service
+  name: The Art of Dating Yourself
+  serviceType: Self-love workshops
+  audience: Successful women
+faqSlugs:
+  - dating-yourself-topics
 ---
 
 ## What You'll Learn

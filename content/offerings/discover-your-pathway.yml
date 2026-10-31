@@ -3,6 +3,8 @@ slug: discover-your-pathway
 order: 20
 isActive: true
 isFeatured: false
-faqSlugs: []
-faqCategories:
-  - general
+faqSlugs:
+  - where-to-start
+  - what-to-work-on
+  - booking-a-session
+  - before-booking

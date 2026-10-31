@@ -1,10 +1,11 @@
 <script setup lang="ts">
+import type { Collections } from '@nuxt/content'
 import { ArrowRight } from 'lucide-vue-next'
 import type { catalogOfferDeadline } from '~/utils/catalogOffer'
 import type { CatalogProduct } from '~/utils/catalogProduct'
 
 defineProps<{
-  content: { heading: string; intro: string; image: string; mobileImage: string; buttonLabel: string }
+  content: Collections['homepage_hero']
   product?: CatalogProduct
   offerDeadline?: ReturnType<typeof catalogOfferDeadline>
 }>()
@@ -17,8 +18,8 @@ defineProps<{
       <img :src="content.image" alt="" width="1942" height="809" fetchpriority="high" />
     </picture>
     <div class="conversion-hero__layout">
-      <h1 id="hero-title">{{ content.heading }}</h1>
-      <p class="conversion-hero__copy">{{ content.intro }}</p>
+      <h1 id="hero-title">{{ content.title }}</h1>
+      <div class="conversion-hero__copy"><ContentRenderer :value="content" /></div>
       <FeaturedSessionCard v-if="product" id="offerings" :product="product" :offer-deadline="offerDeadline" />
       <NuxtLink v-else to="/offerings" class="conversion-button">
         {{ content.buttonLabel }} <ArrowRight aria-hidden="true" />
@@ -71,6 +72,23 @@ defineProps<{
   font-size: clamp(var(--text-catalog-base), 2vw, var(--text-catalog-md));
   line-height: 1.5;
   margin-block: var(--space-catalog-sm) var(--space-catalog-lg);
+}
+.conversion-hero__copy :deep(p + p) {
+  margin-top: 0.75em;
+}
+.conversion-hero__copy :deep(a) {
+  color: var(--color-catalog-action);
+  text-decoration: underline;
+}
+.conversion-hero__copy :deep(ul),
+.conversion-hero__copy :deep(ol) {
+  padding-left: 1.5em;
+}
+.conversion-hero__copy :deep(ul) {
+  list-style: disc;
+}
+.conversion-hero__copy :deep(ol) {
+  list-style: decimal;
 }
 @media (min-width: 64rem) {
   .conversion-hero {

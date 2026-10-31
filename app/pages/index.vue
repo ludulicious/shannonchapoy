@@ -9,8 +9,15 @@ definePageMeta({
 
 const { data: contentData } = await useAsyncData('content-home', () => queryCollection('homepage_hero').first())
 
-const { items: faqItems, groups: faqGroups } = await useFaqs(contentData)
-usePageSeo(() => ({ ...contentData.value, faq: faqItems.value }))
+const { data: homepageSettings } = await useAsyncData('homepage-settings', () =>
+  queryCollection('homepage_settings').first()
+)
+const { data: offeringsSection } = await useAsyncData('homepage-offerings', () =>
+  queryCollection('homepage_offerings').first()
+)
+const { data: faqSection } = await useAsyncData('homepage-faq', () => queryCollection('homepage_faq').first())
+const { items: faqItems, groups: faqGroups } = await useFaqs(faqSection, { includeCategories: true })
+usePageSeo(() => ({ ...homepageSettings.value, faq: faqItems.value }))
 
 const { data: offerings } = await useAsyncData('managed-offerings', () => queryCollection('offerings').all())
 
@@ -52,7 +59,8 @@ watch(
   <main>
     <Hero v-if="contentData" :content="contentData" :product="featured" :offer-deadline="featuredDeadline" />
     <Services
-      v-if="otherProducts.length || !featured"
+      v-if="offeringsSection && (otherProducts.length || !featured)"
+      :content="offeringsSection"
       :products="otherProducts"
       :has-featured="!!featured"
       :status="status"
@@ -62,7 +70,7 @@ watch(
     />
     <About />
     <Philosophy v-if="route.path === '/philosophy'" />
-    <PageFaq :groups="faqGroups" />
+    <PageFaq :groups="faqGroups" :heading="faqSection?.title" :intro="faqSection" />
     <Contact />
   </main>
 </template>

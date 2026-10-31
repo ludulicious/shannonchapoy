@@ -1,0 +1,10 @@
+---
+title: How do I book a session?
+slug: booking-a-session
+categories:
+  - General questions
+order: 30
+isActive: true
+---
+
+Choose an offering and use its booking button to see the available times and complete your booking. You can read the full offering details before you decide.

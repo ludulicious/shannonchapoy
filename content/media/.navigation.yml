@@ -9,5 +9,6 @@ studio:
     - visible
   media:
     directory: images
+    thumbnailAspectRatio: '4:3'
     formats: [jpg, jpeg, png, webp, gif]
     maxBytes: 10485760

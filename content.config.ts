@@ -1,13 +1,30 @@
 import { defineCollection, defineContentConfig, z, type EditorOptions } from '@nuxt/content'
 
 // Marpos Studio extends Nuxt Content's editor metadata with collection relationships.
-const reference = (collection: 'faqs' | 'faq_categories') =>
+const reference = (collection: 'faqs') =>
   z
     .string()
     .min(1)
     .editor({ input: 'reference', collection, valueField: 'slug' } as unknown as EditorOptions)
 
+const itemName = z
+  .string()
+  .trim()
+  .optional()
+  .editor({ label: 'Name' })
+  .describe('Internal name shown in Studio; does not change the website heading or URL')
+
+const previewLink = z
+  .string()
+  .trim()
+  .regex(/^(?:$|\/(?!\/)[^\\\s]*)$/, 'Use an internal website path such as /about or /#about')
+  .optional()
+  .editor({ input: 'internal-link', label: 'Preview link' } as unknown as EditorOptions)
+  .describe('Website page or section opened by Studio preview; does not change the slug or public URL')
+
 const pageSchema = z.object({
+  pageName: itemName,
+  previewUrl: previewLink,
   title: z.string().min(1).describe('Page title'),
   description: z.string().min(1).describe('Short page summary'),
   seo: z
@@ -46,45 +63,90 @@ const pageSchema = z.object({
     .optional(),
   faqSlugs: z.array(reference('faqs')).default([]).describe('Reusable FAQ slugs to display on this page'),
   faqCategories: z
-    .array(reference('faq_categories'))
+    .array(z.string())
     .default([])
-    .describe('Include all active FAQs in these category slugs')
+    .describe('Include all active FAQs with these category names; use the same names as on the FAQ items')
 })
 
 export default defineContentConfig({
   collections: {
     homepage_hero: defineCollection({
-      type: 'data',
-      source: 'homepage/hero/content.yml',
-      schema: pageSchema.extend({
-        heading: z.string().min(1).describe('Main heading at the top of the homepage'),
-        intro: z.string().min(1).editor({ input: 'textarea' }).describe('Text below the hero heading'),
+      type: 'page',
+      source: 'homepage/1.hero.md',
+      schema: z.object({
+        pageName: itemName,
+        previewUrl: previewLink,
+        title: z
+          .string()
+          .min(1)
+          .editor({ label: 'Heading' })
+          .describe('Main heading at the top of the homepage; edit the text underneath in Story'),
         image: z.string().min(1).editor({ input: 'media' }).describe('Desktop background image'),
         mobileImage: z.string().min(1).editor({ input: 'media' }).describe('Mobile background image'),
         buttonLabel: z.string().min(1).describe('Offerings button shown when no offering is featured')
       })
     }),
+    homepage_offerings: defineCollection({
+      type: 'page',
+      source: 'homepage/2.offerings.md',
+      schema: z.object({
+        pageName: itemName,
+        previewUrl: previewLink,
+        title: z
+          .string()
+          .min(1)
+          .editor({ label: 'Heading' })
+          .describe('Section heading; edit the introduction in Story'),
+        featuredHeading: z.string().min(1).describe('Alternate heading when the hero already features an offering'),
+        detailsLabel: z.string().min(1).describe('Details link label on each offering card')
+      })
+    }),
     homepage_about: defineCollection({
       type: 'page',
-      source: 'homepage/about/content.md',
+      source: 'homepage/3.about.md',
       schema: z.object({
-        title: z.string().min(1).describe('Editor label for this homepage block'),
-        description: z.string().min(1).describe('Editor summary of this block'),
+        pageName: itemName,
+        previewUrl: previewLink,
+        title: z.string().default('About Shannon').editor({ hidden: true }),
         image: z.string().min(1).editor({ input: 'media' }).describe('Portrait of Shannon'),
         imageAlt: z.string().min(1).describe('Portrait description for accessibility'),
         storyLinkLabel: z.string().min(1).describe('Link to the full story, edited in this block’s Story tab'),
+        summaryLinkLabel: z
+          .string()
+          .min(1)
+          .default('Show summary')
+          .describe('Button to return from the full story to the summary'),
         actionLabel: z.string().min(1).describe('Button linking to offerings')
+      })
+    }),
+    homepage_faq: defineCollection({
+      type: 'page',
+      source: 'homepage/4.faq.md',
+      schema: pageSchema.pick({ pageName: true, previewUrl: true, title: true, faqSlugs: true, faqCategories: true })
+    }),
+    homepage_settings: defineCollection({
+      type: 'data',
+      source: 'homepage/5.settings.yml',
+      schema: pageSchema.pick({
+        pageName: true,
+        previewUrl: true,
+        title: true,
+        description: true,
+        seo: true,
+        profile: true
       })
     }),
     pages: defineCollection({
       type: 'page',
       source: { include: 'pages/{contact,privacy,terms}.md', prefix: '/' },
-      schema: pageSchema
+      schema: pageSchema.omit({ structuredData: true, profile: true, faqSlugs: true, faqCategories: true })
     }),
     offerings: defineCollection({
       type: 'data',
       source: { include: 'offerings/*.yml', prefix: '/specials', exclude: ['**/.navigation.yml'] },
       schema: z.object({
+        pageName: itemName,
+        previewUrl: previewLink,
         title: z.string().min(1).describe('Internal label; the public title comes from the portal'),
         slug: z
           .string()
@@ -99,47 +161,36 @@ export default defineContentConfig({
           .boolean()
           .default(false)
           .describe('Feature on the homepage; the first available active featured offering wins'),
-        faqSlugs: z.array(reference('faqs')).default([]).describe('Reusable FAQ slugs to display below this offering'),
-        faqCategories: z
-          .array(reference('faq_categories'))
+        faqSlugs: z
+          .array(reference('faqs'))
           .default([])
-          .describe('Include all active FAQs in these category slugs')
+          .describe('Select individual questions to display below this offering')
       })
     }),
     faqs: defineCollection({
-      type: 'data',
-      source: { include: 'faqs/*.yml', exclude: ['**/.navigation.yml'] },
+      type: 'page',
+      source: { include: 'faqs/*.md', exclude: ['**/.navigation.yml'] },
       schema: z.object({
+        pageName: itemName,
+        previewUrl: previewLink,
         title: z.string().min(1).describe('The question shown to visitors'),
         slug: z
           .string()
           .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/)
           .describe('Unique FAQ slug used by pages and offerings'),
-        answer: z.string().min(1).describe('Answer shown to visitors'),
         categories: z
-          .array(reference('faq_categories'))
+          .array(z.string())
           .default([])
-          .describe('Category slugs from the FAQ categories collection'),
+          .describe('Category names for organizing FAQs, like categories in the media library'),
         order: z.number().int().nonnegative().default(100).describe('Display order, lowest first'),
         isActive: z.boolean().default(true).describe('Make this FAQ available on pages and offerings')
-      })
-    }),
-    faq_categories: defineCollection({
-      type: 'data',
-      source: { include: 'faq-categories/*.yml', exclude: ['**/.navigation.yml'] },
-      schema: z.object({
-        title: z.string().min(1).describe('Category heading shown above its questions'),
-        slug: z
-          .string()
-          .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/)
-          .describe('Unique category slug used by FAQs, pages, and offerings'),
-        order: z.number().int().nonnegative().default(100).describe('Category display order, lowest first')
       })
     }),
     media: defineCollection({
       type: 'data',
       source: { include: 'media/*.yml', exclude: ['**/.navigation.yml'] },
       schema: z.object({
+        pageName: itemName,
         title: z.string().min(1).describe('Image name in the library'),
         image: z.object({
           src: z.string().min(1).editor({ input: 'media' }),
@@ -163,7 +214,7 @@ export default defineContentConfig({
         include: 'archive/programs/{pj-circle,pj-circle-intro,one-on-one-love-coaching,art-of-dating-yourself}.md',
         prefix: '/'
       },
-      schema: pageSchema
+      schema: pageSchema.omit({ profile: true, faqCategories: true })
     })
   }
 })

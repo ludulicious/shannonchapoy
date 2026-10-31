@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { managedCatalogProducts, selectedFaqs, groupedFaqs } from '../app/utils/managedContent.ts'
+import { managedCatalogProducts, selectedFaqs, groupedFaqs, faqAnswerText } from '../app/utils/managedContent.ts'
 
 const offering = (slug, order, options = {}) => ({ slug, order, isActive: true, isFeatured: false, ...options })
 
@@ -54,10 +54,10 @@ const faq = (slug, order, categories, isActive = true) => ({
   categories,
   isActive,
   title: `${slug}?`,
-  answer: `${slug} answer`
+  body: { value: [['p', {}, `${slug} answer`]] }
 })
 
-test('FAQ selection reuses categories and individual questions once, excludes inactive records, and follows saved order', () => {
+test('FAQ selection reuses categories and individual questions once, excludes inactive records, and follows selection order', () => {
   const faqs = [
     faq('specific', 30, ['coaching']),
     faq('shared', 10, ['general', 'coaching']),
@@ -70,27 +70,72 @@ test('FAQ selection reuses categories and individual questions once, excludes in
   })
   assert.deepEqual(
     result.map((item) => item.slug),
-    ['shared', 'specific']
+    ['specific', 'shared']
   )
-  assert.equal(result[0].question, 'shared?')
+  assert.equal(result[0].question, 'specific?')
   assert.deepEqual(selectedFaqs(faqs, {}), [])
   assert.equal(faqs[0].slug, 'specific')
 })
 
-test('category headings use saved order and each question appears once, including uncategorized answers', () => {
-  const items = selectedFaqs([faq('shared', 10, ['general', 'coaching']), faq('orphan', 20, ['removed-category'])], {
-    faqSlugs: ['shared', 'orphan']
-  })
-  const groups = groupedFaqs(items, [
-    { slug: 'general', title: 'General', order: 20 },
-    { slug: 'coaching', title: 'Coaching', order: 10 }
-  ])
+test('category headings use selected names first, derive other headings from FAQs, and show each question once', () => {
+  const items = selectedFaqs(
+    [
+      faq('shared', 10, ['General questions', 'Coaching']),
+      faq('custom', 20, ['New category']),
+      faq('uncategorized', 30, [])
+    ],
+    { faqSlugs: ['shared', 'custom', 'uncategorized'] }
+  )
+  const groups = groupedFaqs(items, ['Empty category', 'Coaching', 'Coaching', 'General questions'])
   assert.deepEqual(
     groups.map((group) => group.title),
-    ['Coaching', '']
+    ['Coaching', 'New category', '']
   )
   assert.deepEqual(
     groups.flatMap((group) => group.items.map((item) => item.slug)),
-    ['shared', 'orphan']
+    ['shared', 'custom', 'uncategorized']
+  )
+  assert.deepEqual(
+    groupedFaqs(items).map((group) => group.title),
+    ['General questions', 'New category', '']
+  )
+  assert.deepEqual(groupedFaqs([], ['Empty category']), [])
+})
+
+test('FAQ structured data uses readable text from the same Markdown as the answer panel', () => {
+  const body = {
+    value: [
+      ['p', {}, 'A ', ['strong', {}, 'bold'], ' answer with ', ['a', { href: '/contact' }, 'a link'], '.'],
+      ['ul', {}, ['li', {}, 'First step'], ['li', {}, 'Second step']],
+      ['p', {}, ['img', { src: '/example.jpg', alt: 'Example image' }]]
+    ]
+  }
+  assert.equal(faqAnswerText(body), 'A bold answer with a link. First step Second step Example image')
+  assert.equal(faqAnswerText({ value: [] }), '')
+})
+
+test('individually selected FAQs follow Studio chip order, skipping missing, inactive, and duplicate entries', () => {
+  const faqs = [faq('first', 10, []), faq('second', 20, []), faq('third', 30, []), faq('inactive', 0, [], false)]
+  const selection = { faqSlugs: ['third', 'missing', 'first', 'inactive', 'second', 'third'] }
+  assert.deepEqual(
+    selectedFaqs(faqs, selection).map((faq) => faq.slug),
+    ['third', 'first', 'second']
+  )
+  assert.deepEqual(
+    selectedFaqs(faqs, { faqSlugs: ['second', 'third', 'first'] }).map((faq) => faq.slug),
+    ['second', 'third', 'first']
+  )
+  assert.equal(faqs[0].slug, 'first')
+})
+
+test('category-only selections retain numeric question order; additional category matches follow selected questions', () => {
+  const faqs = [faq('later', 30, ['general']), faq('early', 10, ['general']), faq('middle', 20, ['general'])]
+  assert.deepEqual(
+    selectedFaqs(faqs, { faqCategories: ['general'] }).map((faq) => faq.slug),
+    ['early', 'middle', 'later']
+  )
+  assert.deepEqual(
+    selectedFaqs(faqs, { faqSlugs: ['later'], faqCategories: ['general'] }).map((faq) => faq.slug),
+    ['later', 'early', 'middle']
   )
 })

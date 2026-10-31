@@ -1,10 +1,13 @@
-title: "Shannon portrait \u2014 homepage"
+title: Shannon portrait — homepage
 image:
-  src: '/shannon-cropped.png'
-  alt: 'Shannon Chapoy'
+  src: /shannon-cropped.png
+  alt: Shannon Chapoy
 categories:
-  - 'Portraits'
-  - 'Homepage'
+  - Portraits
+  - Homepage
 credit: ''
 visible: true
 order: 270
+thumbnail:
+  src: /images/shannon-cropped-thumbnail-d0fa8fb9d0424553.png
+  alt: Shannon Chapoy

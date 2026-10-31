@@ -108,19 +108,22 @@ Nuxt 4 uses a preferred folder structure with the `app/` directory:
 
 ## Content Management
 
-| Studio collection         | What to edit                                                                                                            |
-| ------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| **Homepage Hero**         | Main heading, introduction, desktop/mobile artwork, fallback button, homepage SEO, profile, and FAQ selection           |
-| **Homepage About**        | Homepage introduction in the **Summary** Markdown tab; full biography in **Story**; portrait and buttons in **Details** |
-| **Pages**                 | Contact page and the two legal pages                                                                                    |
-| **Offerings**             | Portal product slugs, order, active/featured settings, and related FAQs                                                 |
-| **Media**                 | Upload, crop, organize, and choose website images                                                                       |
-| **FAQs / FAQ Categories** | Reusable questions, answers, and category headings                                                                      |
-| **Archived Programs**     | Older program pages and PJ Circle introduction, kept separately for existing direct links                               |
+| Studio collection      | What to edit                                                                                                                                          |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Homepage Hero**      | **Details**: heading, desktop/mobile artwork, and fallback button. **Story**: Markdown below the main heading.                                        |
+| **Homepage Offerings** | **Details**: section headings and card details-link label. **Story**: introduction above the product cards.                                           |
+| **Homepage FAQ**       | Heading and question/category selection in Details; optional introduction in Story.                                                                   |
+| **Homepage Settings**  | Homepage search/social metadata and coach profile.                                                                                                    |
+| **Homepage About**     | Homepage introduction in the **Summary** Markdown tab; full biography revealed by **Read my story** in **Story**; portrait and buttons in **Details** |
+| **Pages**              | Contact page and the two legal pages                                                                                                                  |
+| **Offerings**          | Portal product slugs, order, active/featured settings, and related FAQs                                                                               |
+| **Media**              | Upload, crop, organize, and choose website images                                                                                                     |
+| **FAQs**               | Reusable questions, answers, and category headings                                                                                                    |
+| **Archived Programs**  | Older program pages and PJ Circle introduction, kept separately for existing direct links                                                             |
 
-The two homepage block collections each open their single existing item. Pages and Archived Programs contain only the existing implemented pages, so Studio does not offer to add unsupported pages. Creating a new page is not needed to change the homepage. The catalog itself is edited in Offerings and the portal. Older program URLs still work, but their records are outside the active page list; archiving here organizes the editor rather than unpublishing existing URLs. Publishing changes requires the usual website rebuild.
+Open **Home** in Studio to find the five homepage entries in order: Hero, Offerings, About Shannon, FAQ section, and Homepage Settings. Each entry retains its own fields and writing tabs. Pages and Archived Programs contain only the existing implemented pages, so Studio does not offer to add unsupported pages. Creating a new page is not needed to change the homepage. The catalog itself is edited in Offerings and the portal. Older program URLs still work, but their records are outside the active page list; archiving here organizes the editor rather than unpublishing existing URLs. Publishing changes requires the usual website rebuild.
 
-Markdown files in the `content/` directory are automatically available via Nuxt Content. The page templates use `<ContentRenderer>` to render Markdown. Search metadata, social previews, and structured service information are editable in page frontmatter through Marpos Studio. FAQs, FAQ categories, and offering selection have their own collections. Homepage text and metadata live in the dedicated **Homepage Hero** and **Homepage About** collections. See [SEO and AI discoverability](docs/seo.md) for the field reference and audit findings.
+Markdown files in the `content/` directory are automatically available via Nuxt Content. The page templates use `<ContentRenderer>` to render Markdown. Search metadata, social previews, and structured service information are editable in page frontmatter through Marpos Studio. FAQs and offering selection have their own collections. FAQ categories are stored directly on each question. Homepage copy lives in **Homepage Hero**, **Homepage Offerings**, and **Homepage About**. SEO and profile settings live in **Homepage Settings**; FAQ selection lives in **Homepage FAQ**. See [SEO and AI discoverability](docs/seo.md) for the field reference and audit findings.
 
 ## Scripts
 
@@ -156,19 +159,19 @@ Open **Offerings** to manage which portal products appear on the website. The ex
 - **Order** controls display order, lowest first, independent of price. Reorder in Studio or edit the number.
 - **Is active** includes the product in the website catalog. New records default to inactive until you enable them. Products without a record are not listed.
 - **Is featured** selects the homepage hero offering. Mark one active offering as featured. If several qualify, the first available one in saved order wins. If none qualifies, the hero displays a general introduction.
-- **FAQ slugs** offers a searchable multiple-selection picker of saved questions, labelled by title. **FAQ categories** offers the same picker for categories and includes all active questions in the selected categories. Both can be combined; questions appear once.
+- **FAQ slugs** offers a searchable multiple-selection picker of saved questions, labelled by title. Category selection is available only in **Home → FAQ section**. Offerings select individual questions.
 
 Product names, images, descriptions, prices, discounts, duration, and checkout URLs still come from the portal for the selected currency. Unlisted or unpublished portal products cannot become public catalog entries through Studio. Deactivation removes a product from the website listings and hero; direct detail links continue to follow the portal's publication rules, including unlisted sharing.
 
 The former `NUXT_PUBLIC_FEATURED_OFFERING_SLUG` setting is no longer used and can be removed from deployment settings. Content changes require rebuilding the pre-rendered website through the normal publication pipeline.
 
-### FAQs and FAQ categories
+### FAQs and categories
 
-Open **FAQ categories** to create a category with a title, unique slug, and display order. Open **FAQs** to add a question (Title), a unique slug, its answer, categories selected from the relationship picker, display order, and active status. The existing nine FAQs and four categories have been migrated without changing their answers.
+Open **FAQs** to add a question (Title), a unique slug, category names, display order, and active status. Categories are a list of text values, just like categories in the media library; there is no separate FAQ categories collection. Edit its answer in the **Story** visual/Markdown editor. The existing nine FAQs retain their answers and their four category names.
 
-Reuse questions on an offering by selecting questions or categories on its Offerings record. They appear below `/specials/<offering-slug>`. Pages use the same `faqSlugs` and `faqCategories` fields in their properties. The homepage and three existing program pages retain their original questions through category selections.
+Reuse questions on an offering by selecting individual questions on its Offerings record. They appear below `/specials/<offering-slug>`. Program pages also select individual questions through `faqSlugs`. Only the homepage FAQ section offers `faqCategories`. Existing program questions were preserved as individual selections.
 
-Relationship pickers display titles and store stable slug identifiers. Studio validates that selected entries exist, updates declared references when a target slug changes, and shows dependent content before deletion. The website ignores missing references if content is changed outside Studio. Inactive FAQs disappear everywhere they are reused. Questions are ordered within categories; categories use their own order. A question in multiple categories appears under the first category only. Questions without a matching category still appear without a category heading.
+Individual FAQ relationship pickers display titles and store stable slug identifiers. Studio validates that selected entries exist, updates declared references when a target slug changes, and shows dependent content before deletion. The website ignores missing references if content is changed outside Studio. Inactive FAQs disappear everywhere they are reused. Questions are ordered within categories. Homepage category names follow their selection order; additional headings come from the selected FAQ items in question order. A question in multiple categories appears under the first matching heading only. Questions without categories appear without a category heading. Category names must match exactly between FAQ items and the homepage selection; renaming a category means updating those text values wherever used.
 
 Visible answers and FAQ structured data come from the same selection. Editing an answer updates every page and offering that reuses it after rebuilding.
 
@@ -176,10 +179,42 @@ Visible answers and FAQ structured data come from the same selection. Editing an
 
 Open **Media** in Marpos Studio for the image library. Existing homepage artwork, portraits, social previews, older artwork, and avatar variants are registered with titles, alternative text, and categories. Logos and favicons remain application assets outside the media library. Portal product images remain managed in the portal.
 
-Use **Upload image** to add an image or open an existing record to crop, adjust, rename, or categorize it. Uploads are stored under `public/images/`; existing URLs are preserved so current links and previews keep working. There is no imposed crop ratio because this library contains portraits and wide backgrounds.
+Use **Upload image** to add an image or open an existing record to crop, adjust, rename, or categorize it. Uploads are stored under `public/images/`; existing URLs are preserved so current links and previews keep working. Full images keep a flexible crop ratio because this library contains portraits and wide backgrounds. Separate thumbnails use a fixed **4:3** crop: open an image, choose **Add thumbnail** or **Adjust thumbnail**, crop, and save. Studio stores the thumbnail separately from the full image.
 
 In **Homepage Hero**, **Homepage About**, or a page’s **SEO → Image** field, use **Choose image** to select from the shared library. Selecting an image stores its URL on that page. If a library edit creates a new cropped image URL, select the updated image in the page field to use that version. Update the portrait or SEO alternative text to match a replacement image. Hidden library records remain selectable; visibility is not a way to unpublish an image already used on a page.
 
 ### About Shannon writing tabs
 
-**Homepage About** has three tabs: **Details** for the portrait and button labels, **Summary** for the homepage heading, paragraphs, and signature, and **Story** for the full biography on `/about`. Summary and Story each use Studio’s visual/Markdown editor. Their content is stored as named Markdown slots in `content/homepage/about/content.md`; editing one tab preserves the other. Use a level-two heading for the summary heading and bold text for the signature.
+**Homepage About** has three tabs: **Details** for the portrait and button labels, **Summary** for the homepage heading, paragraphs, and signature, and **Story** for the full biography opened by **Read my story**. Summary and Story each use Studio’s visual/Markdown editor. Their content is stored as named Markdown slots in `content/homepage/3.about.md`; editing one tab preserves the other. Use a level-two heading for the summary heading and bold text for the signature.
+
+### Hero and offerings writing editors
+
+Open **Homepage Hero** and choose **Story** to edit the text underneath the main heading using Studio’s visual or Markdown editor. It supports multiple paragraphs, emphasis, lists, and links. The heading and artwork stay in Details. **Homepage Offerings → Story** edits the introduction above the product cards. Its Details tab controls both heading variants and the details-link label. Individual products are still managed in Offerings and the portal.
+
+The hero no longer contains general page metadata. **Homepage Settings** contains the homepage’s search/social metadata and coach profile; **Homepage FAQ** contains its selected FAQs. Contact and legal pages expose title, description, and SEO only; unused profile, FAQ, and service fields were removed from those schemas. Archived programs retain their service metadata and FAQ selections because their templates use them. The About block’s redundant editor description was removed, and its fixed internal title is hidden; Summary, Story, portrait, and button settings remain.
+
+Some fields apply only in specific states: the hero button appears when no product is featured, and the alternate catalog heading appears when a product is featured. Page title and description are SEO fallbacks; explicit SEO title/description override them.
+
+### Internal content names
+
+Every collection offers an optional **Name** field for identifying items in Studio. Studio uses this name for cards and editor headings; leaving it empty falls back to the content title. The name does not change the website heading, SEO, slug, or URL. The Home entries are named Hero, Offerings section, About Shannon, FAQ section, and Homepage settings.
+
+### Preview links
+
+Use an item’s **Preview link** to choose where Studio opens its preview, for example `/about`, `/contact`, or `/#about`. The field suggests internal routes and accepts section anchors. It overrides developer preview mappings and inferred routes without changing the item’s slug, canonical URL, or public page address. Leave it empty to use the existing automatic destination. About Shannon defaults to `/about`; Contact defaults to `/contact`.
+
+### Homepage FAQ section
+
+Open **Home → FAQ section** to edit the FAQ heading and select reusable questions or categories in Details. Story provides an optional Markdown introduction. The original General questions selection is preserved. Homepage Settings now contains only search/social metadata and the coach profile. The FAQ section appears below About Shannon whenever its selection contains active questions; `/faq` opens the same section on the homepage.
+
+The About block starts with Summary on every fresh load, including `/about`. **Read my story** expands the full biography; **Show summary** collapses it. This choice is temporary and resets on refresh or navigation to another homepage section.
+
+### FAQ answer editor
+
+Each **FAQs** item has **Details** for its question, name, categories, and status, plus **Story** for the answer. Answers support Markdown paragraphs, emphasis, lists, and links. Existing answers have been migrated unchanged to Markdown bodies. The site renders those bodies inside the same animated, single-open accordion. FAQ structured-data text is derived from that parsed Markdown, so there is no second answer field to maintain.
+
+### FAQ placement rules
+
+Only **Home → FAQ section** allows selecting categories and displays category headings. All other pages and offerings select individual FAQ questions and display one flat accordion with no category headings. Existing category selections outside the homepage were expanded into individual FAQ slugs during migration, preserving the questions that were selected. Category assignments on FAQ records remain available for organizing the library and grouping the homepage.
+
+Individually selected FAQs appear in the exact order of Studio’s selection chips. Move the chips with their arrow controls to reorder the questions on that page or offering. Missing, inactive, and duplicate selections are skipped. For homepage category selections, remaining questions follow their numeric Order, with category headings following the category name selection order.

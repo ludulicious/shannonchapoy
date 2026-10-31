@@ -1,6 +1,7 @@
 title: FAQs
+icon: i-lucide-circle-help
 studio:
-  story: false
+  story: true
   previewUrl: /faq
   filters:
     - categories

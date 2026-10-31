@@ -1,22 +1,25 @@
 ---
 path: /pj-circle
-title: 'Peace & Joy Circle'
-description: 'Connect with a supportive circle of women. Peace & Joy Circles help you reconnect with yourself and rediscover playfulness, self-love, and joy.'
+title: Peace & Joy Circle
+description: Connect with a supportive circle of women. Peace & Joy Circles help
+  you reconnect with yourself and rediscover playfulness, self-love, and joy.
 seo:
-  title: 'Peace & Joy Circle - Shannon Chapoy'
-  description: 'Connect with a supportive circle of women. Peace & Joy Circles help you reconnect with yourself and rediscover playfulness, self-love, and joy.'
-  image: '/images/og-shannon-chapoy.jpg'
-  imageAlt: 'Shannon Chapoy — Your greatest love lives within you. Self-love & relationship coaching.'
-  canonical: '/pj-circle'
+  title: Peace & Joy Circle - Shannon Chapoy
+  description: Connect with a supportive circle of women. Peace & Joy Circles help
+    you reconnect with yourself and rediscover playfulness, self-love, and joy.
+  image: /images/og-shannon-chapoy.jpg
+  imageAlt: Shannon Chapoy — Your greatest love lives within you. Self-love &
+    relationship coaching.
+  canonical: /pj-circle
   noindex: false
 structuredData:
-  type: 'Service'
-  name: 'Peace & Joy Circle'
-  serviceType: 'Group self-love coaching'
-  audience: 'Successful women'
-faqSlugs: []
-faqCategories:
-  - pj-circle
+  type: Service
+  name: Peace & Joy Circle
+  serviceType: Group self-love coaching
+  audience: Successful women
+faqSlugs:
+  - what-is-pj-circle
+  - pj-circle-size
 ---
 
 ## What You'll Experience

@@ -1,6 +1,15 @@
 <script setup lang="ts">
+import { aboutStoryKey } from '~/utils/aboutContent'
+
 const route = useRoute()
-const fullStory = computed(() => route.path === '/about')
+const fullStory = ref(false)
+provide(aboutStoryKey, fullStory)
+watch(
+  () => route.path,
+  () => {
+    fullStory.value = false
+  }
+)
 const { data: contentData } = await useAsyncData('content-about', () => queryCollection('homepage_about').first())
 </script>
 
@@ -16,8 +25,16 @@ const { data: contentData } = await useAsyncData('content-about', () => queryCol
         class="about-portrait"
       />
       <div>
-        <ContentRenderer :value="contentData" />
-        <NuxtLink v-if="!fullStory" to="/about" class="conversion-text-link">{{ contentData.storyLinkLabel }}</NuxtLink>
+        <div id="about-content"><ContentRenderer :value="contentData" /></div>
+        <button
+          type="button"
+          class="conversion-text-link"
+          :aria-expanded="fullStory"
+          aria-controls="about-content"
+          @click="fullStory = !fullStory"
+        >
+          {{ fullStory ? contentData.summaryLinkLabel || 'Show summary' : contentData.storyLinkLabel }}
+        </button>
         <div class="about-action">
           <NuxtLink to="/offerings" class="conversion-button">{{ contentData.actionLabel }}</NuxtLink>
         </div>

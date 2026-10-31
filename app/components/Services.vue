@@ -1,10 +1,12 @@
 <script setup lang="ts">
+import type { Collections } from '@nuxt/content'
 import { ArrowRight, PackageOpen, RefreshCw } from 'lucide-vue-next'
 import type { catalogOfferDeadline } from '~/utils/catalogOffer'
 import type { CatalogPrice } from '~/utils/catalogPrice'
 import { catalogActionLabel, type CatalogProduct } from '~/utils/catalogProduct'
 
 defineProps<{
+  content: Collections['homepage_offerings']
   products: CatalogProduct[]
   status: string
   hasError: boolean
@@ -19,10 +21,8 @@ const checkoutUrl = useCatalogCheckout()
   <section :id="hasFeatured ? 'more-offerings' : 'offerings'" class="catalog-section">
     <div class="catalog-shell">
       <div class="catalog-heading">
-        <h2>{{ hasFeatured ? 'Explore more sessions' : 'Choose your next step' }}</h2>
-        <p class="catalog-heading__copy">
-          Explore the available sessions and choose the support that fits where you are now.
-        </p>
+        <h2>{{ hasFeatured ? content.featuredHeading : content.title }}</h2>
+        <div class="catalog-heading__copy prose max-w-none"><ContentRenderer :value="content" /></div>
       </div>
 
       <div v-if="status === 'pending'" class="catalog-grid" aria-label="Loading offerings" aria-busy="true">
@@ -91,7 +91,7 @@ const checkoutUrl = useCatalogCheckout()
             <p class="product-card__summary">{{ product.summary }}</p>
             <div class="product-card__footer">
               <NuxtLink :to="`/specials/${product.slug}`" class="product-card__action"
-                >View details <ArrowRight aria-hidden="true"
+                >{{ content.detailsLabel }} <ArrowRight aria-hidden="true"
               /></NuxtLink>
               <NuxtLink
                 v-if="checkoutUrl(product)"

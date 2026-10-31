@@ -13,7 +13,7 @@ const pagePaths = [
 
 export default defineEventHandler(async (event) => {
   const [hero, activePages, olderPrograms] = await Promise.all([
-    queryCollection(event, 'homepage_hero').first(),
+    queryCollection(event, 'homepage_settings').first(),
     queryCollection(event, 'pages').all(),
     queryCollection(event, 'archived_programs').all()
   ])

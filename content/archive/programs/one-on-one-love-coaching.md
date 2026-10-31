@@ -1,22 +1,27 @@
 ---
 path: /one-on-one-love-coaching
-title: '1:1 Love Coaching'
-description: 'Build confidence, clarity, and deeper connections with personalized love coaching from Shannon Chapoy. Explore your relationship goals and create your next chapter.'
+title: 1:1 Love Coaching
+description: Build confidence, clarity, and deeper connections with personalized
+  love coaching from Shannon Chapoy. Explore your relationship goals and create
+  your next chapter.
 seo:
-  title: '1:1 Love Coaching - Shannon Chapoy'
-  description: 'Build confidence, clarity, and deeper connections with personalized love coaching from Shannon Chapoy. Explore your relationship goals and create your next chapter.'
-  image: '/images/og-shannon-chapoy.jpg'
-  imageAlt: 'Shannon Chapoy — Your greatest love lives within you. Self-love & relationship coaching.'
-  canonical: '/one-on-one-love-coaching'
+  title: 1:1 Love Coaching - Shannon Chapoy
+  description: Build confidence, clarity, and deeper connections with personalized
+    love coaching from Shannon Chapoy. Explore your relationship goals and
+    create your next chapter.
+  image: /images/og-shannon-chapoy.jpg
+  imageAlt: Shannon Chapoy — Your greatest love lives within you. Self-love &
+    relationship coaching.
+  canonical: /one-on-one-love-coaching
   noindex: false
 structuredData:
-  type: 'Service'
-  name: '1:1 Love Coaching'
-  serviceType: 'Personalized relationship coaching'
-  audience: 'Successful women'
-faqSlugs: []
-faqCategories:
-  - one-on-one
+  type: Service
+  name: 1:1 Love Coaching
+  serviceType: Personalized relationship coaching
+  audience: Successful women
+faqSlugs:
+  - who-is-coaching-for
+  - tailored-coaching
 ---
 
 ## What You'll Gain

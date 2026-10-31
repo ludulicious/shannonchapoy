@@ -1,16 +1,16 @@
 ---
+previewUrl: /privacy
 path: /privacy
-title: 'Privacy Policy'
-description: 'Read how Shannon Chapoy collects, uses, and protects personal information when you visit this website or use her love coaching services.'
+title: Privacy Policy
+description: Read how Shannon Chapoy collects, uses, and protects personal information when you visit this website or use her love coaching services.
 seo:
-  title: 'Privacy Policy - Shannon Chapoy'
-  description: 'Read how Shannon Chapoy collects, uses, and protects personal information when you visit this website or use her love coaching services.'
-  image: '/images/og-shannon-chapoy.jpg'
-  imageAlt: 'Shannon Chapoy — Your greatest love lives within you. Self-love & relationship coaching.'
-  canonical: '/privacy'
+  title: Privacy Policy - Shannon Chapoy
+  description: Read how Shannon Chapoy collects, uses, and protects personal information when you visit this website or use her love coaching services.
+  image: /images/og-shannon-chapoy.jpg
+  imageAlt: Shannon Chapoy — Your greatest love lives within you. Self-love & relationship coaching.
+  canonical: /privacy
   noindex: false
-structuredData:
-  type: 'WebPage'
+pageName: Privacy
 ---
 
 # Privacy Policy

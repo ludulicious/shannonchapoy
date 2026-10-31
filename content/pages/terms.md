@@ -1,16 +1,16 @@
 ---
+previewUrl: /terms
 path: /terms
-title: 'Terms of Service'
-description: 'Review the terms for using this website and coaching services from Shannon Chapoy, including bookings, payments, cancellations, and responsibilities.'
+title: Terms of Service
+description: Review the terms for using this website and coaching services from Shannon Chapoy, including bookings, payments, cancellations, and responsibilities.
 seo:
-  title: 'Terms of Service - Shannon Chapoy'
-  description: 'Review the terms for using this website and coaching services from Shannon Chapoy, including bookings, payments, cancellations, and responsibilities.'
-  image: '/images/og-shannon-chapoy.jpg'
-  imageAlt: 'Shannon Chapoy — Your greatest love lives within you. Self-love & relationship coaching.'
-  canonical: '/terms'
+  title: Terms of Service - Shannon Chapoy
+  description: Review the terms for using this website and coaching services from Shannon Chapoy, including bookings, payments, cancellations, and responsibilities.
+  image: /images/og-shannon-chapoy.jpg
+  imageAlt: Shannon Chapoy — Your greatest love lives within you. Self-love & relationship coaching.
+  canonical: /terms
   noindex: false
-structuredData:
-  type: 'WebPage'
+pageName: Terms
 ---
 
 # Terms of Service
