@@ -21,7 +21,6 @@ type CatalogProduct = {
   purchaseUrl: string
   prices: CatalogPrice[]
   isFree: boolean
-  categoryDetails?: { name?: string }
   markdownStyle?: {
     fontFamily?: 'system' | 'sans' | 'serif'
     fontSize?: number

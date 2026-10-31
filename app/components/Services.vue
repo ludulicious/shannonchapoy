@@ -82,9 +82,6 @@ const checkoutUrl = useCatalogCheckout()
               height="400"
               loading="lazy"
             />
-            <span v-if="product.categoryDetails?.name" class="product-card__category">
-              {{ product.categoryDetails.name }}
-            </span>
           </NuxtLink>
 
           <div class="product-card__body">
@@ -223,18 +220,6 @@ const checkoutUrl = useCatalogCheckout()
   object-fit: cover;
   transition: transform var(--dur-catalog-image) var(--ease-catalog-out);
   width: 100%;
-}
-.product-card__category {
-  background: var(--color-catalog-surface);
-  border-radius: var(--radius-catalog-pill);
-  color: var(--color-catalog-accent);
-  font-size: var(--text-catalog-sm);
-  font-weight: 700;
-  inset-block-start: var(--space-catalog-sm);
-  inset-inline-start: var(--space-catalog-sm);
-  line-height: 1;
-  padding: var(--space-catalog-xs) var(--space-catalog-sm);
-  position: absolute;
 }
 .product-card__body {
   display: flex;
