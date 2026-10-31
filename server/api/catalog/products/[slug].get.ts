@@ -29,7 +29,7 @@ export default defineEventHandler(async (event) => {
       }
       const parsed = new URL(url, portalOrigin)
       const match = parsed.origin === portalOrigin && parsed.pathname.match(/^\/api\/store\/media\/([^/]+)$/)
-      return match ? `/api/catalog/media/${encodeURIComponent(decodeURIComponent(match[1]!))}` : url
+      return match ? `/api/catalog/media/${encodeURIComponent(decodeURIComponent(match[1]!))}${parsed.search}` : url
     }
     if (product.visibility === 'unlisted') {
       setHeader(event, 'X-Robots-Tag', 'noindex, nofollow')
