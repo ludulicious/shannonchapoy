@@ -63,16 +63,11 @@ export default defineNuxtConfig({
   },
 
   nitro: {
-    // Pre-render content while retaining the server for form validation and 404s.
+    // Pre-render editorial pages; portal-backed pages must read the current catalog at request time.
     prerender: {
       crawlLinks: true,
       failOnError: true,
       routes: [
-        '/',
-        '/about',
-        '/offerings',
-        '/philosophy',
-        '/faq',
         '/contact',
         '/pj-circle',
         '/one-on-one-love-coaching',
@@ -83,6 +78,14 @@ export default defineNuxtConfig({
       ]
     },
     routeRules: {
+      // These aliases share the landing page and its portal-backed offering cards.
+      '/': { prerender: false, cache: false, headers: { 'Cache-Control': 'private, no-store' } },
+      '/about': { prerender: false, cache: false, headers: { 'Cache-Control': 'private, no-store' } },
+      '/offerings': { prerender: false, cache: false, headers: { 'Cache-Control': 'private, no-store' } },
+      '/philosophy': { prerender: false, cache: false, headers: { 'Cache-Control': 'private, no-store' } },
+      '/faq': { prerender: false, cache: false, headers: { 'Cache-Control': 'private, no-store' } },
+      '/specials/**': { prerender: false, cache: false, headers: { 'Cache-Control': 'private, no-store' } },
+      '/api/catalog/**': { prerender: false, cache: false, headers: { 'Cache-Control': 'private, no-store' } },
       '/services': { redirect: '/offerings' },
       '/**': {
         headers: {

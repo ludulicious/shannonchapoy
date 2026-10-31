@@ -163,7 +163,7 @@ Open **Offerings** to manage which portal products appear on the website. The ex
 
 Product names, images, descriptions, prices, discounts, duration, and checkout URLs still come from the portal for the selected currency. Unlisted or unpublished portal products cannot become public catalog entries through Studio. Deactivation removes a product from the website listings and hero; direct detail links continue to follow the portal's publication rules, including unlisted sharing.
 
-The former `NUXT_PUBLIC_FEATURED_OFFERING_SLUG` setting is no longer used and can be removed from deployment settings. Content changes require rebuilding the pre-rendered website through the normal publication pipeline.
+The former `NUXT_PUBLIC_FEATURED_OFFERING_SLUG` setting is no longer used and can be removed from deployment settings. Studio content changes require rebuilding through the normal publication pipeline. Portal product changes do not require a rebuild: the homepage and its section aliases (`/about`, `/offerings`, `/philosophy`, `/faq`), offering details (`/specials/**`), and catalog API routes are served dynamically with caching disabled. Each page request reads current portal product data, including replacement image URLs.
 
 ### FAQs and categories
 
