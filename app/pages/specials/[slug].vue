@@ -16,6 +16,7 @@ type CatalogProduct = {
   buyButtonLabel?: string
   secondaryCta?: string
   summary: string
+  summaryHtml?: string
   descriptionHtml: string
   thumbnailImage: string | null
   purchaseUrl: string
@@ -135,7 +136,11 @@ usePageSeo(() => ({
           <h1>{{ product.title }}</h1>
           <p v-if="product.subtitle" class="special-subtitle">{{ product.subtitle }}</p>
           <CatalogAppointmentDuration :product="product" />
-          <p class="special-summary">{{ product.summary }}</p>
+          <CatalogProductSummary
+            class="special-summary"
+            :summary="product.summary"
+            :summary-html="product.summaryHtml"
+          />
 
           <div class="special-booking">
             <div class="special-booking__row">
