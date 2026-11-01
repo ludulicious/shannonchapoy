@@ -85,7 +85,11 @@ const checkoutUrl = useCatalogCheckout()
           </NuxtLink>
 
           <div class="product-card__body">
-            <p class="product-card__summary">{{ product.summary }}</p>
+            <CatalogProductSummary
+              class="product-card__summary"
+              :summary="product.summary"
+              :summary-html="product.summaryHtml"
+            />
             <div class="product-card__footer">
               <NuxtLink :to="`/specials/${product.slug}`" class="product-card__action"
                 >{{ content.detailsLabel }} <ArrowRight aria-hidden="true"

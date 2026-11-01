@@ -8,6 +8,7 @@ export type CatalogProduct = {
   title: string
   subtitle?: string
   summary: string
+  summaryHtml?: string
   thumbnailImage: string | null
   prices: CatalogPrice[]
   purchaseUrl: string

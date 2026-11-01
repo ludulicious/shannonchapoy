@@ -43,7 +43,11 @@ const bookingUrl = computed(() => checkoutUrl(props.product))
           >
         </div>
       </div>
-      <p class="featured-session__summary">{{ product.summary }}</p>
+      <CatalogProductSummary
+        class="featured-session__summary"
+        :summary="product.summary"
+        :summary-html="product.summaryHtml"
+      />
       <CatalogOfferBadge v-if="offerDeadline" :deadline="offerDeadline" />
     </div>
   </article>
