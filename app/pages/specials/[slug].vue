@@ -234,9 +234,10 @@ usePageSeo(() => ({
 .special-content h1 {
   color: var(--color-catalog-display);
   font-family: var(--font-catalog-display);
-  font-size: clamp(2.4rem, 5vw, 4.6rem);
-  letter-spacing: -0.035em;
-  line-height: 1;
+  font-size: clamp(2rem, 3vw, 3rem);
+  letter-spacing: -0.025em;
+  line-height: 1.12;
+  text-wrap: balance;
   margin: 0;
   overflow-wrap: anywhere;
 }
