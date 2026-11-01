@@ -66,6 +66,7 @@ if (import.meta.server) {
   useResponseHeader('Cache-Control').value = 'private, no-store'
 }
 const checkoutUrl = computed(() => (product.value ? getCheckoutUrl(product.value) : ''))
+const displayTitle = computed(() => (product.value?.title ?? '').replace(/\b(a|an|the) +(?=\S)/gi, '$1\u00a0'))
 
 if (error.value?.statusCode === 404) {
   throw createError({ statusCode: 404, statusMessage: 'Offering not found' })
@@ -133,7 +134,7 @@ usePageSeo(() => ({
         </div>
 
         <div class="special-content">
-          <h1>{{ product.title }}</h1>
+          <h1>{{ displayTitle }}</h1>
           <p v-if="product.subtitle" class="special-subtitle">{{ product.subtitle }}</p>
           <CatalogAppointmentDuration :product="product" />
           <CatalogProductSummary
